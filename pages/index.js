@@ -1,7 +1,6 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/pages/Home.module.css";
 import useSWR, { SWRConfig } from "swr";
-import Layout from "../components/Layout";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -24,7 +23,7 @@ function Mangas() {
 	if (!data) return <div>загрузка...</div>;
 
 	return (
-		<div>
+		<div className="container">
 			{data.map((item) => (
 				<div
 					className='check'
