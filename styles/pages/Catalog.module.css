@@ -1,0 +1,24 @@
+.wrap {
+  margin: 50px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+	margin: auto;
+}
+
+.error_img_box {
+  position: relative;
+  margin: auto;
+  pointer-events: none;
+	user-select: none;
+}
