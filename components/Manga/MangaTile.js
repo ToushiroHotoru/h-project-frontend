@@ -1,4 +1,4 @@
-import css from "./Manga.module.css";
+import css from "../../styles/components/MangaTile.module.css";
 import Image from "next/image";
 
 // const myLoader = () => {
@@ -6,19 +6,20 @@ import Image from "next/image";
 // };
 
 export default function MangaTile({ props }) {
-	return (
-		<>
-			<div className={css.manga_tile}>
-				<Image
-					// loader={myLoader}
-					src='https://images.hdqwalls.com/download/tracer-overwatch-2-2019-4k-j3-2160x3840.jpg'
-					layout='responsive'
-					alt='pic'
-					width={500}
-					height={700}
-				/>
-				<div className={css.manga_tile_title}>{props.title}</div>
-			</div>
-		</>
-	);
+  return (
+    <>
+      <div className={css.manga_tile}>
+        <Image
+          // loader={myLoader}
+          src="https://get.wallhere.com/photo/THE-email-protected-brunette-anime-girls-one-eye-closed-phone-redhead-yellow-eyes-belly-sunglasses-2185007.jpg"
+          layout="responsive"
+          alt="pic"
+          width={500}
+          height={700}
+        />
+
+        <div className={css.manga_tile_title}>{props.title}</div>
+      </div>
+    </>
+  );
 }

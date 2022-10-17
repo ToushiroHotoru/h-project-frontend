@@ -1,7 +1,11 @@
+import { useColorMode } from "@chakra-ui/react";
+
 export default function Index() {
-	return (
-		<div className='container'>
-			<h1>Index page</h1>
-		</div>
-	);
+  const { toggleColorMode } = useColorMode();
+  return (
+    <div className="container">
+      <h1>Index page</h1>
+      <button onClick={toggleColorMode}>Toggle color mode</button>
+    </div>
+  );
 }
