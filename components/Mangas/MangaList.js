@@ -32,8 +32,12 @@ export default function MangaList({ data }) {
           <div className={manga.list_series}>{data.series}</div>
           <div className={manga.list_artist}>{data.artist}</div>
           <div className={manga.list_tags}>
-            {data.tags.map((tag) => {
-              return <div className={manga.list_tag}>{tag}</div>;
+            {data.tags.map((tag, i) => {
+              return (
+                <div className={manga.list_tag} key={i + 1}>
+                  {tag}
+                </div>
+              );
             })}
           </div>
           <div className={manga.list_info}></div>
