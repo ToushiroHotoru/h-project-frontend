@@ -2,9 +2,16 @@
   margin: 50px 0;
 }
 
-.grid {
+.grid_common {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.grid_detail {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
   gap: 30px;
 }
 
@@ -13,12 +20,38 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-	margin: auto;
+  margin: auto;
 }
 
 .error_img_box {
   position: relative;
   margin: auto;
   pointer-events: none;
-	user-select: none;
+  user-select: none;
+}
+
+.toggler {
+  display: flex;
+  width: auto;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.toggle_common {
+  padding: 6px;
+  border: 1px solid #fff;
+  border-radius: 10px 0 0 10px;
+  cursor: pointer;
+}
+
+.toggle_detail {
+  padding: 6px;
+  border: 1px solid #fff;
+  border-radius: 0 10px 10px 0;
+  cursor: pointer;
+}
+
+.toggle_active {
+  background-color: #fff;
+  color: #000;
 }
