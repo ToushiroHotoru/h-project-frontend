@@ -11,7 +11,7 @@ export default function MangaTile({ props }) {
   };
 
   return (
-    <Link href={`/${props._id}`}>
+    <Link href={`/mangas/${props._id}`}>
       <div className={css.manga_tile}>
         <Skeleton isLoaded={isLoaded}>
           <Image
