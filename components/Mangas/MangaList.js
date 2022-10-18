@@ -16,7 +16,7 @@ export default function MangaList({ data }) {
           <Box>
             <Image
               onLoad={onLoadHandler}
-              src="https://i.pinimg.com/originals/75/2d/21/752d2198f907d328b1403f91b2a7ded0.jpg"
+              src="/manga_cover/cover_6.jpg"
               alt="pic"
               width={200}
               height={200}
