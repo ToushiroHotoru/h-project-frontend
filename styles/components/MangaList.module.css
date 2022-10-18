@@ -1,5 +1,8 @@
 .list {
   display: flex;
   background-color: whitesmoke;
-  color: black;
+  color: #000;
+  border-radius: 5px;
+  max-height: 250px;
+  height: 250px;
 }

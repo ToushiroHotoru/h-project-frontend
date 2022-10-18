@@ -6,6 +6,8 @@ import Error from "../components/partials/Error";
 import Image from "next/image";
 import Toggler from "../components/Mangas/Toggler";
 import { useState } from "react";
+import { Flex, Box, HStack } from "@chakra-ui/react";
+import Filter from "../components/Mangas/Filter";
 
 export default function Mangas() {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -31,15 +33,28 @@ export default function Mangas() {
 
   return (
     <div className={catalog.catalog}>
-      <Toggler
-        isToggled={isToggled}
-        setIsToggled={(val) => {
-          setIsToggled(val);
-        }}
-      />
       <div className="container">
-        <div className={`${catalog.wrap} ${isToggled ? catalog.grid_detail : catalog.grid_common}`}>
-          {data && data.map((item, i) => {
+        <HStack w="1300px" align="center" justify="right">
+          <Box>
+            <Filter />
+          </Box>
+          <Box>
+            <Toggler
+              isToggled={isToggled}
+              setIsToggled={(val) => {
+                setIsToggled(val);
+              }}
+            />
+          </Box>
+        </HStack>
+
+        <div
+          className={`${catalog.wrap} ${
+            isToggled ? catalog.grid_detail : catalog.grid_common
+          }`}
+        >
+          {data &&
+            data.map((item, i) => {
               return isToggled ? (
                 <MangaList data={item} key={i + 1} />
               ) : (
