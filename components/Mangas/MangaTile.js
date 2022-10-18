@@ -1,5 +1,6 @@
 import css from "../../styles/components/MangaTile.module.css";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { Skeleton, SkeletonText } from "@chakra-ui/react";
 
@@ -10,7 +11,7 @@ export default function MangaTile({ props }) {
   };
 
   return (
-    <>
+    <Link href={`/${props._id}`}>
       <div className={css.manga_tile}>
         <Skeleton isLoaded={isLoaded}>
           <Image
@@ -26,6 +27,6 @@ export default function MangaTile({ props }) {
           <div className={css.manga_tile_title}>{props.title}</div>
         </SkeletonText>
       </div>
-    </>
+    </Link>
   );
 }
