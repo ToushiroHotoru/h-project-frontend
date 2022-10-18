@@ -1,13 +1,13 @@
-import catalog from "../styles/pages/Catalog.module.css";
+import catalog from "../../styles/pages/Catalog.module.css";
 import useSWR from "swr";
-import MangaTile from "../components/Mangas/MangaTile";
-import MangaList from "../components/Mangas/MangaList";
-import Error from "../components/partials/Error";
+import MangaTile from "../../components/Mangas/MangaTile";
+import MangaList from "../../components/Mangas/MangaList";
+import Error from "../../components/partials/Error";
 import Image from "next/image";
-import Toggler from "../components/Mangas/Toggler";
+import Toggler from "../../components/Mangas/Toggler";
 import { useState } from "react";
 import { Flex, Box, HStack } from "@chakra-ui/react";
-import Filter from "../components/Mangas/Filter";
+import Filter from "../../components/Mangas/Filter";
 
 export default function Mangas() {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
