@@ -1,5 +1,5 @@
 .wrap {
-  margin: 50px 0;
+  margin: 20px 0;
 }
 
 .grid_common {
@@ -34,18 +34,19 @@
   display: flex;
   width: auto;
   justify-content: center;
-  margin-top: 10px;
 }
 
 .toggle_common {
-  padding: 6px;
+  padding: 9px 0;
+  width: 40px;
   border: 1px solid #fff;
   border-radius: 10px 0 0 10px;
   cursor: pointer;
 }
 
 .toggle_detail {
-  padding: 6px;
+  padding: 9px 0;
+  width: 40px;
   border: 1px solid #fff;
   border-radius: 0 10px 10px 0;
   cursor: pointer;

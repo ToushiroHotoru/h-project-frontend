@@ -1,5 +1,5 @@
 :root {
-  --pink: #F92672;
+  --pink: #f92672;
 }
 
 html,
@@ -18,14 +18,14 @@ body {
 html,
 body {
   min-height: 100%;
-  height: 100%
+  height: 100%;
 }
 
 body {
   background-color: #161515;
   font-size: 16px;
   line-height: 137%;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 #__next {
@@ -41,7 +41,7 @@ select {
   font-family: inherit;
   outline: none;
   border: none;
-  background-color: rgba(0, 0, 0, 0)
+  background-color: rgba(0, 0, 0, 0);
 }
 
 img {
@@ -51,17 +51,17 @@ img {
 a {
   text-decoration: none;
   font-size: inherit;
-  color: inherit
+  color: inherit;
 }
 
 .container {
+  margin: 50px 0;
   max-width: 1360px;
   width: 100%;
   margin: 0 auto;
   padding: 0 30px;
   flex-grow: 1;
 }
-
 
 .content {
   -webkit-box-flex: 1;
@@ -79,7 +79,7 @@ a {
 
 footer {
   -ms-flex-negative: 1;
-  flex-shrink: 1
+  flex-shrink: 1;
 }
 
 .link {
