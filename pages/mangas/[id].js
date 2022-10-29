@@ -1,4 +1,4 @@
-import { getMangas } from "../../libs/get_post.js";
+import { getPaths } from "../../libs/get_post.js";
 
 export async function getStaticProps({ params }) {
 	const { id } = params;
@@ -18,8 +18,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths(context) {
-	console.log(context);
-	const data = await getMangas();
+	const data = await getPaths();
 	const paths = data.map((post) => ({
 		params: { id: post._id.toString() },
 	}));
