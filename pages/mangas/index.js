@@ -16,6 +16,7 @@ export default function Mangas() {
 
   const { data, error } = useSWR(
     "https://h-project.herokuapp.com/mangas",
+    // "http://localhost:8080/mangas",
     fetcher
   );
   if (error)
@@ -34,7 +35,7 @@ export default function Mangas() {
   return (
     <div className={catalog.catalog}>
       <div className="container">
-        <HStack w="1300px" align="center" justify="right">
+        <HStack w="100%" align="center" justify="right">
           <Box>
             <Filter />
           </Box>

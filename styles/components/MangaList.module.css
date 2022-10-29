@@ -5,4 +5,53 @@
   border-radius: 5px;
   max-height: 250px;
   height: 250px;
+  padding: 20px;
+}
+
+.image_wrap {
+  position: relative;
+  perspective: 800px;
+  width: 160px;
+}
+
+.image_wrap_extended {}
+
+.image {
+  position: absolute;
+  width: 160px;
+  transition-property: opacity, transform;
+  transition-duration: .3s;
+  transition-timing-function: ease;
+  opacity: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.image:nth-child(1) {
+  opacity: 1;
+}
+
+.list:hover .image {
+  opacity: 1;
+}
+
+.list:hover .image:nth-child(1) {
+  transform: rotateY(20deg) translate3D(0, 10px, -10px);
+}
+
+.list:hover .image:nth-child(2) {
+  transform: rotateY(20deg) translate3D(45px, 0, -10px);
+}
+
+.list:hover .image:nth-child(3) {
+  transform: rotateY(20deg) translate3D(90px, -10px, -10px);
+}
+
+.info{
+  margin: 0 0 0 20px;
+  transition: transform .3s ease;
+}
+
+.list:hover .info{
+  transform: translateX(70px);
 }
