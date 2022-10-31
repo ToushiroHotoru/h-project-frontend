@@ -6,7 +6,7 @@ import Error from "../../components/partials/Error";
 import Image from "next/image";
 import Toggler from "../../components/Mangas/Toggler";
 import { useState } from "react";
-import { Flex, Box, HStack, Button } from "@chakra-ui/react";
+import { Flex, Box, HStack, Button, Tooltip } from "@chakra-ui/react";
 import Filter from "../../components/Mangas/Filter";
 import {
   MdOutlineArrowForwardIos,
@@ -19,9 +19,39 @@ export default function Mangas() {
   const [isToggled, setIsToggled] = useState(false);
   const [pageIndex, setPageIndex] = useState(0);
 
+  const pagination = () => {
+    if (data) {
+      console.log(data.offset, data.total);
+      let start_page_offset = data.offset - data.step * 2;
+      let end_page_offset = data.offset + data.step * 3;
+      let page_offset = start_page_offset;
+      let page_offsets = new Array();
+
+      if (data.offset >= data.total || data.offset + data.step >= data.total) {
+        end_page_offset = data.offset + data.step;
+      } else if (data.offset + data.step * 2 >= data.total) {
+        end_page_offset = data.offset + data.step * 2;
+      }
+      while (page_offset < end_page_offset) {
+        if (page_offset >= 0) {
+          page_offsets.push(page_offset);
+        }
+        page_offset += data.step;
+      }
+
+      page_offsets = page_offsets.map((item) => {
+        if (item != 0) {
+          item = Math.ceil(item / data.step);
+        }
+        return item;
+      });
+      return page_offsets;
+    }
+  };
+
   const { data, error } = useSWR(
-    // `https://h-project.herokuapp.com/mangas?page=${pageIndex}`,
-    `http://localhost:8080/mangas?page=${pageIndex}`,
+    `https://h-project.herokuapp.com/mangas?page=${pageIndex}`,
+    // `http://localhost:8080/mangas?page=${pageIndex}`,
     fetcher
   );
 
@@ -81,6 +111,7 @@ export default function Mangas() {
           <Button
             mx="2"
             colorScheme="pink"
+            disabled={pageIndex === 0 ? true : false}
             onClick={() => {
               setPageIndex(pageIndex - 1);
             }}
@@ -88,29 +119,36 @@ export default function Mangas() {
             <MdOutlineArrowBackIosNew />
           </Button>
           {data &&
-            [...Array(Math.ceil(data.total / 8))].map((_, i) => {
+            pagination().map((item, i) => {
               return (
                 <Button
                   key={i + 1}
                   mx="2"
-                  colorScheme="pink"
+                  colorScheme={pageIndex === item ? "blue" : "pink"}
                   onClick={() => {
-                    setPageIndex(i);
+                    setPageIndex(item);
                   }}
                 >
-                  {i + 1}
+                  {item + 1}
                 </Button>
               );
             })}
-          <Button
-            mx="2"
-            colorScheme="pink"
-            onClick={() => {
-              setPageIndex(pageIndex + 1);
-            }}
-          >
-            <MdOutlineArrowForwardIos />
-          </Button>
+          <Tooltip label={true}>
+            <Button
+              mx="2"
+              colorScheme="pink"
+              disabled={
+                pageIndex >= Math.ceil(data && data.total / data.step) - 1
+                  ? true
+                  : false
+              }
+              onClick={() => {
+                setPageIndex(pageIndex + 1);
+              }}
+            >
+              <MdOutlineArrowForwardIos />
+            </Button>
+          </Tooltip>
         </div>
       </div>
     </div>
