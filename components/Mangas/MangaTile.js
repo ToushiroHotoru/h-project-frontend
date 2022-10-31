@@ -16,7 +16,9 @@ export default function MangaTile({ props }) {
         <Skeleton isLoaded={isLoaded}>
           <Image
             onLoad={onLoadHandler}
-            src="/manga_cover/cover_6.jpg"
+            src={
+              props.cover === "Cover" ? "/manga_cover/cover_6.jpg" : props.cover
+            }
             layout="responsive"
             alt="pic"
             width={500}

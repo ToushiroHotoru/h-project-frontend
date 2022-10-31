@@ -8,6 +8,7 @@ const nextConfig = {
       "images.hdqwalls.com",
       "get.wallhere.com",
       "yandex.ru",
+      "img10.reactor.cc",
     ],
   },
 };
