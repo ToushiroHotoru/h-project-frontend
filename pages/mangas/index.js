@@ -18,8 +18,8 @@ export default function Mangas() {
   const [sortType, setSortType] = useState("latest");
 
   const { data, error } = useSWR(
-    // `https://h-project.herokuapp.com/mangas?page=${pageIndex}`,
-    `http://localhost:8080/mangas?page=${pageIndex}&sort=${sortType}`,
+    `https://h-project.herokuapp.com/mangas?page=${pageIndex}&sort=${sortType}`,
+    // `http://localhost:8080/mangas?page=${pageIndex}&sort=${sortType}`,
     fetcher
   );
 
