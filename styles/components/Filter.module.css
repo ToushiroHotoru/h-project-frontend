@@ -1,0 +1,21 @@
+.sort_item {
+  padding: 5px;
+  border: 1px solid #8c8c8c;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55px;
+}
+
+.sort_item:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.sort_item:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+.sort_item_active {
+  background-color: #000;
+}
