@@ -27,7 +27,7 @@ export async function getStaticProps({ params }) {
   const { id } = params;
   // http://localhost:8080/
   // https://h-project.herokuapp.com/
-  const res = await fetch("http://localhost:8080/manga-static", {
+  const res = await fetch("https://h-project.herokuapp.com/manga-static", {
     method: "POST",
     body: JSON.stringify({ id: id }),
     headers: {
@@ -59,7 +59,7 @@ export default function Manga({ manga, id }) {
   const onLoadHander = async () => {
     try {
       console.log(id);
-      const res = await fetch("http://localhost:8080/manga-dynamic", {
+      const res = await fetch("https://h-project.herokuapp.com/manga-dynamic", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
