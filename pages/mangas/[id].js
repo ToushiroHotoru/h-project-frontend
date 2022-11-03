@@ -1,7 +1,7 @@
 import { getPaths } from "../../libs/get_post.js";
 import css from "../../styles/pages/Manga.module.css";
-import { Divider } from "@chakra-ui/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   Box,
@@ -12,8 +12,8 @@ import {
   Textarea,
   Button,
   Avatar,
+  Divider,
 } from "@chakra-ui/react";
-import { Icon } from "@chakra-ui/react";
 
 import {
   BsDownload,
@@ -34,7 +34,6 @@ export async function getStaticProps({ params }) {
       "Content-Type": "application/json",
     },
   });
-  console.log(res);
   const data = await res.json();
   return {
     props: { manga: data, id: id }, // will be passed to the page component as props
@@ -42,7 +41,6 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths(context) {
-  console.log(context);
   const data = await getPaths();
   const paths = data.map((post) => ({
     params: { id: post._id.toString() },
@@ -58,7 +56,6 @@ export default function Manga({ manga, id }) {
 
   const onLoadHander = async () => {
     try {
-      console.log(id);
       const res = await fetch("https://h-project.herokuapp.com/manga-dynamic", {
         method: "POST",
         headers: {
@@ -68,7 +65,6 @@ export default function Manga({ manga, id }) {
       });
 
       const data = await res.json();
-      console.log(data);
       setMangaDynamic(data);
     } catch (err) {
       console.log(err);
@@ -78,7 +74,7 @@ export default function Manga({ manga, id }) {
   useEffect(() => {
     onLoadHander();
   }, []);
-  // console.log(manga);
+
   return (
     <div className="container">
       <div className={css.title}>Manga {manga.title}</div>
@@ -162,16 +158,21 @@ export default function Manga({ manga, id }) {
         {mangaDynamic?.pages
           ? mangaDynamic.pages.map((item, i) => {
               return (
-                <Box key={i + 1} minHeight="120px" className={css.page}>
-                  <Image
-                    src={item}
-                    alt="Picture of the author"
-                    layout="responsive"
-                    objectFit="cover"
-                    width={250}
-                    height={400}
-                  />
-                </Box>
+                <Link
+                  href={`/reader?id=${manga._id}&page=${i + 1}`}
+                  key={i + 1}
+                >
+                  <Box minHeight="120px" className={css.page}>
+                    <Image
+                      src={item}
+                      alt="Picture of the author"
+                      layout="responsive"
+                      objectFit="cover"
+                      width={250}
+                      height={400}
+                    />
+                  </Box>
+                </Link>
               );
             })
           : "это экземпляр, который не содерижит страниц"}
