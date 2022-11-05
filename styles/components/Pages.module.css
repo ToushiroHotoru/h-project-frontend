@@ -1,0 +1,11 @@
+.page {
+  border-radius: 3px;
+  overflow: hidden;
+}
+.content {
+  margin: 20px 0 0 0;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
