@@ -23,7 +23,7 @@ export default function MangaList({ data }) {
           {() => {
             setGalleryExtended(true);
           }}
-          {[4, 5, 6].map((_, i) => {
+          {Array.of(1,1,1).map((_, i) => {
             return (
               <Box key={i + 1} className={`${manga.image}`}>
                 <Image

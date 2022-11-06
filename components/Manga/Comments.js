@@ -33,7 +33,7 @@ export default function Comments() {
           </Flex>
 
           <Box my="2em" className={css.comment_text}>
-            Вообще-то, я не педофил, просто, я феменист, который любит детей.
+            Комментарий 
           </Box>
           <Flex w="100%" justifyContent="flex-end">
             <Button>Ответить</Button>
@@ -61,7 +61,7 @@ export default function Comments() {
           </Flex>
 
           <Box my="2em" className={css.comment_text}>
-            Ага, расскажешь... -_-
+            Комментарий -_-
           </Box>
         </Box>
         <Divider />

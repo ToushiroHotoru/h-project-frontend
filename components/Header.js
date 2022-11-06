@@ -9,18 +9,19 @@ export default function Header() {
 			<div className='container'>
 				<div className={header.wrap}>
 					<A href='/'>
-						<div className={header.logo}>
-							<Image
+						<a className={header.logo}>
+							PROJECT
+							{/* <Image
 								src='/logo.svg'
 								layout='fill'
 								alt='logo'
-							/>
-						</div>
+							/> */}
+						</a>
 					</A>
 
 					<nav className={nav.nav}>
 						<A href='/mangas'>
-							<a className={`link ${nav.link}`}>Каталог манг</a>
+							<a className={`link ${nav.link}`}>Каталог</a>
 						</A>
 					</nav>
 				</div>

@@ -14,7 +14,7 @@ export default function HeadImg() {
     <div className={css.head_img}>
       <Box borderRadius="8px" overflow="hidden">
         <Image
-          src="/manga_cover/cover_6.jpg"
+          src="/manga_cover/cover_1.jpg"
           alt="Picture of the author"
           layout="responsive"
           width={350}
