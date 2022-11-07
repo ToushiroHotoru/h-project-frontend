@@ -19,7 +19,7 @@ export default function MangaTile({ props }) {
             src={
               props.cover === "Cover"
                 ? "/manga_cover/cover_1.jpg"
-                : "/manga_cover/cover_1.jpg"
+                : "/manga_cover/cover_2.jpg"
             }
             layout="responsive"
             alt="pic"
