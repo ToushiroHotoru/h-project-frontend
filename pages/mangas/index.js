@@ -16,20 +16,12 @@ export default function Mangas() {
 
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
-  const [sortType, setSortType] = useState("latest");
 
   const { data, error } = useSWR(
     `https://h-project.herokuapp.com/mangas?page=${router.query.page}&sort=${router.query.sort}`,
     // `http://localhost:8080/mangas?page=${pageIndex}&sort=${sortType}`,
     fetcher
   );
-
-  const onLoadHander = () => {
-    // router.push(`/mangas?&page=${Number(router.query.page) - 1}`, undefined, {
-    //   shallow: true,
-    // });
-    console.log(router.query.page, router.query.sort);
-  };
 
   if (error)
     return (
@@ -46,7 +38,6 @@ export default function Mangas() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    onLoadHander();
   }, [router.isReady]);
 
   return (
