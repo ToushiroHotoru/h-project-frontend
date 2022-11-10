@@ -36,9 +36,9 @@ export default function Mangas() {
       </Error>
     );
 
-  useEffect(() => {
-    if (!router.isReady) return;
-  }, [router.isReady]);
+  // useEffect(() => {
+  //   if (!router.isReady) return;
+  // }, [router.isReady]);
 
   return (
     <div className={catalog.catalog}>

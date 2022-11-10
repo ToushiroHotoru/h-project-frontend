@@ -12,8 +12,7 @@ export default function Reader() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
 
-  useEffect(async () => {
-    if (!router.isReady) return;
+  const onLoadHander = async () => {
     try {
       console.log(router.query.id);
       const res = await fetch("https://h-project.herokuapp.com/manga-dynamic", {
@@ -29,6 +28,11 @@ export default function Reader() {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    onLoadHander();
   }, [router.isReady]);
 
   return (
