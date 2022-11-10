@@ -1,20 +1,33 @@
 import css from "../../styles/pages/Reader.module.css";
-import { Box, Center } from "@chakra-ui/react";
+import { Box, Center, Tooltip } from "@chakra-ui/react";
 import Image from "next/image";
 import { BsGearFill } from "react-icons/bs";
 
 export default function ReaderAlt({
-  id,
   readerAltMode,
   mangaPages,
   btnRef,
   onOpen,
+  mangaTitle,
 }) {
   return (
     <>
       {readerAltMode && (
         <Center flexDirection="column">
-          <div>{id}</div>
+          <Tooltip hasArrow label="Настройки" placement="left">
+            <Box
+              ref={btnRef}
+              colorScheme="teal"
+              className={css.gear}
+              onClick={onOpen}
+            >
+              <BsGearFill size="2em" />
+            </Box>
+          </Tooltip>
+          <Box fontSize="18px" mb="15px">
+            {mangaTitle}
+          </Box>
+
           <div className={css.content_alt_mode}>
             {mangaPages &&
               mangaPages.map((item, i) => {
@@ -26,14 +39,10 @@ export default function ReaderAlt({
                       width={700}
                       height={1000}
                     />
-                    ;
                   </Box>
                 );
               })}
           </div>
-          <Box mt="1em" ref={btnRef} colorScheme="teal" onClick={onOpen}>
-            <BsGearFill />
-          </Box>
         </Center>
       )}
     </>

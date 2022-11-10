@@ -7,6 +7,7 @@ import ReaderDef from "../components/Reader/ReaderDef";
 
 export default function Reader() {
   const [mangaPages, setMangaPages] = useState();
+  const [mangaTitle, setMangaTitle] = useState();
   const [readerAltMode, setReaderAltMode] = useState(false);
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,6 +26,7 @@ export default function Reader() {
 
       const data = await res.json();
       setMangaPages(data?.pages);
+      setMangaTitle(data?.series);
     } catch (err) {
       console.log(err);
     }
@@ -38,6 +40,7 @@ export default function Reader() {
   return (
     <>
       <ReaderDef
+        mangaTitle={mangaTitle}
         readerAltMode={readerAltMode}
         router={router}
         mangaPages={mangaPages}
@@ -46,6 +49,7 @@ export default function Reader() {
       />
 
       <ReaderAlt
+        mangaTitle={mangaTitle}
         id={router.query.id}
         readerAltMode={readerAltMode}
         mangaPages={mangaPages}
@@ -54,6 +58,7 @@ export default function Reader() {
       />
 
       <SideDrawer
+        readerAltMode={readerAltMode}
         isOpen={isOpen}
         onClose={onClose}
         btnRef={btnRef}

@@ -9,3 +9,34 @@
   align-items: center;
   justify-content: center;
 }
+
+.gear {
+  position: fixed;
+  padding: 15px;
+  top: 150px;
+  right: 0;
+  background-color: black;
+  border-radius: 8px 0 0 8px;
+}
+
+.test_click_next {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 60%;
+  height: 100%;
+  z-index: 100;
+}
+
+.test_click_prev {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40%;
+  height: 100%;
+  z-index: 100;
+}
+
+.test_click_next_parent {
+  position: relative;
+}
