@@ -1,14 +1,4 @@
-import {
-  Box,
-  Center,
-  HStack,
-  Flex,
-  Text,
-  Textarea,
-  Button,
-  Avatar,
-  Divider,
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import css from "../../styles/components/Pages.module.css";

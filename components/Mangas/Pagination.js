@@ -3,16 +3,11 @@ import {
   MdOutlineArrowForwardIos,
   MdOutlineArrowBackIosNew,
 } from "react-icons/md";
+import { useEffect } from "react";
 
-export default function Pagination({
-  pageIndex,
-  total,
-  offset,
-  step,
-  setPageIndex,
-}) {
+export default function Pagination({ router, total, offset, step }) {
   const create_pagination = () => {
-    console.log(offset, total);
+    console.log(offset, total, router.query.page, router.query.sort);
     let start_page_offset = offset - step * 2;
     let end_page_offset = offset + step * 3;
     let page_offset = start_page_offset;
@@ -39,16 +34,27 @@ export default function Pagination({
     return page_offsets;
   };
 
+  useEffect(() => {
+    if (!router.isReady) return;
+  }, [router.isReady]);
+
   return (
     <Flex justifyContent="center">
       <Button
         mx="2"
         colorScheme="pink"
-        disabled={pageIndex === 0 ? true : false}
+        disabled={Number(router.query.page) === 0 ? true : false}
         onClick={() => {
-          setPageIndex(() => {
-            return pageIndex - 1;
-          });
+          console.log(router.query.page);
+          router.push(
+            `/mangas?page=${Number(router.query.page) - 1}&sort=${
+              router.query.sort
+            }`,
+            undefined,
+            {
+              shallow: true,
+            }
+          );
         }}
       >
         <MdOutlineArrowBackIosNew />
@@ -58,11 +64,15 @@ export default function Pagination({
           <Button
             key={i + 1}
             mx="2"
-            colorScheme={pageIndex === item ? "blue" : "pink"}
+            colorScheme={Number(router.query.page) === item ? "blue" : "pink"}
             onClick={() => {
-              setPageIndex(() => {
-                return item;
-              });
+              router.push(
+                `/mangas?page=${item}&sort=${router.query.sort}`,
+                undefined,
+                {
+                  shallow: true,
+                }
+              );
             }}
           >
             {item + 1}
@@ -73,11 +83,19 @@ export default function Pagination({
       <Button
         mx="2"
         colorScheme="pink"
-        disabled={pageIndex >= Math.ceil(total / step) - 1 ? true : false}
+        disabled={
+          router.query.page >= Math.ceil(total / step) - 1 ? true : false
+        }
         onClick={() => {
-          setPageIndex(() => {
-            return pageIndex + 1;
-          });
+          router.push(
+            `/mangas?page=${Number(router.query.page) + 1}&sort=${
+              router.query.sort
+            }`,
+            undefined,
+            {
+              shallow: true,
+            }
+          );
         }}
       >
         <MdOutlineArrowForwardIos />
