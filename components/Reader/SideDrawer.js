@@ -7,12 +7,15 @@ import {
   DrawerHeader,
   DrawerBody,
   DrawerFooter,
+  Flex,
+  Box,
 } from "@chakra-ui/react";
 
 export default function SideDrawer({
   isOpen,
   onClose,
   btnRef,
+  readerAltMode,
   setReaderAltMode,
 }) {
   return (
@@ -21,6 +24,7 @@ export default function SideDrawer({
       placement="right"
       onClose={onClose}
       finalFocusRef={btnRef}
+      size="md"
     >
       <DrawerOverlay />
       <DrawerContent>
@@ -28,21 +32,39 @@ export default function SideDrawer({
         <DrawerHeader>Settings</DrawerHeader>
 
         <DrawerBody>
-          <>Здесь будут настрокий Reader</>
-          <Button
-            onClick={() => {
-              setReaderAltMode();
-            }}
-          >
-            Turn on alt mode
-          </Button>
+          <Box my="5px" fontSize="18px">
+            Режим чтения:
+          </Box>
+          <Flex w="100%">
+            <Button
+              borderTopRightRadius="0"
+              borderBottomRightRadius="0"
+              flex="1"
+              colorScheme={readerAltMode ? "gray" : "blue"}
+              onClick={() => {
+                setReaderAltMode();
+              }}
+            >
+              Default MODE
+            </Button>
+            <Button
+              flex="1"
+              borderTopLeftRadius="0"
+              borderBottomLeftRadius="0"
+              colorScheme={readerAltMode ? "blue" : "gray"}
+              onClick={() => {
+                setReaderAltMode();
+              }}
+            >
+              Alternate MODE
+            </Button>
+          </Flex>
         </DrawerBody>
 
         <DrawerFooter>
-          <Button variant="outline" mr={3} onClick={onClose}>
-            Cancel
+          <Button colorScheme="blue" w="100%" onClick={onClose}>
+            Закрыть
           </Button>
-          <Button colorScheme="blue">Save</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
