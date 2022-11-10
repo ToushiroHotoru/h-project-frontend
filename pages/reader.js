@@ -33,7 +33,7 @@ export default function Reader() {
   useEffect(() => {
     if (!router.isReady) return;
     onLoadHander();
-  }, [router.isReady]);
+  }, [router.isReady, onLoadHander()]);
 
   return (
     <>
