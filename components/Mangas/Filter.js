@@ -22,7 +22,7 @@ import {
 } from "react-icons/bs";
 import css from "../../styles/components/Filter.module.css";
 
-export default function Filter({ sortType, setSortType }) {
+export default function Filter({ router }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -39,10 +39,16 @@ export default function Filter({ sortType, setSortType }) {
                 <Tooltip label="Дата" hasArrow>
                   <div
                     className={`${css.sort_item} ${
-                      sortType === "latest" && css.sort_item_active
+                      router.query.sort === "latest" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      setSortType("latest");
+                      router.push(
+                        `/mangas?page=${router.query.page}&sort=latest`,
+                        undefined,
+                        {
+                          shallow: true,
+                        }
+                      );
                     }}
                   >
                     <BsFillClockFill size="50%" />
@@ -52,10 +58,16 @@ export default function Filter({ sortType, setSortType }) {
                 <Tooltip label="Алфавит" hasArrow>
                   <div
                     className={`${css.sort_item} ${
-                      sortType === "alphabet" && css.sort_item_active
+                      router.query.sort === "alphabet" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      setSortType("alphabet");
+                      router.push(
+                        `/mangas?page=${router.query.page}&sort=alphabet`,
+                        undefined,
+                        {
+                          shallow: true,
+                        }
+                      );
                     }}
                   >
                     <BsSortAlphaDown size="50%" />
@@ -65,10 +77,16 @@ export default function Filter({ sortType, setSortType }) {
                 <Tooltip label="Рейтинг" hasArrow>
                   <div
                     className={`${css.sort_item} ${
-                      sortType === "rating" && css.sort_item_active
+                      router.query.sort === "rating" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      setSortType("rating");
+                      router.push(
+                        `/mangas?page=${router.query.page}&sort=rating`,
+                        undefined,
+                        {
+                          shallow: true,
+                        }
+                      );
                     }}
                   >
                     <BsFillStarFill size="50%" />
@@ -78,10 +96,16 @@ export default function Filter({ sortType, setSortType }) {
                 <Tooltip label="Нравится" hasArrow>
                   <div
                     className={`${css.sort_item} ${
-                      sortType === "like" && css.sort_item_active
+                      router.query.sort === "like" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      setSortType("like");
+                      router.push(
+                        `/mangas?page=${router.query.page}&sort=like`,
+                        undefined,
+                        {
+                          shallow: true,
+                        }
+                      );
                     }}
                   >
                     <BsFillHeartFill size="50%" />
@@ -91,10 +115,16 @@ export default function Filter({ sortType, setSortType }) {
                 <Tooltip label="Просмотры" hasArrow>
                   <Box
                     className={`${css.sort_item} ${
-                      sortType === "view" && css.sort_item_active
+                      router.query.sort === "view" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      setSortType("view");
+                      router.push(
+                        `/mangas?page=${router.query.page}&sort=view`,
+                        undefined,
+                        {
+                          shallow: true,
+                        }
+                      );
                     }}
                   >
                     <BsFillEyeFill size="50%" />
