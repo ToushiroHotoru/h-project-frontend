@@ -10,6 +10,10 @@
   display: none;
 }
 
+.page_shown {
+  display: block;
+}
+
 .content {
   padding: 20px 0;
   height: auto;
