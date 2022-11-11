@@ -19,3 +19,21 @@ html[data-theme="light"] .head,
     gap: 16px;
   }
 }
+
+@media (max-width: 1000px) {
+  .head {
+    grid-template-columns: 250px 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .head {
+    grid-template-columns: 160px 1fr;
+  }
+}
+
+@media (max-width: 450px) {
+  .head {
+    grid-template-columns: 100%;
+  }
+}
