@@ -12,7 +12,7 @@ export default function MangaTile({ props }) {
 
   return (
     <Link href={`/mangas/${props._id}`}>
-      <div className={css.manga_tile}>
+      <a className={css.manga_tile}>
         <Skeleton isLoaded={isLoaded}>
           <Image
             onLoad={onLoadHandler}
@@ -30,7 +30,7 @@ export default function MangaTile({ props }) {
         <SkeletonText isLoaded={isLoaded} mt="4">
           <div className={css.manga_tile_title}>{props.title}</div>
         </SkeletonText>
-      </div>
+      </a>
     </Link>
   );
 }
