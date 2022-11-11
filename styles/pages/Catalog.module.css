@@ -58,14 +58,14 @@
 }
 
 @media (max-width: 1100px) {
-  .wrap {
+  .grid_common {
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
   }
 }
 
 @media (max-width: 800px) {
-  .wrap {
+  .grid_common {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
