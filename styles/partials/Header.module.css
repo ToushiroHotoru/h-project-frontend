@@ -16,3 +16,9 @@
   font-size: 36px;
   font-weight: 600;
 }
+
+@media (max-width: 600px) {
+  .logo {
+    font-size: 26px;
+  }
+}
