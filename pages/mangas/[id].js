@@ -1,7 +1,7 @@
 import { getPaths } from "../../libs/get_post.js";
 import css from "../../styles/pages/Manga.module.css";
 import { useEffect, useState } from "react";
-import { Box, Center, Divider } from "@chakra-ui/react";
+import { Box, Center, Divider, Heading } from "@chakra-ui/react";
 import Comments from "../../components/Manga/Comments.js";
 import Pages from "../../components/Manga/Pages.js";
 import HeadTags from "../../components/Manga/HeadTags.js";
@@ -66,26 +66,28 @@ export default function Manga({ manga, id }) {
 			<Head>
 				<title>{manga.title}</title>
 			</Head>
-			<div className='container'>
-				<div className={css.title}>Manga {manga.title}</div>
-				<Divider />
-				<div className={css.head}>
-					<HeadImg />
-					<HeadDesc
-						mangaDynamic={mangaDynamic}
+			<div className={css.wrap}>
+				<div className='container'>
+					<Heading
+						as='h1'
+						size='xl'
+						className={css.title}>
+						Manga - {manga.title}
+					</Heading>
+					<div className={css.head}>
+						<HeadImg />
+						<HeadDesc
+							mangaDynamic={mangaDynamic}
+							manga={manga}
+						/>
+						<HeadTags tags={mangaDynamic && mangaDynamic.tags} />
+					</div>
+					<Pages
+						pages={mangaDynamic && mangaDynamic.pages}
 						manga={manga}
 					/>
-					<HeadTags tags={mangaDynamic && mangaDynamic.tags} />
+					<Comments />
 				</div>
-				<Box mt='15px'>
-					<Divider />
-				</Box>
-				<Pages
-					pages={mangaDynamic && mangaDynamic.pages}
-					manga={manga}
-				/>
-				<Divider />
-				<Comments />
 			</div>
 		</>
 	);
