@@ -6,12 +6,21 @@
   padding: 3px;
 }
 
+.page_hidden {
+  display: none;
+}
+
 .content {
   padding: 20px 0;
   height: auto;
+  border-bottom: 1px solid rgba(255, 255, 255, .16);
+  display: flex;
+  flex-direction: column;
+}
+
+.content_wrap {
   display: flex;
   flex-wrap: wrap;
-  border-bottom: 1px solid rgba(255, 255, 255, .16);
 }
 
 html[data-theme="light"] .head,
