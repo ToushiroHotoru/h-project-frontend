@@ -7,6 +7,7 @@ import Pages from "../../components/Manga/Pages.js";
 import HeadTags from "../../components/Manga/HeadTags.js";
 import HeadDesc from "../../components/Manga/HeadDesc.js";
 import HeadImg from "../../components/Manga/HeadImg.js";
+import Head from "next/head";
 
 export async function getStaticProps({ params }) {
 	const { id } = params;
@@ -61,26 +62,31 @@ export default function Manga({ manga, id }) {
 	}, []);
 
 	return (
-		<div className='container'>
-			<div className={css.title}>Manga {manga.title}</div>
-			<Divider />
-			<div className={css.head}>
-				<HeadImg />
-				<HeadDesc
-					mangaDynamic={mangaDynamic}
+		<>
+			<Head>
+				<title>{manga.title}</title>
+			</Head>
+			<div className='container'>
+				<div className={css.title}>Manga {manga.title}</div>
+				<Divider />
+				<div className={css.head}>
+					<HeadImg />
+					<HeadDesc
+						mangaDynamic={mangaDynamic}
+						manga={manga}
+					/>
+					<HeadTags tags={mangaDynamic && mangaDynamic.tags} />
+				</div>
+				<Box mt='15px'>
+					<Divider />
+				</Box>
+				<Pages
+					pages={mangaDynamic && mangaDynamic.pages}
 					manga={manga}
 				/>
-				<HeadTags tags={mangaDynamic && mangaDynamic.tags} />
-			</div>
-			<Box mt='15px'>
 				<Divider />
-			</Box>
-			<Pages
-				pages={mangaDynamic && mangaDynamic.pages}
-				manga={manga}
-			/>
-			<Divider />
-			<Comments />
-		</div>
+				<Comments />
+			</div>
+		</>
 	);
 }
