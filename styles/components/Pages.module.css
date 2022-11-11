@@ -1,11 +1,33 @@
 .page {
   border-radius: 3px;
   overflow: hidden;
+  flex-grow: 1;
+  flex-basis: 16.6%;
+  padding: 3px;
 }
+
+.page_hidden {
+  display: none;
+}
+
+.page_shown {
+  display: block;
+}
+
 .content {
-  margin: 20px 0 0 0;
+  padding: 20px 0;
   height: auto;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, .16);
+  display: flex;
+  flex-direction: column;
+}
+
+.content_wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+html[data-theme="light"] .head,
+.chakra-ui-light .head {
+  border-color: #E2E8F0;
 }
