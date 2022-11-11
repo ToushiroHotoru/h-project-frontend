@@ -9,78 +9,78 @@ import HeadDesc from "../../components/Manga/HeadDesc.js";
 import HeadImg from "../../components/Manga/HeadImg.js";
 
 export async function getStaticProps({ params }) {
-  const { id } = params;
-  // http://localhost:8080/
-  // https://h-project.herokuapp.com/
-  const res = await fetch("https://h-project.herokuapp.com/manga-static", {
-    method: "POST",
-    body: JSON.stringify({ id: id }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await res.json();
-  return {
-    props: { manga: data, id: id }, // will be passed to the page component as props
-  };
+	const { id } = params;
+	// http://localhost:8080/
+	// https://h-project.herokuapp.com/
+	const res = await fetch("https://h-project.herokuapp.com/manga-static", {
+		method: "POST",
+		body: JSON.stringify({ id: id }),
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	const data = await res.json();
+	return {
+		props: { manga: data, id: id }, // will be passed to the page component as props
+	};
 }
 
 export async function getStaticPaths(context) {
-  const data = await getPaths();
-  const paths = data.map((post) => ({
-    params: { id: post._id.toString() },
-  }));
-  return {
-    paths,
-    fallback: false,
-  };
+	const data = await getPaths();
+	const paths = data.map((post) => ({
+		params: { id: post._id.toString() },
+	}));
+	return {
+		paths,
+		fallback: false,
+	};
 }
 
 export default function Manga({ manga, id }) {
-  const [mangaDynamic, setMangaDynamic] = useState();
+	const [mangaDynamic, setMangaDynamic] = useState();
 
-  const onLoadHander = async () => {
-    try {
-      const res = await fetch("https://h-project.herokuapp.com/manga-dynamic", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: id }),
-      });
+	const onLoadHander = async () => {
+		try {
+			const res = await fetch("https://h-project.herokuapp.com/manga-dynamic", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ id: id }),
+			});
 
-      const data = await res.json();
-      setMangaDynamic(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+			const data = await res.json();
+			setMangaDynamic(data);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-  useEffect(() => {
-    onLoadHander();
-  }, []);
+	useEffect(() => {
+		onLoadHander();
+	}, []);
 
-  return (
-    <div className="container">
-      <div className={css.title}>Manga {manga.title}</div>
-      <Divider />
-      <div className={css.head}>
-        <HeadImg />
-        <Center flex="0.1">
-          <Divider orientation="vertical" />
-        </Center>
-        <HeadDesc mangaDynamic={mangaDynamic} manga={manga} />
-        <Center flex="0.1">
-          <Divider orientation="vertical" />
-        </Center>
-        <HeadTags tags={mangaDynamic && mangaDynamic.tags} />
-      </div>
-      <Box mt="15px">
-        <Divider />
-      </Box>
-      <Pages pages={mangaDynamic && mangaDynamic.pages} manga={manga} />
-      <Divider />
-      <Comments />
-    </div>
-  );
+	return (
+		<div className='container'>
+			<div className={css.title}>Manga {manga.title}</div>
+			<Divider />
+			<div className={css.head}>
+				<HeadImg />
+				<HeadDesc
+					mangaDynamic={mangaDynamic}
+					manga={manga}
+				/>
+				<HeadTags tags={mangaDynamic && mangaDynamic.tags} />
+			</div>
+			<Box mt='15px'>
+				<Divider />
+			</Box>
+			<Pages
+				pages={mangaDynamic && mangaDynamic.pages}
+				manga={manga}
+			/>
+			<Divider />
+			<Comments />
+		</div>
+	);
 }
