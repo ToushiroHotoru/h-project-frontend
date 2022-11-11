@@ -56,3 +56,17 @@
   background-color: #fff;
   color: #000;
 }
+
+@media (max-width: 1100px) {
+  .wrap {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 800px) {
+  .wrap {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+}
