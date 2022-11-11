@@ -1,8 +1,21 @@
-.title {
-  margin: 0 0 10px 0;
-}
-
 .head {
   margin: 20px 0 0 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 30px;
+  padding: 16px 0 20px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-left: 0;
+  border-right: 0;
+}
+
+html[data-theme="light"] .head,
+.chakra-ui-light .head {
+  border-color: #E2E8F0;
+}
+
+@media (max-width: 1200px) {
+  .head {
+    gap: 16px;
+  }
 }
