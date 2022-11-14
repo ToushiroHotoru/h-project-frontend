@@ -36,8 +36,8 @@ export default function Mangas() {
   };
 
   const { data, error } = useSWR(
-    // `https://h-project.herokuapp.com/mangas?page=${router.query.page}&sort=${router.query.sort}`,
-    `http://localhost:8080/mangas?page=${router.query.page}&sort=${router.query.sort}`,
+    `https://h-project.herokuapp.com/mangas?page=${router.query.page}&sort=${router.query.sort}`,
+    // `http://localhost:8080/mangas?page=${router.query.page}&sort=${router.query.sort}`,
     fetcher
   );
 
