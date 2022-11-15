@@ -7,7 +7,6 @@ import { useEffect } from "react";
 
 export default function Pagination({ router, total, offset, step }) {
   const create_pagination = () => {
-    console.log(offset, total, router.query.page, router.query.sort);
     let start_page_offset = offset - step * 2;
     let end_page_offset = offset + step * 3;
     let page_offset = start_page_offset;
@@ -45,7 +44,6 @@ export default function Pagination({ router, total, offset, step }) {
         colorScheme="pink"
         disabled={Number(router.query.page) === 0 ? true : false}
         onClick={() => {
-          console.log(router.query.page);
           router.push(
             `/mangas?page=${Number(router.query.page) - 1}&sort=${
               router.query.sort

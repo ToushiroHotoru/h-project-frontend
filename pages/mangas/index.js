@@ -2,7 +2,7 @@ import catalog from "../../styles/pages/Catalog.module.css";
 import useSWR from "swr";
 import MangaTile from "../../components/Mangas/MangaTile";
 import MangaList from "../../components/Mangas/MangaList";
-import Error from "../../components/partials/Error";
+import ErrorWrapper from "../../components/partials/ErrorWrapper";
 import Image from "next/image";
 import Toggler from "../../components/Mangas/Toggler";
 import { useState } from "react";
@@ -10,7 +10,7 @@ import Filter from "../../components/Mangas/Filter";
 import Pagination from "../../components/Mangas/Pagination";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { Skeleton, Flex, Box, HStack } from "@chakra-ui/react";
+import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
 
 export default function Mangas() {
   //   const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -28,7 +28,7 @@ export default function Mangas() {
 
     if (!res.ok) {
       const error = new Error("An error occurred while fetching the data.");
-
+      error.info = await res.json();
       throw error;
     }
 
@@ -43,7 +43,10 @@ export default function Mangas() {
 
   if (error) {
     return (
-      <Error>
+      <ErrorWrapper
+        link="/mangas?page=0&sort=latest"
+        linkTitle="Перейти на существующую страницу"
+      >
         <Image
           src="/manga_cover/cover_error.png"
           layout="intrinsic"
@@ -51,7 +54,10 @@ export default function Mangas() {
           width={723}
           height={693}
         />
-      </Error>
+        <Center color="red" fontSize="24px">
+          Error: {error.info.message}
+        </Center>
+      </ErrorWrapper>
     );
   }
 

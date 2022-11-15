@@ -17,6 +17,8 @@ export default function SideDrawer({
   btnRef,
   readerAltMode,
   setReaderAltMode,
+  quality,
+  setQuality,
 }) {
   return (
     <Drawer
@@ -32,33 +34,64 @@ export default function SideDrawer({
         <DrawerHeader>Settings</DrawerHeader>
 
         <DrawerBody>
-          <Box my="5px" fontSize="18px">
-            Режим чтения:
+          <Box>
+            <Box my="5px" fontSize="18px">
+              Режим чтения:
+            </Box>
+            <Flex w="100%">
+              <Button
+                borderTopRightRadius="0"
+                borderBottomRightRadius="0"
+                flex="1"
+                colorScheme={readerAltMode ? "gray" : "blue"}
+                onClick={() => {
+                  setReaderAltMode();
+                }}
+              >
+                Default MODE
+              </Button>
+              <Button
+                flex="1"
+                borderTopLeftRadius="0"
+                borderBottomLeftRadius="0"
+                colorScheme={readerAltMode ? "blue" : "gray"}
+                onClick={() => {
+                  setReaderAltMode();
+                }}
+              >
+                Alternate MODE
+              </Button>
+            </Flex>
           </Box>
-          <Flex w="100%">
-            <Button
-              borderTopRightRadius="0"
-              borderBottomRightRadius="0"
-              flex="1"
-              colorScheme={readerAltMode ? "gray" : "blue"}
-              onClick={() => {
-                setReaderAltMode();
-              }}
-            >
-              Default MODE
-            </Button>
-            <Button
-              flex="1"
-              borderTopLeftRadius="0"
-              borderBottomLeftRadius="0"
-              colorScheme={readerAltMode ? "blue" : "gray"}
-              onClick={() => {
-                setReaderAltMode();
-              }}
-            >
-              Alternate MODE
-            </Button>
-          </Flex>
+          <Box mt="2em">
+            <Box my="5px" fontSize="18px">
+              Качесто изображений:
+            </Box>
+            <Flex w="100%">
+              <Button
+                borderTopRightRadius="0"
+                borderBottomRightRadius="0"
+                flex="1"
+                colorScheme={quality !== 100 ? "blue" : "gray"}
+                onClick={() => {
+                  setQuality(1);
+                }}
+              >
+                Perfomance MODE
+              </Button>
+              <Button
+                flex="1"
+                borderTopLeftRadius="0"
+                borderBottomLeftRadius="0"
+                colorScheme={quality === 100 ? "blue" : "gray"}
+                onClick={() => {
+                  setQuality(100);
+                }}
+              >
+                Quality MODE
+              </Button>
+            </Flex>
+          </Box>
         </DrawerBody>
 
         <DrawerFooter>

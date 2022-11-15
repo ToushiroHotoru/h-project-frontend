@@ -1,71 +1,30 @@
-import {
-  Button,
-  Box,
-  Input,
-  Flex,
-  HStack,
-  Center,
-  Tooltip,
-  IconButton,
-  ButtonGroup,
-} from "@chakra-ui/react";
+import { Button, Box, HStack, Center, Tooltip } from "@chakra-ui/react";
 import css from "../../styles/pages/Reader.module.css";
 import Image from "next/image";
 import {
-  Editable,
-  EditableInput,
-  EditablePreview,
-  useEditableControls,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
-import {
-  BsGearFill,
-  BsFillPencilFill,
-  BsXSquare,
-  BsCheck,
-} from "react-icons/bs";
+import { BsGearFill } from "react-icons/bs";
 import { useEffect } from "react";
-
-function EditableControls({ onSubmit, page }) {
-  const {
-    isEditing,
-    getSubmitButtonProps,
-    getCancelButtonProps,
-    getEditButtonProps,
-  } = useEditableControls();
-
-  return isEditing ? (
-    <ButtonGroup justifyContent="center" size="sm">
-      <IconButton
-        icon={<BsCheck />}
-        {...getSubmitButtonProps()}
-        onClick={() => {
-          onSubmit(page);
-        }}
-      />
-      <IconButton icon={<BsXSquare />} {...getCancelButtonProps()} />
-    </ButtonGroup>
-  ) : (
-    <Flex justifyContent="center">
-      <IconButton
-        size="sm"
-        variant="outline"
-        colorScheme="teal"
-        aria-label="Call Sage"
-        fontSize="20px"
-        icon={<BsFillPencilFill />}
-        {...getEditButtonProps()}
-      />
-    </Flex>
-  );
-}
+import Link from "next/link";
 
 export default function RederDef({
+  id,
   readerAltMode,
   router,
   mangaPages,
   onOpen,
   btnRef,
   mangaTitle,
+  quality,
 }) {
   useEffect(() => {
     if (!router.isReady) return;
@@ -78,7 +37,7 @@ export default function RederDef({
           <Tooltip hasArrow label="Настройки" placement="left">
             <Box
               ref={btnRef}
-              colorScheme="teal"
+              // colorScheme="teal"
               className={css.gear}
               onClick={onOpen}
             >
@@ -92,7 +51,14 @@ export default function RederDef({
             {mangaPages && (
               <div className={css.test_click_next_parent}>
                 <Image
-                  src={mangaPages[router.query.page - 1]}
+                  placeholder="blur"
+                  blurDataURL="/manga_cover/placeholder.png"
+                  quality={quality}
+                  src={
+                    router.query.page == 0
+                      ? mangaPages[0]
+                      : mangaPages[router.query.page - 1]
+                  }
                   alt="Picture of the author"
                   width={700}
                   height={1000}
@@ -154,26 +120,15 @@ export default function RederDef({
             >
               Prev
             </Button>
-            <Editable
-              defaultValue={router.query.page}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <EditablePreview mr="10px" />
-              {/* <EditableInput
-                onChange={(e) => {
-                  if (
-                    Number(router.query.page) >= 1 &&
-                    mangaPages &&
-                    mangaPages.length >= Number(router.query.page)
-                  ) {
+            <FormControl w="100px">
+              <NumberInput
+                value={router.isReady && Number(router.query.page)}
+                max={mangaPages?.length}
+                min={1}
+                onChange={(value) => {
+                  if (value <= mangaPages?.length) {
                     router.push(
-                      `/reader?id=${router.query.id}&page=${
-                        e.target.value != "" && e.target.value != 0
-                          ? Number(e.target.value)
-                          : 1
-                      }`,
+                      `/reader?id=${router.query.id}&page=${Number(value)}`,
                       undefined,
                       {
                         shallow: true,
@@ -181,22 +136,14 @@ export default function RederDef({
                     );
                   }
                 }}
-              /> */}
-              <Input as={EditableInput} />
-              <EditableControls
-                page={router.query.page}
-                onSubmit={(page) => {
-                  router.push(
-                    `/reader?id=${router.query.id}&page=${Number(page)}`,
-                    undefined,
-                    {
-                      shallow: true,
-                    }
-                  );
-                }}
-              />
-            </Editable>
-
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
             <Button
               isDisabled={
                 mangaPages && mangaPages.length <= Number(router.query.page)
@@ -218,6 +165,9 @@ export default function RederDef({
               Next
             </Button>
           </HStack>
+          <Link href={`/mangas/${id}`}>
+            <Button mt="1em">Вернуться на страницу</Button>
+          </Link>
         </Center>
       )}
     </>

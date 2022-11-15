@@ -8,6 +8,7 @@ import ReaderDef from "../components/Reader/ReaderDef";
 export default function Reader() {
   const [mangaPages, setMangaPages] = useState();
   const [mangaTitle, setMangaTitle] = useState();
+  const [quality, setQuality] = useState(1);
   const [readerAltMode, setReaderAltMode] = useState(false);
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -15,7 +16,6 @@ export default function Reader() {
 
   const onLoadHander = async () => {
     try {
-      console.log(router.query.id);
       const res = await fetch("https://h-project.herokuapp.com/manga-dynamic", {
         method: "POST",
         headers: {
@@ -40,6 +40,8 @@ export default function Reader() {
   return (
     <>
       <ReaderDef
+        id={router.query.id}
+        quality={quality}
         mangaTitle={mangaTitle}
         readerAltMode={readerAltMode}
         router={router}
@@ -49,6 +51,7 @@ export default function Reader() {
       />
 
       <ReaderAlt
+        quality={quality}
         mangaTitle={mangaTitle}
         id={router.query.id}
         readerAltMode={readerAltMode}
@@ -58,12 +61,16 @@ export default function Reader() {
       />
 
       <SideDrawer
+        quality={quality}
         readerAltMode={readerAltMode}
         isOpen={isOpen}
         onClose={onClose}
         btnRef={btnRef}
         setReaderAltMode={() => {
           setReaderAltMode(!readerAltMode);
+        }}
+        setQuality={(val) => {
+          setQuality(val);
         }}
       />
     </>
