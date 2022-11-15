@@ -15,20 +15,7 @@
   gap: 30px;
 }
 
-.error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  margin: auto;
-}
 
-.error_img_box {
-  position: relative;
-  margin: auto;
-  pointer-events: none;
-  user-select: none;
-}
 
 .toggler {
   display: flex;
