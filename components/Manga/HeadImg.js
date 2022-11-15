@@ -14,13 +14,15 @@ export default function HeadImg({ img, id }) {
   return (
     <div className={css.head_img}>
       <Box borderRadius="8px" overflow="hidden">
-        <Image
-          src={img}
-          alt="Picture of the author"
-          layout="responsive"
-          width={350}
-          height={500}
-        />
+        {img && (
+          <Image
+            src={img}
+            alt="Picture of the author"
+            layout="responsive"
+            width={350}
+            height={500}
+          />
+        )}
       </Box>
       <Link href={`/reader?id=${id}&page=1`}>
         <Button w="100%" mt="15px" colorScheme="orange">
