@@ -9,6 +9,7 @@ export default function ReaderAlt({
   btnRef,
   onOpen,
   mangaTitle,
+  quality,
 }) {
   return (
     <>
@@ -35,6 +36,7 @@ export default function ReaderAlt({
                   <Box key={i + 1}>
                     <Image
                       src={item}
+                      quality={quality}
                       alt="Picture of the author"
                       width={700}
                       height={1000}
