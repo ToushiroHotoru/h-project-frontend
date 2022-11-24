@@ -19,6 +19,8 @@ export default function SideDrawer({
   setReaderAltMode,
   quality,
   setQuality,
+  showMap,
+  setShowMap,
 }) {
   return (
     <Drawer
@@ -72,12 +74,22 @@ export default function SideDrawer({
                 borderTopRightRadius="0"
                 borderBottomRightRadius="0"
                 flex="1"
-                colorScheme={quality !== 100 ? "blue" : "gray"}
+                colorScheme={quality === 1 ? "blue" : "gray"}
                 onClick={() => {
                   setQuality(1);
                 }}
               >
                 Perfomance MODE
+              </Button>
+              <Button
+                flex="1"
+                borderRadius="0"
+                colorScheme={quality === 50 ? "blue" : "gray"}
+                onClick={() => {
+                  setQuality(50);
+                }}
+              >
+                Balanced MODE
               </Button>
               <Button
                 flex="1"
@@ -89,6 +101,35 @@ export default function SideDrawer({
                 }}
               >
                 Quality MODE
+              </Button>
+            </Flex>
+          </Box>
+          <Box>
+            <Box mt="2em" fontSize="18px">
+              Map(Хех пока для вида):
+            </Box>
+            <Flex w="100%">
+              <Button
+                borderTopRightRadius="0"
+                borderBottomRightRadius="0"
+                flex="1"
+                colorScheme={showMap ? "gray" : "blue"}
+                onClick={() => {
+                  setShowMap(false);
+                }}
+              >
+                OFF
+              </Button>
+              <Button
+                flex="1"
+                borderTopLeftRadius="0"
+                borderBottomLeftRadius="0"
+                colorScheme={showMap ? "blue" : "gray"}
+                onClick={() => {
+                  setShowMap(true);
+                }}
+              >
+                ON
               </Button>
             </Flex>
           </Box>

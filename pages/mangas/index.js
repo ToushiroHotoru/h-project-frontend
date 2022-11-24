@@ -44,7 +44,7 @@ export default function Mangas() {
   if (error) {
     return (
       <ErrorWrapper
-        link="/mangas?page=0&sort=latest"
+        link="/mangas?page=1&sort=latest"
         linkTitle="Перейти на существующую страницу"
       >
         <Image

@@ -20,7 +20,7 @@ export default function Header() {
           </A>
 
           <nav className={nav.nav}>
-            <A href="/mangas?page=0&sort=latest">
+            <A href="/mangas?page=1&sort=latest">
               <a className={`link ${nav.link}`}>Каталог</a>
             </A>
           </nav>

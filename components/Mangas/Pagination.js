@@ -12,13 +12,16 @@ export default function Pagination({ router, total, offset, step }) {
     let page_offset = start_page_offset;
     let page_offsets = new Array();
 
+    console.log(start_page_offset);
+
     if (offset >= total || offset + step >= total) {
       end_page_offset = offset + step;
     } else if (offset + step * 2 >= total) {
       end_page_offset = offset + step * 2;
     }
-    while (page_offset < end_page_offset) {
-      if (page_offset >= 0) {
+
+    while (page_offset <= end_page_offset) {
+      if (page_offset > 0) {
         page_offsets.push(page_offset);
       }
       page_offset += step;
@@ -42,7 +45,7 @@ export default function Pagination({ router, total, offset, step }) {
       <Button
         mx="2"
         colorScheme="pink"
-        disabled={Number(router.query.page) === 0 ? true : false}
+        disabled={Number(router.query.page) - 1 === 0 ? true : false}
         onClick={() => {
           router.push(
             `/mangas?page=${Number(router.query.page) - 1}&sort=${
@@ -73,7 +76,7 @@ export default function Pagination({ router, total, offset, step }) {
               );
             }}
           >
-            {item + 1}
+            {item}
           </Button>
         );
       })}
