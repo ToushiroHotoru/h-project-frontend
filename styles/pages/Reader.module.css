@@ -40,3 +40,7 @@
 .test_click_next_parent {
   position: relative;
 }
+
+.to_the_top_btn {
+  transition: all 1s ease-in;
+}
