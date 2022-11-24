@@ -106,7 +106,7 @@ export default function SideDrawer({
           </Box>
           <Box>
             <Box mt="2em" fontSize="18px">
-              Map(Хех пока для вида):
+              Map(Теперь работает):
             </Box>
             <Flex w="100%">
               <Button

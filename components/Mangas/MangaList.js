@@ -65,7 +65,7 @@ export default function MangaList({ data }) {
                 <Tag
                   key={i + 1}
                   variant="solid"
-                  colorScheme="dark"
+                  // colorScheme="teal"
                   margin="0 3px 3px 0"
                 >
                   {tag}
