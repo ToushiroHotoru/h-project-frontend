@@ -48,12 +48,8 @@ export default function RederDef({
               {mangaPages &&
                 mangaPages.map((item, i) => {
                   return (
-                    <Link href={`/reader?id=${id}&page=${i + 1}`}>
-                      <Flex
-                        key={i + 1}
-                        flexDirection="column"
-                        alignItems="center"
-                      >
+                    <Link href={`/reader?id=${id}&page=${i + 1}`} key={i + 1}>
+                      <Flex flexDirection="column" alignItems="center">
                         <Image
                           src={item}
                           quality="1"
