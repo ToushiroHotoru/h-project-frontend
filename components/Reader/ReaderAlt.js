@@ -53,12 +53,8 @@ export default function ReaderAlt({
               {mangaPages &&
                 mangaPages.map((item, i) => {
                   return (
-                    <a href={`#${item}`}>
-                      <Flex
-                        key={i + 1}
-                        flexDirection="column"
-                        alignItems="center"
-                      >
+                    <a href={`#${item}`} key={i + 1}>
+                      <Flex flexDirection="column" alignItems="center">
                         <Image
                           src={item}
                           quality="1"
