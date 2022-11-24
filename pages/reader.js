@@ -8,7 +8,8 @@ import ReaderDef from "../components/Reader/ReaderDef";
 export default function Reader() {
   const [mangaPages, setMangaPages] = useState();
   const [mangaTitle, setMangaTitle] = useState();
-  const [quality, setQuality] = useState(1);
+  const [quality, setQuality] = useState(50);
+  const [showMap, setShowMap] = useState(false);
   const [readerAltMode, setReaderAltMode] = useState(false);
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -51,6 +52,7 @@ export default function Reader() {
       />
 
       <ReaderAlt
+        showMap={showMap}
         quality={quality}
         mangaTitle={mangaTitle}
         id={router.query.id}
@@ -61,6 +63,7 @@ export default function Reader() {
       />
 
       <SideDrawer
+        showMap={showMap}
         quality={quality}
         readerAltMode={readerAltMode}
         isOpen={isOpen}
@@ -71,6 +74,9 @@ export default function Reader() {
         }}
         setQuality={(val) => {
           setQuality(val);
+        }}
+        setShowMap={(val) => {
+          setShowMap(val);
         }}
       />
     </>
