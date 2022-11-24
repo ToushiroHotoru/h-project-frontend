@@ -41,6 +41,7 @@ export default function Reader() {
   return (
     <>
       <ReaderDef
+        showMap={showMap}
         id={router.query.id}
         quality={quality}
         mangaTitle={mangaTitle}
