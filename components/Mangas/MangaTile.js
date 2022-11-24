@@ -11,6 +11,14 @@ export default function MangaTile({ props }) {
     // событие после загрузки изображения
   };
 
+  // const cutLongTitle = (title) => {
+  //   if (title.length > 88) {
+  //     console.log(title.slice(0, 85));
+  //     return title.slice(0, 100);
+  //   }
+  //   return title;
+  // };
+
   return (
     <Link href={`/mangas/${props._id}`}>
       <a
@@ -29,7 +37,7 @@ export default function MangaTile({ props }) {
           height={700}
         />
 
-        <Box mt="4">
+        <Box mt="4" maxHeight="50px" overflowY="hidden" height="50px">
           <div className={css.manga_tile_title}>{props.title}</div>
         </Box>
       </a>
