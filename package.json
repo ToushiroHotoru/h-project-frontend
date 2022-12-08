@@ -3,9 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "cross-env NODE_ENV=production next dev",
-		"build": "cross-env NODE_ENV=production next build",
-		"local": "cross-env NODE_ENV=development next dev",
+		"dev": "next dev",
+		"build": "next build",
 		"start": "next start",
 		"lint": "next lint"
 	},
@@ -23,7 +22,6 @@
 		"swr": "^1.3.0"
 	},
 	"devDependencies": {
-		"cross-env": "^7.0.3",
 		"eslint": "8.25.0",
 		"eslint-config-next": "12.3.1"
 	}
