@@ -2,6 +2,7 @@ import Image from "next/image";
 import header from "../styles/partials/Header.module.css";
 import nav from "../styles/partials/Navigation.module.css";
 import A from "./partials/A";
+import AuthModal from "./Auth/AuthModal";
 
 export default function Header() {
   return (
@@ -23,6 +24,11 @@ export default function Header() {
             <A href="/mangas?page=1&sort=latest">
               <a className={`link ${nav.link}`}>Каталог</a>
             </A>
+          </nav>
+          <nav className={nav.nav}>
+            <div className={`link ${nav.link}`}>
+              <AuthModal />
+            </div>
           </nav>
         </div>
       </div>
