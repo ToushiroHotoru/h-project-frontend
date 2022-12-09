@@ -12,17 +12,17 @@ export default function AuthForm({ stage, setStage }) {
       <div>
         <FormControl>
           <FormLabel>Email address</FormLabel>
-          <Input type="email" />
+          <Input type="email" bg="#fff" color="#000" />
           <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </FormControl>
         <FormControl>
           <FormLabel>Username</FormLabel>
-          <Input type="email" />
+          <Input type="text" bg="#fff" color="#000" />
           <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </FormControl>
         <FormControl>
           <FormLabel>Password</FormLabel>
-          <Input type="email" />
+          <Input type="password" bg="#fff" color="#000" />
           <FormErrorMessage>We'll never share your email.</FormErrorMessage>
         </FormControl>
       </div>

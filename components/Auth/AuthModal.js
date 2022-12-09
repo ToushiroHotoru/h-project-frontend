@@ -26,8 +26,9 @@ export default function AuthModal() {
       Modal: {
         baseStyle: (props) => ({
           dialog: {
-            maxWidth: ["95%", "95%", "95%"],
-            minWidth: "95%",
+            // maxWidth: ["95%", "95%", "95%"],
+            // minWidth: "45%",
+            minWidth: "55%",
             bg: "#1A202C",
           },
         }),
@@ -67,9 +68,20 @@ export default function AuthModal() {
             <ModalHeader>Modal Title</ModalHeader>
             <ModalCloseButton />
             <ModalBody>{i_dunno_how_to_name_this(stage)}</ModalBody>
-            <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
+            <ModalFooter display="flex" justifyContent="center">
+              {/* <Button colorScheme="blue" mr={3} onClick={onClose}>
                 Close
+              </Button> */}
+              <Button
+                mr="1em"
+                disabled={stage <= 1}
+                onClick={() => {
+                  setStage((prev) => {
+                    return prev - 1;
+                  });
+                }}
+              >
+                back
               </Button>
               <Button
                 disabled={stage >= 4}
@@ -79,7 +91,7 @@ export default function AuthModal() {
                   });
                 }}
               >
-                Secondary Action
+                next
               </Button>
             </ModalFooter>
           </ModalContent>
