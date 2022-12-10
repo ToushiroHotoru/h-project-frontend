@@ -3,8 +3,17 @@ import Image from "next/image";
 import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import { useState, useEffect } from "react";
 
-export default function Tag({ name, img, func }) {
-  const [isClicked, setIsClicked] = useState(false);
+export default function AuthTag({ name, img, func, favorites }) {
+  const [isClicked, setIsClicked] = useState();
+
+  useEffect(() => {
+    if (favorites.includes(name)) {
+      setIsClicked(true);
+    } else {
+      setIsClicked(false);
+    }
+  }, [favorites]);
+
   return (
     <Box
       className={

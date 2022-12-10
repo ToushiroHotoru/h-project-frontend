@@ -28,7 +28,7 @@ export default function AuthModal() {
           dialog: {
             // maxWidth: ["95%", "95%", "95%"],
             // minWidth: "45%",
-            minWidth: "55%",
+            minWidth: "600px",
             bg: "#1A202C",
           },
         }),
@@ -65,7 +65,7 @@ export default function AuthModal() {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
+            <ModalHeader></ModalHeader>
             <ModalCloseButton />
             <ModalBody>{i_dunno_how_to_name_this(stage)}</ModalBody>
             <ModalFooter display="flex" justifyContent="center">
