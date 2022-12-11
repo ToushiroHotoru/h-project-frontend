@@ -3,7 +3,7 @@ import Image from "next/image";
 import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import { useState, useEffect } from "react";
 
-export default function AuthTag({ name, img, func, favorites }) {
+export default function AuthTag({ name, img, func, favorites, isFavorites }) {
   const [isClicked, setIsClicked] = useState();
 
   useEffect(() => {
@@ -17,7 +17,11 @@ export default function AuthTag({ name, img, func, favorites }) {
   return (
     <Box
       className={
-        isClicked ? AuthFavoritesCSS.itemClicked : AuthFavoritesCSS.item
+        isClicked
+          ? isFavorites
+            ? AuthFavoritesCSS.item_clicked
+            : AuthFavoritesCSS.unloved_item_clicked
+          : AuthFavoritesCSS.item
       }
       onClick={() => {
         func(name);
@@ -34,7 +38,11 @@ export default function AuthTag({ name, img, func, favorites }) {
       />
       <Box
         className={
-          isClicked ? AuthFavoritesCSS.tagNameClicked : AuthFavoritesCSS.tagName
+          isClicked
+            ? isFavorites
+              ? AuthFavoritesCSS.tag_name_clicked
+              : AuthFavoritesCSS.unloved_tag_name_clicked
+            : AuthFavoritesCSS.tag_name
         }
       >
         {name}

@@ -37,7 +37,6 @@ export default function AuthModal() {
   });
 
   const i_dunno_how_to_name_this = (value) => {
-    console.log(value);
     switch (value) {
       case 1:
         return <AuthForm stage={stage} />;
@@ -49,6 +48,36 @@ export default function AuthModal() {
         return <AuthEnd stage={stage} />;
       default:
         return <AuthForm stage={stage} />;
+    }
+  };
+
+  const btn_color_i_guess = (value) => {
+    switch (value) {
+      case 1:
+        return "#F143E0";
+      case 2:
+        return "#47F143";
+      case 3:
+        return "#F14343";
+      case 4:
+        return "#43F1DC";
+      default:
+        return "#F143E0";
+    }
+  };
+
+  const btn_hover_i_guess = (value) => {
+    switch (value) {
+      case 1:
+        return "#CE39BF";
+      case 2:
+        return "#3FD23C";
+      case 3:
+        return "#D03939";
+      case 4:
+        return "#3DD7C4";
+      default:
+        return "#CE39BF";
     }
   };
 
@@ -85,6 +114,8 @@ export default function AuthModal() {
               </Button>
               <Button
                 disabled={stage >= 4}
+                bg={btn_color_i_guess(stage)}
+                _hover={{ bg: btn_hover_i_guess(stage) }}
                 onClick={() => {
                   setStage((prev) => {
                     return prev + 1;

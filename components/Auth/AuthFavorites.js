@@ -102,6 +102,7 @@ export default function AuthFavorites({ stage, setStage }) {
               img={item.img}
               func={add_favorites}
               favorites={favorites}
+              isFavorites={true}
             />
           );
         })}
