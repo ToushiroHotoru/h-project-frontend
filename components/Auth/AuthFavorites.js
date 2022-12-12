@@ -1,19 +1,19 @@
-import { Input, Flex, Box, Center } from "@chakra-ui/react";
-import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
-import { useState, useEffect } from "react";
 import AuthTag from "./AuthTag";
+import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import {
+  Input,
+  Box,
+  Center,
   Tag,
   TagLabel,
-  TagLeftIcon,
-  TagRightIcon,
   TagCloseButton,
 } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
-export default function AuthFavorites({ stage, setStage }) {
-  const [favorites, setFavorites] = useState([]);
-  const [filterToggler, setFilterToggler] = useState();
-
+export default function AuthFavorites({ func }) {
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [sortFlag, setSortFlag] = useState();
+  const [sortedTags, setSortedTags] = useState([]);
   const [tags, setTags] = useState([
     { name: "Alan", img: "/tristana.png" },
     { name: "Alice", img: "/tristana.png" },
@@ -36,87 +36,75 @@ export default function AuthFavorites({ stage, setStage }) {
     { name: "Kenny", img: "/tristana.png" },
     { name: "Kiana", img: "/tristana.png" },
   ]);
-  const [filteredTags, setFilteredTags] = useState([]);
 
-  const add_favorites = (id) => {
-    const prev_favorites = [...favorites];
-    if (prev_favorites.includes(id)) {
-      prev_favorites.splice(prev_favorites.indexOf(id), 1);
+  const selectTagFunc = (id) => {
+    const prevSelectedTags = [...selectedTags];
+    if (prevSelectedTags.includes(id)) {
+      prevSelectedTags.splice(prevSelectedTags.indexOf(id), 1);
     } else {
-      prev_favorites.push(id);
+      prevSelectedTags.push(id);
     }
-    setFavorites(prev_favorites);
+    setSelectedTags(prevSelectedTags);
   };
 
-  const filter_by_query = (query) => {
-    console.log(query);
-    const prev_tags = [...tags];
-    const filtered_tags = prev_tags.filter((item) => {
+  // сортировка тегов по запросу
+  const sortByQuery = (query) => {
+    const prevTags = [...tags];
+    const filteredTags = prevTags.filter((item) => {
       return item["name"].includes(query);
     });
 
-    filtered_tags.forEach((item) => {
-      prev_tags.splice(1, prev_tags.indexOf(item));
+    filteredTags.forEach((item) => {
+      prevTags.splice(1, prevTags.indexOf(item));
     });
 
-    const new_tags = [...filtered_tags, ...prev_tags];
-
-    console.log(new_tags);
-    setFilteredTags(new_tags);
+    const newTags = [...filteredTags, ...prevTags];
+    setSortedTags(newTags);
   };
 
-  const toggle_filter = () => {
-    if (filterToggler) {
-      return filteredTags;
+  const toggleSort = () => {
+    if (sortFlag) {
+      return sortedTags;
     } else {
       return tags;
     }
   };
 
+  useEffect(() => {
+    func(selectedTags);
+  }, [selectedTags]);
+
   return (
     <Center flexDirection="column">
       <Input
         type="text"
-        bg="#fff"
-        color="#000"
         width="445px"
+        color="#000"
+        bg="#fff"
         borderRadius="0"
         placeholder="Tag name..."
         _placeholder={{ color: "#000" }}
-        className={AuthFavoritesCSS.input}
         onChange={(e) => {
-          if (e.target.value.length !== 0) {
-            setFilterToggler(true);
-          } else {
-            setFilterToggler(false);
-          }
-          filter_by_query(e.target.value);
+          setSortFlag(e.target.value.length !== 0 ? true : false);
+          sortByQuery(e.target.value);
         }}
       />
       <div className={AuthFavoritesCSS.tags}>
-        {toggle_filter().map((item, i) => {
+        {toggleSort().map((item, i) => {
           return (
             <AuthTag
               key={i + 1}
-              name={item.name}
-              img={item.img}
-              func={add_favorites}
-              favorites={favorites}
-              isFavorites={true}
+              data={item}
+              selectTagFunc={selectTagFunc}
+              selectedTags={selectedTags}
+              type={"favs"}
             />
           );
         })}
       </div>
-      {favorites.length != 0 && (
-        <Box
-          display="flex"
-          maxWidth="445px"
-          height="60px"
-          alignItems="center"
-          overflowX="scroll"
-          mt="10px"
-        >
-          {favorites.map((item, i) => {
+      {selectedTags.length != 0 && (
+        <Box className={AuthFavoritesCSS.subTags}>
+          {selectedTags.map((item, i) => {
             return (
               <Tag
                 size="md"
@@ -131,7 +119,7 @@ export default function AuthFavorites({ stage, setStage }) {
                 <TagCloseButton
                   ml="auto"
                   onClick={() => {
-                    add_favorites(item);
+                    selectTagFunc(item);
                   }}
                 />
               </Tag>

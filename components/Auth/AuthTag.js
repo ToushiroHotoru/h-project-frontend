@@ -1,35 +1,31 @@
-import { Input, Flex, Box, Center } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import { useState, useEffect } from "react";
 
-export default function AuthTag({ name, img, func, favorites, isFavorites }) {
+export default function AuthTag({ data, selectTagFunc, selectedTags, type }) {
   const [isClicked, setIsClicked] = useState();
 
   useEffect(() => {
-    if (favorites.includes(name)) {
-      setIsClicked(true);
-    } else {
-      setIsClicked(false);
-    }
-  }, [favorites]);
+    setIsClicked(selectedTags.includes(data["name"]) ? true : false);
+  }, [selectedTags]);
 
   return (
     <Box
       className={
         isClicked
-          ? isFavorites
+          ? type === "favs"
             ? AuthFavoritesCSS.item_clicked
             : AuthFavoritesCSS.unloved_item_clicked
           : AuthFavoritesCSS.item
       }
       onClick={() => {
-        func(name);
+        selectTagFunc(data["name"]);
         setIsClicked(!isClicked);
       }}
     >
       <Image
-        src={img}
+        src={data["img"]}
         alt="Picture of the author"
         width={100}
         height={90}
@@ -39,13 +35,13 @@ export default function AuthTag({ name, img, func, favorites, isFavorites }) {
       <Box
         className={
           isClicked
-            ? isFavorites
+            ? type === "favs"
               ? AuthFavoritesCSS.tag_name_clicked
               : AuthFavoritesCSS.unloved_tag_name_clicked
             : AuthFavoritesCSS.tag_name
         }
       >
-        {name}
+        {data["name"]}
       </Box>
     </Box>
   );
