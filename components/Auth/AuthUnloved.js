@@ -8,6 +8,7 @@ import {
   Button,
   ModalFooter,
   ModalBody,
+  Divider,
   Tag,
   TagLabel,
   TagCloseButton,
@@ -96,6 +97,7 @@ export default function AuthFavorites({ stage, setStage }) {
               sortByQuery(e.target.value);
             }}
           />
+          <Divider mt="20px" width="445px" bg="#f14343" height="2px" />
           <div className={AuthFavoritesCSS.tags}>
             {toggleSort().map((item, i) => {
               return (

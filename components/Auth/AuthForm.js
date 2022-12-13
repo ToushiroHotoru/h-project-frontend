@@ -38,31 +38,30 @@ export default function AuthForm({ stage, setStage }) {
     const passwordRegex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
 
     if (!mailRegex.test(email)) {
-      errors["emailError"] = "Поле email не должно быть пустым!";
+      errors["emailError"] = "Поле email не не заполнено!";
       console.log(!mailRegex.test(email));
       if (!email) {
-        errors["emailError"] = "Поле email заполнено не правильно!";
+        errors["emailError"] = "Не корректный email";
         errors["status"] = true;
       }
       errors["status"] = true;
     }
 
     if (!usernameRegex.test(username)) {
-      errors["usernameError"] = "Поле username заполнено неверно!";
+      errors["usernameError"] = "Латиница, не менее 3х символов.";
       console.log(!usernameRegex.test(username));
       if (!username) {
-        errors["usernameError"] = "Поле username не должно быть пустым!";
+        errors["usernameError"] = "Поле username не заполнено!";
         errors["status"] = true;
       }
       errors["status"] = true;
     }
 
     if (!passwordRegex.test(password)) {
-      errors["passwordError"] =
-        "Поле password должен быть на английском, минимум 8 символов и 1 цифра!";
+      errors["passwordError"] = "Латиница, не менее 8и символов, 1 цифра";
       console.log(!passwordRegex.test(password));
       if (!password) {
-        errors["passwordError"] = "Поле password не должно быть пустым!";
+        errors["passwordError"] = "Поле password не заполнено!";
         errors["status"] = true;
       }
       errors["status"] = true;
@@ -150,12 +149,12 @@ export default function AuthForm({ stage, setStage }) {
           bg="#F143E0"
           _hover={{ bg: "#CE39BF" }}
           onClick={() => {
-            if (!validationFunc(email, username, password).status) {
-              setStage(2);
-            } else {
-              setShowErrors(true);
-              console.log("ошибка вообще то");
-            }
+            // if (!validationFunc(email, username, password).status) {
+            setStage(2);
+            // } else {
+            //   setShowErrors(true);
+            //   console.log("ошибка вообще то");
+            // }
           }}
         >
           next

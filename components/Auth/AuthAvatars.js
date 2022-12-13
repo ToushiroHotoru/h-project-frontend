@@ -14,7 +14,7 @@ import {
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useState, useEffect, useContext } from "react";
 
-export default function AuthEnd({ stage, setStage, onCloseFunc }) {
+export default function AuthAvatars({ stage, setStage, onCloseFunc }) {
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
   const [avatarsOffset, setAvatarsOffset] = useState(1);

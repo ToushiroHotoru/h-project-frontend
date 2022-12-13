@@ -9,6 +9,7 @@ import {
   ModalFooter,
   ModalBody,
   Tag,
+  Divider,
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
@@ -93,6 +94,7 @@ export default function AuthFavorites({ stage, setStage }) {
               sortByQuery(e.target.value);
             }}
           />
+          <Divider mt="20px" width="445px" bg="#47f143" height="2px" />
           <div className={AuthFavoritesCSS.tags}>
             {toggleSort().map((item, i) => {
               return (
