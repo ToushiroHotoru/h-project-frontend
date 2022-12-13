@@ -149,12 +149,12 @@ export default function AuthForm({ stage, setStage }) {
           bg="#F143E0"
           _hover={{ bg: "#CE39BF" }}
           onClick={() => {
-            // if (!validationFunc(email, username, password).status) {
-            setStage(2);
-            // } else {
-            //   setShowErrors(true);
-            //   console.log("ошибка вообще то");
-            // }
+            if (!validationFunc(email, username, password).status) {
+              setStage(2);
+            } else {
+              setShowErrors(true);
+              console.log("ошибка вообще то");
+            }
           }}
         >
           next
