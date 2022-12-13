@@ -1,25 +1,40 @@
+import AuthForm from "./AuthForm";
+import AuthFavorites from "./AuthFavorites";
+import AuthUnloved from "./AuthUnloved";
+import AuthAvatars from "./AuthAvatars";
+import { AuthContext } from "./AuthContext";
+import Image from "next/image";
 import {
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
   Button,
+  Box,
+  Tooltip,
   extendTheme,
 } from "@chakra-ui/react";
-
-import AuthForm from "./AuthForm";
-import AuthFavorites from "./AuthFavorites";
-import AuthUnloved from "./AuthUnloved";
-import AuthEnd from "./AuthEnd";
 import { useState, useEffect } from "react";
 
 export default function AuthModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [stage, setStage] = useState(1);
+  const [usernameContext, setUsernameContext] = useState();
+  const [favorites, setFavorites] = useState();
+  const [maskots, setMaskots] = useState([
+    "/maskot.png",
+    "/maskot2.png",
+    "/maskot2.png",
+    "/maskot4.png",
+  ]);
+  const speeches = [
+    "Fuck u)",
+    "I like cookies)",
+    "My fav color is orange)",
+    "Welcome)",
+  ];
 
   const theme = extendTheme({
     components: {
@@ -28,7 +43,7 @@ export default function AuthModal() {
           dialog: {
             // maxWidth: ["95%", "95%", "95%"],
             // minWidth: "45%",
-            minWidth: "55%",
+            minWidth: "600px",
             bg: "#1A202C",
           },
         }),
@@ -37,25 +52,59 @@ export default function AuthModal() {
   });
 
   const i_dunno_how_to_name_this = (value) => {
-    console.log(value);
     switch (value) {
       case 1:
-        return <AuthForm stage={stage} />;
+        return (
+          <AuthForm
+            stage={stage}
+            setStage={(val) => {
+              setStage(val);
+            }}
+          />
+        );
       case 2:
-        return <AuthFavorites stage={stage} />;
+        return (
+          <AuthFavorites
+            stage={stage}
+            setStage={(val) => {
+              setStage(val);
+            }}
+          />
+        );
       case 3:
-        return <AuthUnloved stage={stage} />;
+        return (
+          <AuthUnloved
+            stage={stage}
+            setStage={(val) => {
+              setStage(val);
+            }}
+          />
+        );
       case 4:
-        return <AuthEnd stage={stage} />;
-      default:
-        return <AuthForm stage={stage} />;
+        return (
+          <AuthAvatars
+            stage={stage}
+            setStage={(val) => {
+              setStage(val);
+            }}
+            onCloseFunc={() => {
+              onClose();
+            }}
+          />
+        );
     }
   };
 
+  useEffect(() => {
+    setStage(1);
+  }, []);
+
   return (
-    <div>
-      <>
-        <Button onClick={onOpen}>Open Modal</Button>
+    <>
+      <AuthContext.Provider
+        value={{ usernameContext, setUsernameContext, favorites, setFavorites }}
+      >
+        <Button onClick={onOpen}>Регистрация</Button>
         <Modal
           isCentered
           onClose={onClose}
@@ -64,39 +113,40 @@ export default function AuthModal() {
           theme={theme}
         >
           <ModalOverlay />
+
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
+            <Tooltip
+              label={speeches[stage - 1]}
+              hasArrow
+              bg="#fff"
+              placement="left"
+              isOpen
+              padding="30px"
+              borderRadius="40px"
+            >
+              <Box
+                position="absolute"
+                overflow="hidden"
+                height="300px"
+                top="-300"
+                left="120"
+                zIndex="-105"
+              >
+                <Image
+                  src={maskots[stage - 1]}
+                  alt="Picture of the author"
+                  width={400}
+                  height={400}
+                  draggable="false"
+                ></Image>
+              </Box>
+            </Tooltip>
+            <ModalHeader></ModalHeader>
             <ModalCloseButton />
-            <ModalBody>{i_dunno_how_to_name_this(stage)}</ModalBody>
-            <ModalFooter display="flex" justifyContent="center">
-              {/* <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
-              </Button> */}
-              <Button
-                mr="1em"
-                disabled={stage <= 1}
-                onClick={() => {
-                  setStage((prev) => {
-                    return prev - 1;
-                  });
-                }}
-              >
-                back
-              </Button>
-              <Button
-                disabled={stage >= 4}
-                onClick={() => {
-                  setStage((prev) => {
-                    return prev + 1;
-                  });
-                }}
-              >
-                next
-              </Button>
-            </ModalFooter>
+            {i_dunno_how_to_name_this(stage)}
           </ModalContent>
         </Modal>
-      </>
-    </div>
+      </AuthContext.Provider>
+    </>
   );
 }
