@@ -3,7 +3,13 @@ import Image from "next/image";
 import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import { useState, useEffect } from "react";
 
-export default function AuthTag({ data, selectTagFunc, selectedTags, type }) {
+export default function AuthTag({
+  data,
+  selectTagFunc,
+  selectedTags,
+  type,
+  isFavorited,
+}) {
   const [isClicked, setIsClicked] = useState();
 
   useEffect(() => {
@@ -17,11 +23,15 @@ export default function AuthTag({ data, selectTagFunc, selectedTags, type }) {
           ? type === "favs"
             ? AuthFavoritesCSS.item_clicked
             : AuthFavoritesCSS.unloved_item_clicked
+          : isFavorited
+          ? AuthFavoritesCSS.item_is_favorited
           : AuthFavoritesCSS.item
       }
       onClick={() => {
-        selectTagFunc(data["name"]);
-        setIsClicked(!isClicked);
+        if (!isFavorited) {
+          selectTagFunc(data["name"]);
+          setIsClicked(!isClicked);
+        }
       }}
     >
       <Image

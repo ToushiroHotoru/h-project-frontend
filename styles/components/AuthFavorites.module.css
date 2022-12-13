@@ -4,7 +4,7 @@
   width: 100px;
   height: 90px;
   overflow: hidden;
-  filter: saturate(0);
+  /* filter: saturate(0); */
 }
 
 .item_clicked {
@@ -14,6 +14,15 @@
   height: 90px;
   overflow: hidden;
   border: 2px solid #47f143;
+}
+
+.item_is_favorited {
+  position: relative;
+  border-radius: 8px;
+  width: 100px;
+  height: 90px;
+  overflow: hidden;
+  filter: saturate(0);
 }
 
 .tag_name {

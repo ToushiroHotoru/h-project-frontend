@@ -1,19 +1,24 @@
 import AuthTag from "./AuthTag";
+import { AuthContext } from "./AuthContext";
 import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import {
   Input,
   Box,
   Center,
+  Button,
+  ModalFooter,
+  ModalBody,
   Tag,
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
-export default function AuthFavorites({ func }) {
+export default function AuthFavorites({ stage, setStage }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortFlag, setSortFlag] = useState();
   const [sortedTags, setSortedTags] = useState([]);
+  const { favorites, setFavorites } = useContext(AuthContext);
   const [tags, setTags] = useState([
     { name: "Alan", img: "/tristana.png" },
     { name: "Alice", img: "/tristana.png" },
@@ -45,6 +50,7 @@ export default function AuthFavorites({ func }) {
       prevSelectedTags.push(id);
     }
     setSelectedTags(prevSelectedTags);
+    setFavorites(prevSelectedTags);
   };
 
   // сортировка тегов по запросу
@@ -70,63 +76,84 @@ export default function AuthFavorites({ func }) {
     }
   };
 
-  useEffect(() => {
-    func(selectedTags);
-  }, [selectedTags]);
-
   return (
-    <Center flexDirection="column">
-      <Input
-        type="text"
-        width="445px"
-        color="#000"
-        bg="#fff"
-        borderRadius="0"
-        placeholder="Tag name..."
-        _placeholder={{ color: "#000" }}
-        onChange={(e) => {
-          setSortFlag(e.target.value.length !== 0 ? true : false);
-          sortByQuery(e.target.value);
-        }}
-      />
-      <div className={AuthFavoritesCSS.tags}>
-        {toggleSort().map((item, i) => {
-          return (
-            <AuthTag
-              key={i + 1}
-              data={item}
-              selectTagFunc={selectTagFunc}
-              selectedTags={selectedTags}
-              type={"favs"}
-            />
-          );
-        })}
-      </div>
-      {selectedTags.length != 0 && (
-        <Box className={AuthFavoritesCSS.subTags}>
-          {selectedTags.map((item, i) => {
-            return (
-              <Tag
-                size="md"
-                minWidth="100px"
-                width="auto"
-                key={i + 1}
-                variant="solid"
-                mx="3px"
-                colorScheme="black"
-              >
-                <TagLabel>{item}</TagLabel>
-                <TagCloseButton
-                  ml="auto"
-                  onClick={() => {
-                    selectTagFunc(item);
-                  }}
+    <>
+      <ModalBody>
+        <Center flexDirection="column">
+          <Input
+            type="text"
+            width="445px"
+            color="#000"
+            bg="#fff"
+            borderRadius="0"
+            placeholder="Tag name..."
+            _placeholder={{ color: "#000" }}
+            onChange={(e) => {
+              setSortFlag(e.target.value.length !== 0 ? true : false);
+              sortByQuery(e.target.value);
+            }}
+          />
+          <div className={AuthFavoritesCSS.tags}>
+            {toggleSort().map((item, i) => {
+              return (
+                <AuthTag
+                  key={i + 1}
+                  data={item}
+                  selectTagFunc={selectTagFunc}
+                  selectedTags={selectedTags}
+                  type={"favs"}
                 />
-              </Tag>
-            );
-          })}
-        </Box>
-      )}
-    </Center>
+              );
+            })}
+          </div>
+          {selectedTags.length != 0 && (
+            <Box className={AuthFavoritesCSS.subTags}>
+              {selectedTags.map((item, i) => {
+                return (
+                  <Tag
+                    size="md"
+                    minWidth="100px"
+                    width="auto"
+                    key={i + 1}
+                    variant="solid"
+                    mx="3px"
+                    colorScheme="black"
+                  >
+                    <TagLabel>{item}</TagLabel>
+                    <TagCloseButton
+                      ml="auto"
+                      onClick={() => {
+                        selectTagFunc(item);
+                      }}
+                    />
+                  </Tag>
+                );
+              })}
+            </Box>
+          )}
+        </Center>
+      </ModalBody>
+      <ModalFooter display="flex" justifyContent="center">
+        {/* <Button
+          mr="1em"
+          disabled={stage <= 1}
+          onClick={() => {
+            setStage(stage - 1);
+          }}
+        >
+          back
+        </Button> */}
+        <Button
+          disabled={stage >= 4}
+          bg={selectedTags.length != 0 ? "#47F143" : "#A2ACAB"} // #1F0A0E
+          _hover={{ bg: selectedTags.length != 0 ? "#3FD23C" : "#727978" }}
+          onClick={() => {
+            setStage(3);
+          }}
+        >
+          {selectedTags.length != 0 ? "Подтвердить" : "Пропустить"}
+        </Button>
+      </ModalFooter>
+    </>
   );
 }
