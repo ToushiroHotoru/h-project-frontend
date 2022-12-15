@@ -13,16 +13,20 @@ import {
 } from "@chakra-ui/react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useState, useEffect, useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
 
 export default function AuthAvatars({ setStage, onCloseFunc }) {
-  const deviceType = useSelector((state) => state.deviceType.value);
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
   const [avatarsOffset, setAvatarsOffset] = useState(1);
   const [currentAvatars, setCurrentAvatars] = useState([]);
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
-  const step = deviceType == "desktop" ? 15 : 5;
+  const step = isMobile ? 5 : 15;
 
   const [avatars, setAvatars] = useState([
     "/avatar(NY).png",
@@ -98,7 +102,6 @@ export default function AuthAvatars({ setStage, onCloseFunc }) {
               />
             </Box>
           </Tooltip>
-          {deviceType}
         </Center>
         <Center fontSize="24px" mt="15px">
           {usernameContext ? usernameContext : "no username"}
@@ -121,9 +124,9 @@ export default function AuthAvatars({ setStage, onCloseFunc }) {
 
           <Box
             className={
-              deviceType == "desktop"
-                ? AuthFavoritesCSS.avatars_desktop
-                : AuthFavoritesCSS.avatars_mobile
+              isMobile
+                ? AuthFavoritesCSS.avatars_mobile
+                : AuthFavoritesCSS.avatars_desktop
             }
           >
             {currentAvatars.map((item, i) => {

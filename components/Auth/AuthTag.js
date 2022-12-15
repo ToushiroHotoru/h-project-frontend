@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/react";
+import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import Image from "next/image";
 import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import { useState, useEffect } from "react";
@@ -11,13 +12,18 @@ export default function AuthTag({
   isFavorited,
 }) {
   const [isClicked, setIsClicked] = useState();
+  const [isLoaded, setIsloaded] = useState(false);
 
   useEffect(() => {
+    setTimeout(() => {
+      setIsloaded(true);
+    }, 3000);
     setIsClicked(selectedTags.includes(data["name"]) ? true : false);
   }, [selectedTags]);
 
   return (
-    <Box
+    <Skeleton
+      isLoaded={isLoaded}
       className={
         isClicked
           ? type === "favs"
@@ -53,6 +59,6 @@ export default function AuthTag({
       >
         {data["name"]}
       </Box>
-    </Box>
+    </Skeleton>
   );
 }
