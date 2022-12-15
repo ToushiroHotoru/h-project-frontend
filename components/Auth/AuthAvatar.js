@@ -23,7 +23,7 @@ export default function AuthAvatar({
       mx="1em"
       onClick={() => {
         // включение отключение рамки аватарки
-        setIsClicked(!isClicked);
+        setIsClicked(true);
         // установка превью аватарки
         setAvatarPreview(avatarImgUrl);
       }}

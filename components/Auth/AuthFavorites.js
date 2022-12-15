@@ -62,10 +62,11 @@ export default function AuthFavorites({ stage, setStage }) {
     });
 
     filteredTags.forEach((item) => {
-      prevTags.splice(1, prevTags.indexOf(item));
+      prevTags.splice(prevTags.indexOf(item), 1);
     });
 
     const newTags = [...filteredTags, ...prevTags];
+
     setSortedTags(newTags);
   };
 

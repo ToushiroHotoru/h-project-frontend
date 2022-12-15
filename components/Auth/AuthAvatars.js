@@ -13,28 +13,37 @@ import {
 } from "@chakra-ui/react";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useState, useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-export default function AuthAvatars({ stage, setStage, onCloseFunc }) {
+export default function AuthAvatars({ setStage, onCloseFunc }) {
+  const deviceType = useSelector((state) => state.deviceType.value);
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
   const [avatarsOffset, setAvatarsOffset] = useState(1);
   const [currentAvatars, setCurrentAvatars] = useState([]);
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
-  const step = 5;
+  const step = deviceType == "desktop" ? 15 : 5;
 
   const [avatars, setAvatars] = useState([
     "/avatar(NY).png",
     "/avatar.png",
-    "/avatar1.png",
-    "/avatar2.png",
-    "/avatar3.jpg",
-    "/avatar4.jpg",
-    "/avatar5.jpg",
-    "/avatar6.png",
-    "/avatar7.jpg",
-    "/avatar8.jpg",
-    "/avatar9.png",
-    "/avatar10.jpg",
+    "/avatars/avatar1.png",
+    "/avatars/avatar2.png",
+    "/avatars/avatar3.jpg",
+    "/avatars/avatar4.jpg",
+    "/avatars/avatar5.jpg",
+    "/avatars/avatar6.png",
+    "/avatars/avatar7.jpg",
+    "/avatars/avatar8.jpg",
+    "/avatars/avatar9.png",
+    "/avatars/avatar10.jpg",
+    "/avatars/avatar11.jpg",
+    "/avatars/avatar12.jpg",
+    "/avatars/avatar13.jpg",
+    "/avatars/avatar14.png",
+    "/avatars/avatar15.png",
+    "/avatars/avatar16.jpg",
+    "/avatars/avatar17.png",
   ]);
 
   const onClickPrevBtnHandler = () => {
@@ -89,19 +98,34 @@ export default function AuthAvatars({ stage, setStage, onCloseFunc }) {
               />
             </Box>
           </Tooltip>
+          {deviceType}
         </Center>
         <Center fontSize="24px" mt="15px">
           {usernameContext ? usernameContext : "no username"}
         </Center>
         <Divider mt="20px" />
         <Center>
-          {avatarsOffset != 1 && (
-            <Box onClick={onClickPrevBtnHandler} mr="18px">
-              <BsChevronLeft />
-            </Box>
-          )}
+          {/* {avatarsOffset != 1 && ( */}
+          <Box
+            onClick={() => {
+              if (avatarsOffset != 1) {
+                onClickPrevBtnHandler();
+              }
+            }}
+            disabled={avatarsOffset == 1}
+            mr="18px"
+          >
+            <BsChevronLeft />
+          </Box>
+          {/* )} */}
 
-          <Box className={AuthFavoritesCSS.avatars}>
+          <Box
+            className={
+              deviceType == "desktop"
+                ? AuthFavoritesCSS.avatars_desktop
+                : AuthFavoritesCSS.avatars_mobile
+            }
+          >
             {currentAvatars.map((item, i) => {
               return (
                 <AuthAvatar
@@ -116,11 +140,18 @@ export default function AuthAvatars({ stage, setStage, onCloseFunc }) {
               );
             })}
           </Box>
-          {avatars.length / step >= avatarsOffset && (
-            <Box onClick={onClickNextBtnHandler} ml="18px">
-              <BsChevronRight />
-            </Box>
-          )}
+          {/* {avatars.length / step >= avatarsOffset && ( */}
+          <Box
+            onClick={() => {
+              if (avatars.length / step >= avatarsOffset) {
+                onClickNextBtnHandler();
+              }
+            }}
+            ml="18px"
+          >
+            <BsChevronRight />
+          </Box>
+          {/* )} */}
         </Center>
         <Divider />
       </ModalBody>

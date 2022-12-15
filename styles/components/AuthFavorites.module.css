@@ -81,11 +81,22 @@
   opacity: 1;
 }
 
-.avatars {
+.avatars_desktop {
   display: flex;
+  flex-wrap: wrap;
   max-width: 500px;
-  height: 100px;
+  height: 300px;
   align-items: center;
+  justify-content: center;
+}
+
+.avatars_mobile {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 500px;
+  height: 300px;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar_image {

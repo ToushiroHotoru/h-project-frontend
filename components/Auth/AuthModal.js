@@ -95,16 +95,19 @@ export default function AuthModal() {
     }
   };
 
-  useEffect(() => {
-    setStage(1);
-  }, []);
-
   return (
     <>
       <AuthContext.Provider
         value={{ usernameContext, setUsernameContext, favorites, setFavorites }}
       >
-        <Button onClick={onOpen}>Регистрация</Button>
+        <Button
+          onClick={() => {
+            setStage(1);
+            onOpen();
+          }}
+        >
+          Регистрация
+        </Button>
         <Modal
           isCentered
           onClose={onClose}
