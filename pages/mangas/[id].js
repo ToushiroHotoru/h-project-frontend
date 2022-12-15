@@ -23,6 +23,7 @@ export async function getStaticProps({ params }) {
       "Content-Type": "application/json",
     },
   });
+
   const data = await res.json();
   return {
     props: { manga: data, id: id }, // will be passed to the page component as props
@@ -34,6 +35,7 @@ export async function getStaticPaths(context) {
   const paths = data.map((post) => ({
     params: { id: post._id.toString() },
   }));
+
   return {
     paths,
     fallback: false,
