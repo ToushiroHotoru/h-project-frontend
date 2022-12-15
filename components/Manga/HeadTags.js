@@ -1,5 +1,6 @@
 import css from "../../styles/components/MangaHead.module.css";
 import { Box, Center, HStack, Flex } from "@chakra-ui/react";
+
 import Image from "next/image";
 
 export default function HeadTags({ tags }) {
