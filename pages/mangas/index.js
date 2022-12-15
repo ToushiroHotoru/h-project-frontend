@@ -51,6 +51,10 @@ export default function Mangas({ deviceType }) {
     return res.json();
   };
 
+  useEffect(() => {
+    dispatch(setupDeviceType(deviceType));
+  }, []);
+
   const { data, error } = useSWR(
     `${LINK}/mangas?page=${router.query.page}&sort=${router.query.sort}`,
     fetcher
@@ -79,10 +83,6 @@ export default function Mangas({ deviceType }) {
   //   useEffect(() => {
   //     if (!router.isReady) return;
   //   }, [router.isReady]);
-
-  useEffect(() => {
-    dispatch(setupDeviceType(deviceType));
-  }, []);
 
   return (
     <>
