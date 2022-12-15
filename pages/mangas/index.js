@@ -4,8 +4,6 @@ import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import useSWR from "swr";
-import { useSelector, useDispatch } from "react-redux";
-import { setupDeviceType } from "../../redux/deviceTypeSlice";
 
 import catalog from "../../styles/pages/Catalog.module.css";
 import MangaTile from "../../components/Mangas/MangaTile";
@@ -16,25 +14,8 @@ import Filter from "../../components/Mangas/Filter";
 import Pagination from "../../components/Mangas/Pagination";
 import { LINK } from "../../libs/changeApiUrl.js";
 
-export async function getServerSideProps(context) {
-  const UA = context.req.headers["user-agent"];
-  const isMobile = Boolean(
-    UA.match(
-      /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-    )
-  );
-
-  return {
-    props: {
-      deviceType: isMobile ? "mobile" : "desktop",
-      //   deviceType: "zero",
-    },
-  };
-}
-
 export default function Mangas({ deviceType }) {
   //   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const dispatch = useDispatch();
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
 
@@ -50,10 +31,6 @@ export default function Mangas({ deviceType }) {
 
     return res.json();
   };
-
-  useEffect(() => {
-    dispatch(setupDeviceType(deviceType));
-  }, []);
 
   const { data, error } = useSWR(
     `${LINK}/mangas?page=${router.query.page}&sort=${router.query.sort}`,
@@ -87,7 +64,7 @@ export default function Mangas({ deviceType }) {
   return (
     <>
       <Head>
-        <title>Каталог {deviceType}</title>
+        <title>Каталог</title>
       </Head>
       <div className={catalog.catalog}>
         <div className="container">
@@ -114,8 +91,7 @@ export default function Mangas({ deviceType }) {
               [...Array(24)].map((_, i) => {
                 return (
                   <Flex flexDirection="column" key={i + 1}>
-                    <Skeleton height="420px" />
-                    <Skeleton height="25px" mt="15px" />
+                    <Skeleton height="380px" />
                   </Flex>
                 );
               })}
