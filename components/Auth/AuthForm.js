@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { AuthContext } from "./AuthContext";
 import { useState, useContext } from "react";
+import css from "../../styles/components/AuthFavorites.module.css";
 
 export default function AuthForm({ stage, setStage }) {
   const [show, setShow] = useState(false);
@@ -72,78 +73,98 @@ export default function AuthForm({ stage, setStage }) {
 
   return (
     <>
-      <ModalBody>
+      <ModalBody
+        py={{ base: "16px", sm: "24px" }}
+        px={0}
+        maxWidth={400}
+        width="100%"
+        display="flex"
+        flexDirection="column"
+        mx="auto"
+      >
         <FormControl>
-          <FormLabel>Email address</FormLabel>
+          <FormLabel mb="4px">Email*</FormLabel>
           <Input
-            type="email"
             bg="#fff"
+            type="email"
             color="#000"
+            height="auto"
+            borderRadius={2}
+            p="10px 36px 10px 12px"
             placeholder="example@gmail.com"
-            _placeholder={{ color: "#000" }}
+            _placeholder={{ color: "#8b8b8b;" }}
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
           {showErrors && (
-            <Box color="#F14343">
+            <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
               {validationFunc(email, username, password).emailError}
             </Box>
           )}
         </FormControl>
         <FormControl mt="10px">
-          <FormLabel>Username</FormLabel>
+          <FormLabel mb="4px">Никнейм</FormLabel>
           <Input
-            type="text"
             bg="#fff"
+            type="text"
             color="#000"
+            height="auto"
+            borderRadius={2}
             placeholder="Username"
-            _placeholder={{ color: "#000" }}
+            p="10px 36px 10px 12px"
+            _placeholder={{ color: "#8b8b8b;" }}
             onChange={(e) => {
               setUsername(e.target.value);
               setUsernameContext(e.target.value);
             }}
           />
           {showErrors && (
-            <Box color="#F14343">
+            <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
               {validationFunc(email, username, password).usernameError}
             </Box>
           )}
         </FormControl>
         <FormControl mt="10px">
-          <FormLabel>Password</FormLabel>
+          <FormLabel mb="4px">Пароль*</FormLabel>
           <InputGroup size="md">
             <Input
-              type={show ? "text" : "password"}
               bg="#fff"
               color="#000"
+              height="auto"
+              borderRadius={2}
               placeholder="Password"
-              _placeholder={{ color: "#000" }}
+              p="10px 36px 10px 12px"
+              type={show ? "text" : "password"}
+              _placeholder={{ color: "#8b8b8b;" }}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
 
-            <InputRightElement width="4.5rem">
-              <Button
-                h="1.75rem"
-                size="sm"
-                _hover={{ borderColor: "#1A202C" }}
-                bg="#1A202C"
+            <InputRightElement width="36px" right="4px" height="100%">
+              <Box
+                width="24px"
+                height="24px"
                 onClick={handleClick}
-              >
-                {show ? "Hide" : "Show"}
-              </Button>
+                cursor="pointer"
+                bgPosition="center"
+                bgRepeat="no-repeat"
+                bgSize="contain"
+                className={
+                  show ? css.input_password_hidden : css.input_password_shown
+                }
+              ></Box>
             </InputRightElement>
           </InputGroup>
           {showErrors && (
-            <Box color="#F14343">
+            <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
               {validationFunc(email, username, password).passwordError}
             </Box>
           )}
         </FormControl>
       </ModalBody>
-      <ModalFooter display="flex" justifyContent="center">
+      <ModalFooter display="flex" justifyContent="center" p={0} pt={24}>
         <Button
           disabled={stage >= 4}
           bg="#F143E0"
@@ -157,7 +178,7 @@ export default function AuthForm({ stage, setStage }) {
             }
           }}
         >
-          next
+          Далее
         </Button>
       </ModalFooter>
     </>
