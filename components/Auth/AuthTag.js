@@ -24,7 +24,7 @@ export default function AuthTag({
   return (
     <Skeleton
       isLoaded={isLoaded}
-      className={
+      className={`${AuthFavoritesCSS.item} ${
         isClicked
           ? type === "favs"
             ? AuthFavoritesCSS.item_clicked
@@ -32,7 +32,7 @@ export default function AuthTag({
           : isFavorited
           ? AuthFavoritesCSS.item_is_favorited
           : AuthFavoritesCSS.item
-      }
+      }`}
       onClick={() => {
         if (!isFavorited) {
           selectTagFunc(data["name"]);
@@ -43,19 +43,20 @@ export default function AuthTag({
       <Image
         src={data["img"]}
         alt="Picture of the author"
-        width={100}
-        height={90}
+        width={128}
+        height={128}
+        fill="strict"
         objectFit="cover"
         draggable="false"
       />
       <Box
-        className={
+        className={`${AuthFavoritesCSS.tag_name} ${
           isClicked
             ? type === "favs"
               ? AuthFavoritesCSS.tag_name_clicked
               : AuthFavoritesCSS.unloved_tag_name_clicked
             : AuthFavoritesCSS.tag_name
-        }
+        }`}
       >
         {data["name"]}
       </Box>
