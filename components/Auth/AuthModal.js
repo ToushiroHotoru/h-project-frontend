@@ -116,8 +116,8 @@ export default function AuthModal() {
         >
           <ModalOverlay />
 
-          <ModalContent maxWidth="100%" m="16px" alignItems="center">
-            <Box maxWidth={600} w="100%" position="relative">
+          <ModalContent maxWidth="100%" m="auto" alignItems="center">
+            <Box maxWidth={600} w="100%" position="relative" p="16px">
               <Tooltip
                 label={speeches[stage - 1]}
                 hasArrow
