@@ -1,7 +1,5 @@
-import AuthAvatar from "./AuthAvatar";
-import { AuthContext } from "./AuthContext";
-import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
 import Image from "next/image";
+import { useState, useContext } from "react";
 import {
   Box,
   Center,
@@ -11,22 +9,17 @@ import {
   Divider,
   Tooltip,
 } from "@chakra-ui/react";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { useState, useEffect, useContext } from "react";
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect";
-
+import { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import AuthAvatar from "./AuthAvatar";
+import { AuthContext } from "./AuthContext";
+import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
+import "swiper/css";
+import 'swiper/css/navigation';
 export default function AuthAvatars({ setStage, onCloseFunc }) {
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
-  const [avatarsOffset, setAvatarsOffset] = useState(1);
-  const [currentAvatars, setCurrentAvatars] = useState([]);
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
-  const step = isMobile ? 5 : 15;
 
   const [avatars, setAvatars] = useState([
     "/avatar(NY).png",
@@ -50,26 +43,9 @@ export default function AuthAvatars({ setStage, onCloseFunc }) {
     "/avatars/avatar17.png",
   ]);
 
-  const onClickPrevBtnHandler = () => {
-    if (avatarsOffset != 1) {
-      setAvatarsOffset((prevOffset) => prevOffset - 1);
-    }
-  };
-
-  const onClickNextBtnHandler = () => {
-    setAvatarsOffset((prevOffset) => prevOffset + 1);
-  };
-
-  useEffect(() => {
-    // из массива всех аватарок создается массив, который содержит 5 аватарок для отображения
-    setCurrentAvatars([
-      ...avatars.slice((avatarsOffset - 1) * step, avatarsOffset * step),
-    ]);
-  }, [avatarsOffset]);
-
   return (
     <>
-      <ModalBody>
+      <ModalBody p={0} mt="15px">
         <Center>
           <Tooltip
             label="Click to choose your own image"
@@ -108,66 +84,35 @@ export default function AuthAvatars({ setStage, onCloseFunc }) {
         </Center>
         <Divider mt="20px" />
         <Center>
-          {/* {avatarsOffset != 1 && ( */}
-          <Box
-            onClick={() => {
-              if (avatarsOffset != 1) {
-                onClickPrevBtnHandler();
-              }
-            }}
-            disabled={avatarsOffset == 1}
-            mr="18px"
-          >
-            <BsChevronLeft />
+          <Box className={AuthFavoritesCSS.avatars_wrap}>
+            <Swiper
+              modules={[Navigation]}
+              navigation
+              spaceBetween={14}
+              slidesPerView="auto"
+              slidesPerGroup={3}
+              className="auth_avatars"
+            >
+              {avatars.map((item, i) => {
+                return (
+                  <SwiperSlide key={i + 1}>
+                    <AuthAvatar
+                      avatarImgUrl={item}
+                      avatarPreview={avatarPreview}
+                      setAvatarPreview={(val) => {
+                        setUploadFlag(false);
+                        setAvatarPreview(val);
+                      }}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
           </Box>
-          {/* )} */}
-
-          <Box
-            className={
-              isMobile
-                ? AuthFavoritesCSS.avatars_mobile
-                : AuthFavoritesCSS.avatars_desktop
-            }
-          >
-            {currentAvatars.map((item, i) => {
-              return (
-                <AuthAvatar
-                  avatarImgUrl={item}
-                  key={i + 1}
-                  avatarPreview={avatarPreview}
-                  setAvatarPreview={(val) => {
-                    setUploadFlag(false);
-                    setAvatarPreview(val);
-                  }}
-                />
-              );
-            })}
-          </Box>
-          {/* {avatars.length / step >= avatarsOffset && ( */}
-          <Box
-            onClick={() => {
-              if (avatars.length / step >= avatarsOffset) {
-                onClickNextBtnHandler();
-              }
-            }}
-            ml="18px"
-          >
-            <BsChevronRight />
-          </Box>
-          {/* )} */}
         </Center>
         <Divider />
       </ModalBody>
-      <ModalFooter display="flex" justifyContent="center">
-        {/* <Button
-          mr="1em"
-          disabled={stage <= 1}
-          onClick={() => {
-            setStage(stage - 1);
-          }}
-        >
-          back
-        </Button> */}
+      <ModalFooter display="flex" justifyContent="center" p={0} mt="15px">
         <Button
           bg={avatarPreview != "/zero.png" ? "#43F1DC" : "#A2ACAB"}
           _hover={{ bg: avatarPreview != "/zero.png" ? "#3DD7C4" : "#727978" }}
