@@ -17,13 +17,14 @@ export default function AuthAvatar({
   }, [avatarPreview, avatarImgUrl]);
   return (
     <SkeletonCircle
-      className={
+      className={`${AuthFavoritesCSS.avatar_image} ${
         isClicked
           ? AuthFavoritesCSS.avatar_image_clicked
           : AuthFavoritesCSS.avatar_image
-      }
+      }`}
+      width="55px"
+      height="55px"
       isLoaded={isLoaded}
-      mx="1em"
       onClick={() => {
         // включение отключение рамки аватарки
         setIsClicked(true);

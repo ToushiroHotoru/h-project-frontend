@@ -1,3 +1,4 @@
+import { Flex, Box } from "@chakra-ui/react";
 import Image from "next/image";
 import header from "../styles/partials/Header.module.css";
 import nav from "../styles/partials/Navigation.module.css";
@@ -11,25 +12,18 @@ export default function Header() {
         <div className={header.wrap}>
           <A href="/">
             <a className={header.logo}>
-              PROJECT
-              {/* <Image
-								src='/logo.svg'
-								layout='fill'
-								alt='logo'
-							/> */}
+              <Image src="/logo.svg" layout="fill" alt="logo" />
             </a>
           </A>
 
-          <nav className={nav.nav}>
+          <Flex alignItems="center" >
             <A href="/mangas?page=1&sort=latest">
               <a className={`link ${nav.link}`}>Каталог</a>
             </A>
-          </nav>
-          <nav className={nav.nav}>
-            <div className={`link ${nav.link}`}>
+            <Box className={`link ${nav.link}`} ml="20px">
               <AuthModal />
-            </div>
-          </nav>
+            </Box>
+          </Flex>
         </div>
       </div>
     </header>
