@@ -82,22 +82,22 @@ export default function AuthFavorites({ stage, setStage }) {
 
   return (
     <>
-      <ModalBody>
+      <ModalBody p={0} mt="15px">
         <Center flexDirection="column">
           <Input
             type="text"
-            width="445px"
+            width="100%"
             color="#000"
             bg="#fff"
             borderRadius="0"
-            placeholder="Tag name..."
-            _placeholder={{ color: "#000" }}
+            placeholder="Название тега"
+            _placeholder={{ color: "#8b8b8b" }}
             onChange={(e) => {
               setSortFlag(e.target.value.length !== 0 ? true : false);
               sortByQuery(e.target.value);
             }}
           />
-          <Divider mt="20px" width="445px" bg="#f14343" height="2px" />
+          <Divider mt="20px" width="100%" bg="#f14343" height="2px" />
           <div className={AuthFavoritesCSS.tags}>
             {toggleSort().map((item, i) => {
               return (
@@ -141,16 +141,7 @@ export default function AuthFavorites({ stage, setStage }) {
           )}
         </Center>
       </ModalBody>
-      <ModalFooter display="flex" justifyContent="center">
-        {/* <Button
-          mr="1em"
-          disabled={stage <= 1}
-          onClick={() => {
-            setStage(stage - 1);
-          }}
-        >
-          back
-        </Button> */}
+      <ModalFooter display="flex" justifyContent="center" p={0} mt="15px">
         <Button
           disabled={stage >= 4}
           bg={selectedTags.length != 0 ? "#F14343" : "#A2ACAB"}
