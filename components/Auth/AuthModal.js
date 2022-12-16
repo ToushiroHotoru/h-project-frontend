@@ -15,6 +15,7 @@ import {
   Box,
   Tooltip,
   extendTheme,
+  Heading,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
@@ -41,10 +42,8 @@ export default function AuthModal() {
       Modal: {
         baseStyle: (props) => ({
           dialog: {
-            // maxWidth: ["95%", "95%", "95%"],
-            // minWidth: "45%",
-            minWidth: "600px",
-            bg: "#1A202C",
+            bg: "transparent",
+            boxShadow: "none",
           },
         }),
       },
@@ -117,36 +116,56 @@ export default function AuthModal() {
         >
           <ModalOverlay />
 
-          <ModalContent>
-            <Tooltip
-              label={speeches[stage - 1]}
-              hasArrow
-              bg="#fff"
-              placement="left"
-              isOpen
-              padding="30px"
-              borderRadius="40px"
-            >
-              <Box
-                position="absolute"
-                overflow="hidden"
-                height="300px"
-                top="-300"
-                left="120"
-                zIndex="-105"
+          <ModalContent maxWidth="100%" m="16px" alignItems="center">
+            <Box maxWidth={600} w="100%" position="relative">
+              <Tooltip
+                label={speeches[stage - 1]}
+                hasArrow
+                bg="#fff"
+                placement="left"
+                isOpen
+                padding="12px 16px"
+                borderRadius="0px 7px 7px 6px"
               >
-                <Image
-                  src={maskots[stage - 1]}
-                  alt="Picture of the author"
-                  width={400}
-                  height={400}
-                  draggable="false"
-                ></Image>
+                <Box
+                  position="absolute"
+                  overflow="hidden"
+                  height={{ base: "200px", sm: "300px" }}
+                  width={{ base: "200px", sm: "300px" }}
+                  top={{ base: "-140px", sm: "-215px" }}
+                  left={{ base: "auto", sm: "calc(50% + 100px)" }}
+                  right={{ base: 0, sm: "auto" }}
+                  transform={{ base: "translateX(0)", sm: "translateX(-50%)" }}
+                  zIndex="1"
+                >
+                  <Image
+                    src={maskots[stage - 1]}
+                    alt="Picture of the author"
+                    width={400}
+                    height={400}
+                    draggable="false"
+                  ></Image>
+                </Box>
+              </Tooltip>
+              <Box
+                maxWidth={600}
+                w="100%"
+                py={{ base: 30, sm: 50 }}
+                px={{ base: "24px", sm: "40px" }}
+                bg="#1A202C"
+                position="relative"
+                zIndex={2}
+              >
+                <ModalHeader position="relative" p={0}>
+                  <Heading size="md"> Этап регистрации</Heading>
+                  <ModalCloseButton
+                    top={{ base: "-18px", sm: "-25px" }}
+                    right={{ base: "-15px", sm: "-16px" }}
+                  />
+                </ModalHeader>
+                {i_dunno_how_to_name_this(stage)}
               </Box>
-            </Tooltip>
-            <ModalHeader></ModalHeader>
-            <ModalCloseButton />
-            {i_dunno_how_to_name_this(stage)}
+            </Box>
           </ModalContent>
         </Modal>
       </AuthContext.Provider>
