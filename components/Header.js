@@ -16,7 +16,7 @@ export default function Header() {
             </a>
           </A>
 
-          <Flex className={nav.nav}>
+          <Flex alignItems="center" >
             <A href="/mangas?page=1&sort=latest">
               <a className={`link ${nav.link}`}>Каталог</a>
             </A>
