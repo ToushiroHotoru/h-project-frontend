@@ -16,13 +16,17 @@ export default function Header() {
             </a>
           </A>
 
-          <Flex alignItems="center" >
+          <Flex alignItems="center">
             <A href="/mangas?page=1&sort=latest">
               <a className={`link ${nav.link}`}>Каталог</a>
             </A>
-            <Box className={`link ${nav.link}`} ml="20px">
+
+            <Box className={`link ${nav.link}`} mx="20px">
               <AuthModal />
             </Box>
+            <A href="/tags">
+              <a className={`link ${nav.link}`}>Теги</a>
+            </A>
           </Flex>
         </div>
       </div>
