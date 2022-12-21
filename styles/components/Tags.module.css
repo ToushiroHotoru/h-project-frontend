@@ -14,7 +14,7 @@
   grid-template-columns: 1fr;
   grid-template-rows: auto;
   justify-items: center;
-  gap: 15px;
+  padding: 0 10px 0 10px;
   max-width: 1360px;
   width: 100%;
 }

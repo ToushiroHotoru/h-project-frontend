@@ -6,8 +6,8 @@ export default function TagMobile({ data }) {
   return (
     <Box
       position="relative"
-      width="640px"
-      height="360px"
+      maxWidth="480px"
+      maxHeight="180px"
       display="flex"
       my="10px"
       borderRadius="8px"
@@ -21,7 +21,7 @@ export default function TagMobile({ data }) {
         p="15px"
       >
         <Box fontSize="24px">{data.name}</Box>
-        <Box flex="1" mt="5px">
+        <Box flex="1" mt="5px" fontSize="12px">
           {data.desc}
         </Box>
         <Box display="flex" alignItems="center">
