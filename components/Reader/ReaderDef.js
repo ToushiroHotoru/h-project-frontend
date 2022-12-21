@@ -1,4 +1,5 @@
 import { Button, Box, HStack, Center, Tooltip, Flex } from "@chakra-ui/react";
+import { Divider } from "@chakra-ui/react";
 import css from "../../styles/pages/Reader.module.css";
 import Image from "next/image";
 import {
@@ -12,8 +13,9 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
+import ReaderPage from "./ReaderPage";
 import { BsGearFill } from "react-icons/bs";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function RederDef({
@@ -37,29 +39,45 @@ export default function RederDef({
         <>
           {showMap && (
             <Flex
+              py="20px"
               flexDirection="column"
               alignItems="center"
               position="fixed"
               height="100%"
+              zIndex="10"
+              top="0"
               left="0"
               width="300px"
               overflowY="auto"
+              backgroundColor="#000"
             >
               {mangaPages &&
                 mangaPages.map((item, i) => {
                   return (
-                    <Link href={`/reader?id=${id}&page=${i + 1}`} key={i + 1}>
-                      <Flex flexDirection="column" alignItems="center">
-                        <Image
-                          src={item}
-                          quality="1"
-                          alt="Picture of the author"
-                          width={160}
-                          height={220}
-                        />
-                        {i + 1}
-                      </Flex>
-                    </Link>
+                    <>
+                      <Link href={`/reader?id=${id}&page=${i + 1}`} key={i + 1}>
+                        <Flex flexDirection="column" alignItems="center">
+                          <Box
+                            border={
+                              Number(router.query.page) === i + 1
+                                ? "3px solid #47f143"
+                                : "none"
+                            }
+                            height="225"
+                          >
+                            <Image
+                              src={item}
+                              quality="1"
+                              alt="Picture of the author"
+                              width={160}
+                              height={220}
+                            />
+                          </Box>
+                          {i + 1}
+                        </Flex>
+                      </Link>
+                      <Divider my="20px" width="160px" bg="#fff" height="2px" />
+                    </>
                   );
                 })}
             </Flex>
@@ -76,58 +94,11 @@ export default function RederDef({
             </Box>
             <div className={css.content}>
               {mangaPages && (
-                <div className={css.test_click_next_parent}>
-                  <Image
-                    placeholder="blur"
-                    blurDataURL="/manga_cover/placeholder.png"
-                    quality={quality}
-                    src={
-                      router.query.page == 0
-                        ? mangaPages[0]
-                        : mangaPages[router.query.page - 1]
-                    }
-                    alt="Picture of the author"
-                    width={700}
-                    height={1000}
-                  />
-                  <div
-                    className={css.test_click_prev}
-                    onClick={() => {
-                      if (Number(router.query.page) <= 1 ? false : true) {
-                        router.push(
-                          `/reader?id=${router.query.id}&page=${
-                            Number(router.query.page) - 1
-                          }`,
-                          undefined,
-                          {
-                            shallow: true,
-                          }
-                        );
-                      }
-                    }}
-                  ></div>
-                  <div
-                    className={css.test_click_next}
-                    onClick={() => {
-                      if (
-                        mangaPages &&
-                        mangaPages.length <= Number(router.query.page)
-                          ? false
-                          : true
-                      ) {
-                        router.push(
-                          `/reader?id=${router.query.id}&page=${
-                            Number(router.query.page) + 1
-                          }`,
-                          undefined,
-                          {
-                            shallow: true,
-                          }
-                        );
-                      }
-                    }}
-                  ></div>
-                </div>
+                <ReaderPage
+                  quality={quality}
+                  mangaPages={mangaPages}
+                  router={router}
+                />
               )}
             </div>
             <HStack mt="1em" justifyContent="center">

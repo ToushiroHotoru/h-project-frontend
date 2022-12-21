@@ -44,3 +44,19 @@
 .to_the_top_btn {
   transition: all 1s ease-in;
 }
+
+.readerMap {
+  right: -300;
+  padding: 20 0 20 0;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  height: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 300px;
+  overflow-y: auto;
+  background-color: #000;
+  display: none;
+}
