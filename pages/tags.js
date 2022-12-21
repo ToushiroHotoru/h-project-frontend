@@ -10,6 +10,7 @@ import {
 } from "react-device-detect";
 
 export default function Tags() {
+  const { isMobile } = getSelectorsByUserAgent(userAgent);
   const [tags, setTags] = useState([
     {
       name: "tag1",
@@ -63,7 +64,7 @@ export default function Tags() {
   return (
     <div className={isMobile ? TagsCss.tagsMobile : TagsCss.tagsDesktop}>
       {tags.map((item, i) => {
-        return isMobile && isMobile ? (
+        return isMobile ? (
           //   <TagDesktop data={item} key={i + 1} />
           <TagMobile data={item} key={i + 1} />
         ) : (
