@@ -75,7 +75,11 @@ export default function Tags({ test }) {
         <h1>This is rendered only on mobile</h1>
       </MobileView>
       {tags.map((item, i) => {
-        return test ? <TagMobile /> : <TagDesktop />;
+        return test ? (
+          <TagMobile data={item} key={i + 1} />
+        ) : (
+          <TagDesktop data={item} key={i + 1} />
+        );
       })}
     </div>
   );
