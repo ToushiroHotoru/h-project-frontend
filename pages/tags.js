@@ -63,13 +63,22 @@ export default function Tags() {
   ]);
   return (
     <div className={isMobile ? TagsCss.tagsMobile : TagsCss.tagsDesktop}>
+      <BrowserView>
+        <h1>This is rendered only in browser</h1>
+      </BrowserView>
+      <MobileView>
+        <h1>This is rendered only on mobile</h1>
+      </MobileView>
       {tags.map((item, i) => {
-        return isMobile ? (
-          //   <TagDesktop data={item} key={i + 1} />
-          <TagMobile data={item} key={i + 1} />
-        ) : (
-          //   <TagMobile data={item} key={i + 1} />
-          <TagDesktop data={item} key={i + 1} />
+        return (
+          <>
+            <MobileView>
+              <TagMobile data={item} key={i + 1} />
+            </MobileView>
+            <BrowserView>
+              <TagDesktop data={item} key={i + 1} />
+            </BrowserView>
+          </>
         );
       })}
     </div>
