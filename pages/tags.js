@@ -10,7 +10,6 @@ import {
 } from "react-device-detect";
 
 export default function Tags() {
-  const { isMobile } = getSelectorsByUserAgent(userAgent);
   const [tags, setTags] = useState([
     {
       name: "tag1",
