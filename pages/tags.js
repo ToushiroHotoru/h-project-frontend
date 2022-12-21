@@ -61,14 +61,14 @@ export default function Tags() {
     },
   ]);
   return (
-    <div className={isMobile ? TagsCss.tagsDesktop : TagsCss.tagsMobile}>
+    <div className={isMobile ? TagsCss.tagsMobile : TagsCss.tagsDesktop}>
       {tags.map((item, i) => {
         return isMobile ? (
+          //   <TagDesktop data={item} key={i + 1} />
+          <TagMobile data={item} key={i + 1} />
+        ) : (
           //   <TagMobile data={item} key={i + 1} />
           <TagDesktop data={item} key={i + 1} />
-        ) : (
-          <TagMobile data={item} key={i + 1} />
-          //   <TagDesktop data={item} key={i + 1} />
         );
       })}
     </div>
