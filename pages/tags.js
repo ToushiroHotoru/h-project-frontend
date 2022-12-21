@@ -9,12 +9,6 @@ import {
   isMobile,
 } from "react-device-detect";
 
-export async function getStaticProps() {
-  return {
-    props: { test: isMobile }, // will be passed to the page component as props
-  };
-}
-
 export default function Tags({ test }) {
   const [tags, setTags] = useState([
     {
@@ -68,14 +62,8 @@ export default function Tags({ test }) {
   ]);
   return (
     <div className={isMobile ? TagsCss.tagsMobile : TagsCss.tagsDesktop}>
-      <BrowserView>
-        <h1>This is rendered only in browser</h1>
-      </BrowserView>
-      <MobileView>
-        <h1>This is rendered only on mobile</h1>
-      </MobileView>
       {tags.map((item, i) => {
-        return test ? (
+        return isMobile ? (
           <TagMobile data={item} key={i + 1} />
         ) : (
           <TagDesktop data={item} key={i + 1} />
