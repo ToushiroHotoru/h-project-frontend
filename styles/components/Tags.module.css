@@ -1,32 +1,20 @@
 .tagsDesktop {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 15px;
-  padding: 0 15px 0 15px;
-  max-width: 1360px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 30px;
-}
-
-.tagsMobile {
-  display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto;
-  justify-items: center;
-  padding: 0 10px 0 10px;
-  max-width: 1360px;
-  width: 100%;
+  gap: 15px;
 }
 
-.tagWrapper {
+.tag {
   border-radius: 8px;
   position: relative;
   overflow: hidden;
 }
 
-.coverWrapper {
-  border-radius: 8px;
+.tagImage {
+  position: relative;
+}
+
+.tagInfo {
   position: absolute;
   z-index: 10;
   bottom: 0;
@@ -35,23 +23,76 @@
   background: linear-gradient(rgba(255, 255, 255, 0) 26%, rgba(0, 0, 0, 1) 62%);
 }
 
-.coverDataWrapper {
+.tagInfoInner {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 50%;
   display: flex;
   flex-direction: column;
-  padding: 0 15px 0 15px;
+  padding: 0 15px 15px;
 }
 
-.countWrapper {
-  position: relative;
+.tagDescription:after {
+  content: "";
+  position: absolute;
   bottom: 0;
-  height: 30px;
   width: 100%;
-  margin: 15px 0 15px 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  height: 50%;
+  left: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 1) 88%);
+}
+
+.tagCount {
+  padding: 8px 0 0;
+}
+
+@media (min-width: 450px) {
+  .tagsDesktop {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 700px) {
+  .tagsDesktop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .tagsDesktop {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .tagsDesktop {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+  .tag {
+    height: 180px;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .tagImage {
+    position: relative;
+    height: 200px;
+    width: 70%;
+  }
+
+  .tagInfo {
+    position: static;
+  }
+
+  .tagInfoInner {
+    position: static;
+    height: 100%;
+    padding: 15px;
+    background: #000;
+    box-shadow: 0 0 29px 30px #000;
+  }
 }

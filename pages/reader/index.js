@@ -2,10 +2,10 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/react";
 
-import SideDrawer from "../components/Reader/SideDrawer";
-import ReaderAlt from "../components/Reader/ReaderAlt";
-import ReaderDef from "../components/Reader/ReaderDef";
-import { LINK } from "../libs/changeApiUrl.js";
+import SideDrawer from "../../components/Reader/SideDrawer";
+import ReaderAlt from "../../components/Reader/ReaderAlt";
+import ReaderDef from "../../components/Reader/ReaderDef";
+import { LINK } from "../../libs/changeApiUrl.js";
 
 export default function Reader() {
 	const [mangaPages, setMangaPages] = useState();
