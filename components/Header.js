@@ -15,18 +15,16 @@ export default function Header() {
               <Image src="/logo.svg" layout="fill" alt="logo" />
             </a>
           </A>
-
           <Flex alignItems="center">
-            <A href="/mangas?page=1&sort=latest">
-              <a className={`link ${nav.link}`}>Каталог</a>
-            </A>
-
-            <Box className={`link ${nav.link}`} mx="20px">
+            <Box className={`link ${nav.link}`} cursor="pointer" ml="20px">
+              <A href="/mangas?page=1&sort=latest">Каталог</A>
+            </Box>
+            <Box className={`link ${nav.link}`} cursor="pointer" ml="20px">
+              <A href="/tags">Теги</A>
+            </Box>
+            <Box className={`link ${nav.link}`} ml="20px">
               <AuthModal />
             </Box>
-            <A href="/tags">
-              <a className={`link ${nav.link}`}>Теги</a>
-            </A>
           </Flex>
         </div>
       </div>
