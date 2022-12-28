@@ -4,9 +4,6 @@ import css from "../../styles/pages/Reader.module.css";
 import Image from "next/image";
 import {
   FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
