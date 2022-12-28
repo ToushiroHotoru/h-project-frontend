@@ -53,6 +53,7 @@ export default function Pagination({ router, total, offset, step }) {
             }`,
             undefined,
             {
+              scroll: true,
               shallow: true,
             }
           );
@@ -71,6 +72,7 @@ export default function Pagination({ router, total, offset, step }) {
                 `/mangas?page=${item}&sort=${router.query.sort}`,
                 undefined,
                 {
+                  scroll: true,
                   shallow: true,
                 }
               );
@@ -94,6 +96,7 @@ export default function Pagination({ router, total, offset, step }) {
             }`,
             undefined,
             {
+              scroll: true,
               shallow: true,
             }
           );
