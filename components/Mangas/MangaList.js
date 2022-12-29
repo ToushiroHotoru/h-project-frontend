@@ -2,19 +2,35 @@ import manga from "../../styles/components/MangaList.module.css";
 import Image from "next/image";
 import { Flex, Box } from "@chakra-ui/react";
 import Link from "next/link";
+import moment from "moment";
 import { useState } from "react";
+import useMeasure from "react-use-measure";
 
 export default function MangaList({ data }) {
   const [isHovored, setIsHovored] = useState();
-  let previewPicsArray = isHovored
-    ? [data.pages[0], data.pages[1], data.pages[2]]
-    : [data.cover, data.pages[0], data.pages[1]];
+  const [ref, { width }] = useMeasure();
+
+  const reviewPicsArrayFunc = () => {
+    if (isHovored) {
+      return [data.pages[0], data.pages[1], data.pages[2]];
+    } else {
+      if (width > 600) {
+        return [data.cover, data.pages[0], data.pages[1]];
+      } else {
+        return [data.cover, data.pages[0]];
+      }
+    }
+  };
+
   return (
     <Flex
+      ref={ref}
       overflow="hidden"
       className={manga.list}
       onMouseEnter={() => {
-        setIsHovored(true);
+        if (width > 600) {
+          setIsHovored(true);
+        }
       }}
       onMouseLeave={() => {
         setIsHovored(false);
@@ -23,7 +39,7 @@ export default function MangaList({ data }) {
       <Link href={`/mangas/${data._id}`}>
         <a>
           <Flex justify="center" align="center" className={manga.image_wrap}>
-            {previewPicsArray.map((item, i) => {
+            {reviewPicsArrayFunc().map((item, i) => {
               return (
                 <Box key={i + 1} className={`${manga.image}`}>
                   <Image
@@ -40,13 +56,7 @@ export default function MangaList({ data }) {
         </a>
       </Link>
 
-      <Flex
-        w="100%"
-        height="100%"
-        ml="20px"
-        flexDirection="column"
-        justifyContent="flex-start"
-      >
+      <Box className={manga.infoWrapper}>
         <Link href={`/mangas/${data._id}`}>
           <a>
             <Box
@@ -54,36 +64,53 @@ export default function MangaList({ data }) {
               maxH="35px"
               overflow="hidden"
               fontSize="1.3em"
+              padding="0 10px"
               className={manga.info}
             >
               {data.title}
             </Box>
           </a>
         </Link>
-        <Flex>
-          <Flex direction="column" mt="10px" className={manga.info}>
+        <Box className={manga.infoSubWrapper}>
+          <Flex
+            direction="column"
+            maxH="170px"
+            mt="10px"
+            padding="0 10px"
+            className={manga.info}
+          >
             <Flex mb="5px">
               <Box minW="100px">Серия</Box>
-              <Box w="100%">{data.series}</Box>
+              <Box minW="150px" ml="2%" w="100%">
+                {data.series}
+              </Box>
             </Flex>
             <Flex mb="5px">
               <Box minW="100px">Автор</Box>
-              <Box w="100%">{data.artist}</Box>
+              <Box ml="2%" w="100%">
+                {data.artist}
+              </Box>
             </Flex>
             <Flex mb="5px">
               <Box minW="100px">Дата</Box>
-              <Box w="100%">{data.createdAt}</Box>
+              <Box ml="2%" w="100%">
+                {moment(data.createdAt).format("DD-MM-YYYY")}
+              </Box>
             </Flex>
             <Flex mb="5px">
               <Box minW="100px">Просмотры</Box>
-              <Box w="100%">{data.views}</Box>
+              <Box ml="2%" w="100%">
+                {data.views}
+              </Box>
             </Flex>
             <Flex mb="5px">
               <Box minW="100px">Likes</Box>
-              <Box w="100%">{data.likes}</Box>
+              <Box ml="2%" w="100%">
+                {data.likes}
+              </Box>
             </Flex>
           </Flex>
-          <Flex position="relative" ml="45px" className={manga.info}>
+          <Box className={`${manga.tagsWrapper}`}>
             {data.tags.map((tag, i) => {
               return (
                 <Box className={`${manga.tag}`} key={i + 1}>
@@ -100,9 +127,9 @@ export default function MangaList({ data }) {
                 </Box>
               );
             })}
-          </Flex>
-        </Flex>
-      </Flex>
+          </Box>
+        </Box>
+      </Box>
     </Flex>
   );
 }
