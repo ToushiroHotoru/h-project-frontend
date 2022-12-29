@@ -51,7 +51,7 @@ export default function Mangas({ deviceType }) {
           height={693}
         />
         <Center color="red" fontSize="24px">
-          Error: {error.info.message}
+          Error: {error.message}
         </Center>
       </ErrorWrapper>
     );
