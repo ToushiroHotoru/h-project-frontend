@@ -50,7 +50,7 @@ export default function AuthModal() {
     },
   });
 
-  const i_dunno_how_to_name_this = (value) => {
+  const renderSwitchFunc = (value) => {
     switch (value) {
       case 1:
         return (
@@ -163,7 +163,7 @@ export default function AuthModal() {
                     right={{ base: "-15px", sm: "-16px" }}
                   />
                 </ModalHeader>
-                {i_dunno_how_to_name_this(stage)}
+                {renderSwitchFunc(stage)}
               </Box>
             </Box>
           </ModalContent>

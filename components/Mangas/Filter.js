@@ -11,7 +11,7 @@ import {
   Flex,
   Box,
   Tooltip,
-  Center,
+  extendTheme,
 } from "@chakra-ui/react";
 import {
   BsFillClockFill,
@@ -24,10 +24,24 @@ import css from "../../styles/components/Filter.module.css";
 
 export default function Filter({ router }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const theme = extendTheme({
+    components: {
+      Modal: {
+        baseStyle: (props) => ({
+          dialog: {
+            bg: "#1A202C",
+            boxShadow: "none",
+          },
+        }),
+      },
+    },
+  });
+
   return (
     <>
       <Button onClick={onOpen}>Расширенный поиск</Button>
-      <Modal isOpen={isOpen} onClose={onClose} size="xs">
+      <Modal isOpen={isOpen} onClose={onClose} size="xs" theme={theme}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Расширенный поиск</ModalHeader>

@@ -15,7 +15,7 @@ export default function ReaderAlt({
   showMap,
 }) {
   const [styles, animate] = useSpring(() => ({ right: -200 }));
-  const [styles2, animate2] = useSpring(() => ({ left: -300 }));
+
   const [isMap, setIsMap] = useState(false);
 
   const add_scroll = () => {
@@ -43,72 +43,6 @@ export default function ReaderAlt({
     <>
       {readerAltMode && (
         <>
-          <button
-            onClick={() => {
-              if (!isMap) {
-                animate2({ left: 0 });
-              } else {
-                animate2({ left: -300 });
-              }
-              setIsMap(!isMap);
-            }}
-          >
-            <BsArrowUpCircle size="2em" />
-          </button>
-          <animated.div
-            style={{
-              display: "flex",
-              padding: "20 0 20 0",
-              flexDirection: "column",
-              alignItems: "center",
-              position: "fixed",
-              height: "100%",
-              zIndex: "10",
-              top: "0",
-              left: "0",
-              width: "300px",
-              overflowY: "auto",
-              backgroundColor: "#000",
-              ...styles2,
-            }}
-            onClick={goToTop}
-          >
-            <Box
-              zIndex="10"
-              backgroundColor="#000"
-              padding="15px"
-              borderTopLeftRadius="8px"
-              borderBottomLeftRadius="8px"
-              right="-50"
-              position="fixed"
-              onClick={() => {
-                animate2({ left: 0 });
-              }}
-            >
-              <BsArrowUpCircle size="2em" />
-            </Box>
-            {mangaPages &&
-              mangaPages.map((item, i) => {
-                return (
-                  <>
-                    <a href={`#${item}`} key={i + 1}>
-                      <Flex flexDirection="column" alignItems="center">
-                        <Image
-                          src={item}
-                          quality="1"
-                          alt="Picture of the author"
-                          width={160}
-                          height={220}
-                        />
-                        {i + 1}
-                      </Flex>
-                    </a>
-                    <Divider my="20px" width="160px" bg="#fff" height="2px" />
-                  </>
-                );
-              })}
-            <BsArrowUpCircle size="2em" />
-          </animated.div>
           {showMap && (
             <Flex
               py="20px"

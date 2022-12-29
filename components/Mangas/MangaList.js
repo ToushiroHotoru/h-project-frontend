@@ -1,80 +1,135 @@
 import manga from "../../styles/components/MangaList.module.css";
 import Image from "next/image";
-import { Flex, Box, Tag } from "@chakra-ui/react";
+import { Flex, Box } from "@chakra-ui/react";
 import Link from "next/link";
+import moment from "moment";
+import { useState } from "react";
+import useMeasure from "react-use-measure";
 
 export default function MangaList({ data }) {
-  const onLoadHandler = () => {
-    // событие после загрузки изображения
+  const [isHovored, setIsHovored] = useState();
+  const [ref, { width }] = useMeasure();
+
+  const reviewPicsArrayFunc = () => {
+    if (isHovored) {
+      return [data.pages[0], data.pages[1], data.pages[2]];
+    } else {
+      if (width > 600) {
+        return [data.cover, data.pages[0], data.pages[1]];
+      } else {
+        return [data.cover, data.pages[0]];
+      }
+    }
   };
 
   return (
-    <Flex className={manga.list}>
+    <Flex
+      ref={ref}
+      overflow="hidden"
+      className={manga.list}
+      onMouseEnter={() => {
+        if (width > 600) {
+          setIsHovored(true);
+        }
+      }}
+      onMouseLeave={() => {
+        setIsHovored(false);
+      }}
+    >
       <Link href={`/mangas/${data._id}`}>
         <a>
           <Flex justify="center" align="center" className={manga.image_wrap}>
-            {Array.of(data.cover, data.pages[0], data.pages[1]).map(
-              (item, i) => {
-                return (
-                  <Box key={i + 1} className={`${manga.image}`}>
-                    <Image
-                      onLoad={onLoadHandler}
-                      src={item}
-                      alt="pic"
-                      layout="intrinsic"
-                      width={160}
-                      height={200}
-                    />
-                  </Box>
-                );
-              }
-            )}
+            {reviewPicsArrayFunc().map((item, i) => {
+              return (
+                <Box key={i + 1} className={`${manga.image}`}>
+                  <Image
+                    src={item}
+                    alt="pic"
+                    layout="intrinsic"
+                    width={160}
+                    height={200}
+                  />
+                </Box>
+              );
+            })}
           </Flex>
         </a>
       </Link>
 
-      <Flex direction="column" className={manga.info}>
-        <Flex w="100%" mb="16px">
-          <Box fontSize="18px" minW="100px">
-            Название
-          </Box>
-          <Link href={`/mangas/${data._id}`}>
-            <a>
-              <Box fontSize="18px" w="100%">
-                {data.title}
+      <Box className={manga.infoWrapper}>
+        <Link href={`/mangas/${data._id}`}>
+          <a>
+            <Box
+              w="90%"
+              maxH="35px"
+              overflow="hidden"
+              fontSize="1.3em"
+              padding="0 10px"
+              className={manga.info}
+            >
+              {data.title}
+            </Box>
+          </a>
+        </Link>
+        <Box className={manga.infoSubWrapper}>
+          <Flex
+            direction="column"
+            maxH="170px"
+            mt="10px"
+            padding="0 10px"
+            className={manga.info}
+          >
+            <Flex mb="5px">
+              <Box minW="100px">Серия</Box>
+              <Box minW="150px" ml="2%" w="100%">
+                {data.series}
               </Box>
-            </a>
-          </Link>
-        </Flex>
-        <Flex mb="8px">
-          <Box minW="100px">Серия</Box>
-          <Box w="100%">{data.series}</Box>
-        </Flex>
-        <Flex mb="10px">
-          <Box minW="100px">Автор</Box>
-          <Box w="100%">{data.artist}</Box>
-        </Flex>
-
-        <Flex>
-          <Box minW="100px" verticalAlign="center">
-            Теги:
-          </Box>
-          <Flex w="100%" flexWrap="wrap">
+            </Flex>
+            <Flex mb="5px">
+              <Box minW="100px">Автор</Box>
+              <Box ml="2%" w="100%">
+                {data.artist}
+              </Box>
+            </Flex>
+            <Flex mb="5px">
+              <Box minW="100px">Дата</Box>
+              <Box ml="2%" w="100%">
+                {moment(data.createdAt).format("DD-MM-YYYY")}
+              </Box>
+            </Flex>
+            <Flex mb="5px">
+              <Box minW="100px">Просмотры</Box>
+              <Box ml="2%" w="100%">
+                {data.views}
+              </Box>
+            </Flex>
+            <Flex mb="5px">
+              <Box minW="100px">Likes</Box>
+              <Box ml="2%" w="100%">
+                {data.likes}
+              </Box>
+            </Flex>
+          </Flex>
+          <Box className={`${manga.tagsWrapper}`}>
             {data.tags.map((tag, i) => {
               return (
-                <Tag
-                  key={i + 1}
-                  variant="solid"
-                  // colorScheme="teal"
-                  margin="0 3px 3px 0"
-                >
-                  {tag}
-                </Tag>
+                <Box className={`${manga.tag}`} key={i + 1}>
+                  <Image
+                    src={tag?.img ? tag["img"] : "/tristana.png"}
+                    alt="Picture of the author"
+                    width={128}
+                    height={128}
+                    fill="strict"
+                    objectFit="cover"
+                    draggable="false"
+                  />
+                  <Box className={`${manga.tag_name}`}>{tag}</Box>
+                </Box>
               );
             })}
-          </Flex>
-        </Flex>
-      </Flex>
+          </Box>
+        </Box>
+      </Box>
     </Flex>
   );
 }

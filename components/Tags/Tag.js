@@ -1,4 +1,4 @@
-import { Box, Flex, Center } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Image from "next/image";
 import TagsCss from "../../styles/components/Tags.module.css";
 
