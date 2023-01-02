@@ -13,6 +13,7 @@ import {
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
+import { LINK } from "../../libs/changeApiUrl.js";
 import { useState, useEffect, useContext } from "react";
 
 export default function AuthFavorites({ stage, setStage }) {
@@ -20,28 +21,18 @@ export default function AuthFavorites({ stage, setStage }) {
   const [sortFlag, setSortFlag] = useState();
   const [sortedTags, setSortedTags] = useState([]);
   const { favorites, setFavorites } = useContext(AuthContext);
-  const [tags, setTags] = useState([
-    { name: "Alan", img: "/tristana.png" },
-    { name: "Alice", img: "/tristana.png" },
-    { name: "Brom", img: "/tristana.png" },
-    { name: "Bettie", img: "/tristana.png" },
-    { name: "Clown", img: "/tristana.png" },
-    { name: "Clara", img: "/tristana.png" },
-    { name: "Dio", img: "/tristana.png" },
-    { name: "Dalia", img: "/tristana.png" },
-    { name: "Eren", img: "/tristana.png" },
-    { name: "Eva", img: "/tristana.png" },
-    { name: "Frank", img: "/tristana.png" },
-    { name: "Fiora", img: "/tristana.png" },
-    { name: "Hovard", img: "/tristana.png" },
-    { name: "Hina", img: "/tristana.png" },
-    { name: "Irven", img: "/tristana.png" },
-    { name: "Ino", img: "/tristana.png" },
-    { name: "Jostar", img: "/tristana.png" },
-    { name: "Joulin", img: "/tristana.png" },
-    { name: "Kenny", img: "/tristana.png" },
-    { name: "Kiana", img: "/tristana.png" },
-  ]);
+  const [tags, setTags] = useState([]);
+
+  const getTagsFunc = async () => {
+    try {
+      const res = await fetch(`${LINK}/get_tags`);
+      const result = await res.json();
+      setTags(result.tags);
+      console.log(result.tags);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const selectTagFunc = (id) => {
     const prevSelectedTags = [...selectedTags];
@@ -78,6 +69,11 @@ export default function AuthFavorites({ stage, setStage }) {
     }
   };
 
+  useEffect(() => {
+    getTagsFunc();
+    console.log(toggleSort());
+  }, []);
+
   return (
     <>
       <ModalBody p="0" mt="15px">
@@ -97,17 +93,18 @@ export default function AuthFavorites({ stage, setStage }) {
           />
           <Divider mt="20px" width="100%" bg="#47f143" height="2px" />
           <div className={AuthFavoritesCSS.tags}>
-            {toggleSort().map((item, i) => {
-              return (
-                <AuthTag
-                  key={i + 1}
-                  data={item}
-                  selectTagFunc={selectTagFunc}
-                  selectedTags={selectedTags}
-                  type={"favs"}
-                />
-              );
-            })}
+            {toggleSort().length > 0 &&
+              toggleSort().map((item, i) => {
+                return (
+                  <AuthTag
+                    key={i + 1}
+                    data={item}
+                    selectTagFunc={selectTagFunc}
+                    selectedTags={selectedTags}
+                    type={"favs"}
+                  />
+                );
+              })}
           </div>
           {selectedTags.length != 0 && (
             <Box className={AuthFavoritesCSS.subTags}>

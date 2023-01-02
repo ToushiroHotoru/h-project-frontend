@@ -7,10 +7,9 @@ export default function TagDesktop({ data }) {
     <Box className={TagsCss.tag}>
       <Box className={TagsCss.tagImage}>
         <Image
-          src={data.img}
+          src={data.image}
           alt="Picture of the author"
-          width={360}
-          height={570}
+          layout="fill"
           draggable={false}
         />
       </Box>
@@ -25,7 +24,7 @@ export default function TagDesktop({ data }) {
             overflow="hidden"
             position="relative"
           >
-            {data.desc}
+            {data.description}
           </Box>
           <Flex
             className={TagsCss.tagCount}
