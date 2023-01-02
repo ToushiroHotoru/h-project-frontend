@@ -9,6 +9,7 @@ const nextConfig = {
       "get.wallhere.com",
       "yandex.ru",
       "img10.reactor.cc",
+      "h-project.toushirohotoru.repl.co",
     ],
   },
 };

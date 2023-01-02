@@ -15,6 +15,7 @@ export default function AuthTag({
   const [isLoaded, setIsloaded] = useState(false);
 
   useEffect(() => {
+    console.log(data["image"]);
     setTimeout(() => {
       setIsloaded(true);
     }, 3000);
@@ -41,7 +42,7 @@ export default function AuthTag({
       }}
     >
       <Image
-        src={data["img"]}
+        src={data["image"]}
         alt="Picture of the author"
         width={128}
         height={128}
