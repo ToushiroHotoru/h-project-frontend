@@ -29,7 +29,11 @@ export default function HeadTags() {
         {tags &&
           tags.map((item, i) => {
             return (
-              <Skeleton isLoaded={isLoaded} className={`${MangaHeadCSS.item} `}>
+              <Skeleton
+                isLoaded={isLoaded}
+                className={`${MangaHeadCSS.item} `}
+                key={i + 1}
+              >
                 <Image
                   src={item["image"]}
                   alt="Picture of the author"
