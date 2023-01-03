@@ -71,7 +71,6 @@ export default function AuthFavorites({ stage, setStage }) {
 
   useEffect(() => {
     getTagsFunc();
-    console.log(toggleSort());
   }, []);
 
   return (
