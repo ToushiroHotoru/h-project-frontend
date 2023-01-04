@@ -2,7 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import css from "../../styles/components/MangaHead.module.css";
 
 export default function HeadDesc({ mangaDynamic, manga }) {
-  console.log(mangaDynamic);
+
   return (
     <div className={css.head_desc}>
       <Flex direction="column">

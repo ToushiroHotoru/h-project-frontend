@@ -1,28 +1,11 @@
 import MangaHeadCSS from "../../styles/components/MangaHead.module.css";
 import { Box, Flex, Skeleton } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { LINK } from "../../libs/changeApiUrl.js";
 
-export default function HeadTags() {
-  const [isLoaded, setIsloaded] = useState(true);
-  const [tags, setTags] = useState([]);
-
-  const getTagsFunc = async () => {
-    try {
-      const res = await fetch(`${LINK}/get_tags`);
-      const result = await res.json();
-      setTags(result.tags);
-      console.log(result.tags);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
-  useEffect(() => {
-    getTagsFunc();
-  }, []);
-
+export default function HeadTags({ tags }) {
+  const [isLoaded, setIsloaded] = useState(false);
+  console.log(tags);
   return (
     <div className={MangaHeadCSS.head_tags}>
       <Flex alignItems="flex-start" flexWrap="wrap" spacing="5px">
@@ -36,9 +19,11 @@ export default function HeadTags() {
               >
                 <Image
                   src={item["image"]}
+                  onLoadingComplete={() => {
+                    setIsloaded(true);
+                  }}
                   alt="Picture of the author"
-                  width={128}
-                  height={128}
+                  layout="fill"
                   fill="strict"
                   objectFit="cover"
                   draggable="false"

@@ -110,11 +110,11 @@ export default function Filter({ router }) {
                 <Tooltip label="Нравится" hasArrow>
                   <div
                     className={`${css.sort_item} ${
-                      router.query.sort === "like" && css.sort_item_active
+                      router.query.sort === "likes" && css.sort_item_active
                     }`}
                     onClick={() => {
                       router.push(
-                        `/mangas?page=${router.query.page}&sort=like`,
+                        `/mangas?page=${router.query.page}&sort=likes`,
                         undefined,
                         {
                           shallow: true,
@@ -129,11 +129,11 @@ export default function Filter({ router }) {
                 <Tooltip label="Просмотры" hasArrow>
                   <Box
                     className={`${css.sort_item} ${
-                      router.query.sort === "view" && css.sort_item_active
+                      router.query.sort === "views" && css.sort_item_active
                     }`}
                     onClick={() => {
                       router.push(
-                        `/mangas?page=${router.query.page}&sort=view`,
+                        `/mangas?page=${router.query.page}&sort=views`,
                         undefined,
                         {
                           shallow: true,

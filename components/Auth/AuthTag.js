@@ -15,10 +15,6 @@ export default function AuthTag({
   const [isLoaded, setIsloaded] = useState(false);
 
   useEffect(() => {
-    console.log(data["image"]);
-    setTimeout(() => {
-      setIsloaded(true);
-    }, 3000);
     setIsClicked(selectedTags.includes(data["name"]) ? true : false);
   }, [selectedTags]);
 
@@ -43,6 +39,9 @@ export default function AuthTag({
     >
       <Image
         src={data["image"]}
+        onLoadingComplete={() => {
+          setIsloaded(true);
+        }}
         alt="Picture of the author"
         width={128}
         height={128}

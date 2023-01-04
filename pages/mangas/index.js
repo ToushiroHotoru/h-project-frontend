@@ -33,7 +33,9 @@ export default function Mangas({ deviceType }) {
   };
 
   const { data, error } = useSWR(
-    `${LINK}/mangas?page=${router.query.page}&sort=${router.query.sort}`,
+    `${LINK}/mangas?page=${router.query.page}&sort=${router.query.sort}${
+      router.query.tag ? "&tag=" + router.query.tag : ""
+    }`,
     fetcher
   );
 
