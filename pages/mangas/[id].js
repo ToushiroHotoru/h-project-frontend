@@ -57,6 +57,7 @@ export default function Manga({ manga, id }) {
       });
 
       const data = await res.json();
+      console.log(data["tags"]);
       setMangaDynamic(data);
     } catch (err) {
       console.log(err);
@@ -85,7 +86,10 @@ export default function Manga({ manga, id }) {
 
           <section className={css.head}>
             <HeadImg img={manga.cover} id={mangaDynamic?._id} />
-            <HeadDesc mangaDynamic={mangaDynamic} manga={manga} />
+            <HeadDesc
+              tags={mangaDynamic && mangaDynamic["tags"]}
+              manga={manga}
+            />
             <HeadTags tags={mangaDynamic && mangaDynamic.tags} />
           </section>
           <Pages pages={mangaDynamic && mangaDynamic.pages} manga={manga} />

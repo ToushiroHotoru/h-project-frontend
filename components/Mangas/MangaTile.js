@@ -17,19 +17,10 @@ export default function MangaTile({ props }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isLoaded, setIsloaded] = useState(false);
 
-  const onLoadHandler = () => {
-    // событие после загрузки изображения
-  };
-
+ 
   const tags = ["tag1", "tag2", "tag3", "tag4", "tag5", "tag6"];
 
-  // const cutLongTitle = (title) => {
-  //   if (title.length > 88) {
-  //     console.log(title.slice(0, 85));
-  //     return title.slice(0, 100);
-  //   }
-  //   return title;
-  // };
+
 
   const Cover = () => {
     return (

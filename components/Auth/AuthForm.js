@@ -40,7 +40,7 @@ export default function AuthForm({ stage, setStage }) {
 
     if (!mailRegex.test(email)) {
       errors["emailError"] = "Поле email не не заполнено!";
-      console.log(!mailRegex.test(email));
+     
       if (!email) {
         errors["emailError"] = "Не корректный email";
         errors["status"] = true;
@@ -50,7 +50,7 @@ export default function AuthForm({ stage, setStage }) {
 
     if (!usernameRegex.test(username)) {
       errors["usernameError"] = "Латиница, не менее 3х символов.";
-      console.log(!usernameRegex.test(username));
+      
       if (!username) {
         errors["usernameError"] = "Поле username не заполнено!";
         errors["status"] = true;
@@ -60,7 +60,7 @@ export default function AuthForm({ stage, setStage }) {
 
     if (!passwordRegex.test(password)) {
       errors["passwordError"] = "Латиница, не менее 8и символов, 1 цифра";
-      console.log(!passwordRegex.test(password));
+     
       if (!password) {
         errors["passwordError"] = "Поле password не заполнено!";
         errors["status"] = true;

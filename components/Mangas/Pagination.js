@@ -12,7 +12,7 @@ export default function Pagination({ router, total, offset, step }) {
     let page_offset = start_page_offset;
     let page_offsets = new Array();
 
-    console.log(start_page_offset);
+
 
     if (offset >= total || offset + step >= total) {
       end_page_offset = offset + step;

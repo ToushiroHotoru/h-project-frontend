@@ -1,15 +1,20 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import Image from "next/image";
 import TagsCss from "../../styles/components/Tags.module.css";
+import { useState } from "react";
 
 export default function TagDesktop({ data }) {
+  const [isLoaded, setIsloaded] = useState(false);
   return (
-    <Box className={TagsCss.tag}>
+    <Skeleton className={TagsCss.tag} isLoaded={isLoaded}>
       <Box className={TagsCss.tagImage}>
         <Image
           src={data.image}
           alt="Picture of the author"
           layout="fill"
+          onLoadingComplete={() => {
+            setIsloaded(true);
+          }}
           draggable={false}
         />
       </Box>
@@ -46,6 +51,6 @@ export default function TagDesktop({ data }) {
           </Flex>
         </Box>
       </Box>
-    </Box>
+    </Skeleton>
   );
 }
