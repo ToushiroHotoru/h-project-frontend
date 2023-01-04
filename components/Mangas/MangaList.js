@@ -9,6 +9,7 @@ import useMeasure from "react-use-measure";
 export default function MangaList({ data }) {
   const [isHovored, setIsHovored] = useState();
   const [ref, { width }] = useMeasure();
+  console.log(data);
 
   const reviewPicsArrayFunc = () => {
     if (isHovored) {
@@ -111,22 +112,23 @@ export default function MangaList({ data }) {
             </Flex>
           </Flex>
           <Box className={`${manga.tagsWrapper}`}>
-            {data.tags.map((tag, i) => {
-              return (
-                <Box className={`${manga.tag}`} key={i + 1}>
-                  <Image
-                    src={tag?.img ? tag["img"] : "/tristana.png"}
-                    alt="Picture of the author"
-                    width={128}
-                    height={128}
-                    fill="strict"
-                    objectFit="cover"
-                    draggable="false"
-                  />
-                  <Box className={`${manga.tag_name}`}>{tag}</Box>
-                </Box>
-              );
-            })}
+            {data &&
+              data.tags.map((tag, i) => {
+                return (
+                  <Box className={`${manga.tag}`} key={i + 1}>
+                    <Image
+                      src={tag["image"]}
+                      alt="Picture of the author"
+                      width={128}
+                      height={128}
+                      fill="strict"
+                      objectFit="cover"
+                      draggable="false"
+                    />
+                    <Box className={`${manga.tag_name}`}>{tag.name}</Box>
+                  </Box>
+                );
+              })}
           </Box>
         </Box>
       </Box>

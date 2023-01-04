@@ -12,8 +12,6 @@ export default function Pagination({ router, total, offset, step }) {
     let page_offset = start_page_offset;
     let page_offsets = new Array();
 
-
-
     if (offset >= total || offset + step >= total) {
       end_page_offset = offset + step;
     } else if (offset + step * 2 >= total) {
@@ -50,7 +48,7 @@ export default function Pagination({ router, total, offset, step }) {
           router.push(
             `/mangas?page=${Number(router.query.page) - 1}&sort=${
               router.query.sort
-            }`,
+            }${router.query.tag ? "&tag=" + router.query.tag : ""}`,
             undefined,
             {
               scroll: true,
@@ -69,7 +67,9 @@ export default function Pagination({ router, total, offset, step }) {
             colorScheme={Number(router.query.page) === item ? "blue" : "pink"}
             onClick={() => {
               router.push(
-                `/mangas?page=${item}&sort=${router.query.sort}`,
+                `/mangas?page=${item}&sort=${router.query.sort}${
+                  router.query.tag ? "&tag=" + router.query.tag : ""
+                }`,
                 undefined,
                 {
                   scroll: true,
@@ -93,7 +93,7 @@ export default function Pagination({ router, total, offset, step }) {
           router.push(
             `/mangas?page=${Number(router.query.page) + 1}&sort=${
               router.query.sort
-            }`,
+            }${router.query.tag ? "&tag=" + router.query.tag : ""}`,
             undefined,
             {
               scroll: true,
