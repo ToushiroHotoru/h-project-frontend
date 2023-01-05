@@ -15,8 +15,15 @@
   padding: 15px;
   top: 150px;
   right: 0;
+  min-width: 50px;
+  min-height: 50px;
   background-color: black;
   border-radius: 8px 0 0 8px;
+}
+
+.gearIcon {
+  min-width: 30px;
+  min-height: 30px;
 }
 
 .test_click_next {
@@ -59,4 +66,19 @@
   overflow-y: auto;
   background-color: #000;
   display: none;
+}
+
+@media (max-width: 868px) {
+  .gear {
+    position: relative;
+    min-width: 50px;
+    min-height: 30px;
+    padding: 10px;
+    top: auto;
+    border-radius: 8px 8px 8px 8px;
+  }
+
+  .gearIcon {
+    min-width: 20px;
+  }
 }

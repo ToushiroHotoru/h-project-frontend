@@ -1,16 +1,11 @@
 import { Box, Button, Heading } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import css from "../../styles/components/Pages.module.css";
+import css from "../../styles/components/manga/Pages.module.css";
 import { useState } from "react";
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile,
-} from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
-export default function Pages({ pages, manga }) {
+export default function MangaPages({ pages, manga }) {
   const [pagesVisibality, setPagesVisibality] = useState(false);
   const step = isMobile ? 5 : 11;
   const changePreviewVisability = () => {

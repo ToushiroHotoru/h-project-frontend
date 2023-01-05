@@ -1,6 +1,6 @@
 import AuthTag from "./AuthTag";
 import { AuthContext } from "./AuthContext";
-import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import {
   Input,
   Box,
@@ -28,7 +28,6 @@ export default function AuthFavorites({ stage, setStage }) {
       const res = await fetch(`${LINK}/get_tags`);
       const result = await res.json();
       setTags(result.tags);
-   
     } catch (err) {
       console.log(err.message);
     }

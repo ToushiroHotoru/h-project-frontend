@@ -10,6 +10,7 @@ import {
   Flex,
   Box,
 } from "@chakra-ui/react";
+import SideDrawerCSS from "../../styles/components/SideDrawer.module.css";
 
 export default function SideDrawer({
   isOpen,
@@ -28,6 +29,7 @@ export default function SideDrawer({
       placement="right"
       onClose={onClose}
       finalFocusRef={btnRef}
+      className={SideDrawerCSS.drawer}
       size="md"
     >
       <DrawerOverlay />
@@ -106,7 +108,7 @@ export default function SideDrawer({
           </Box>
           <Box>
             <Box mt="2em" fontSize="18px">
-              Map(Теперь работает):
+              Map:
             </Box>
             <Flex w="100%">
               <Button

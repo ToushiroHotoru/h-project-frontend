@@ -8,9 +8,9 @@ import {
   BsFillFolderFill,
 } from "react-icons/bs";
 
-import css from "../../styles/components/MangaHead.module.css";
+import css from "../../styles/components/manga/MangaHead.module.css";
 
-export default function HeadImg({ img, id }) {
+export default function MangaImg({ img, id }) {
   return (
     <div className={css.head_img}>
       <Box borderRadius="8px" overflow="hidden">

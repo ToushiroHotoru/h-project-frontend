@@ -1,4 +1,4 @@
-import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import Image from "next/image";
 import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { useState, useEffect } from "react";

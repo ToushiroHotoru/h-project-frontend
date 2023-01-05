@@ -8,9 +8,9 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { BsXLg } from "react-icons/bs";
-import css from "../../styles/components/Comments.module.css";
+import css from "../../styles/components/manga/Comments.module.css";
 
-export default function Comments() {
+export default function MangaComments() {
   return (
     <section className={css.comments}>
       <Text mb="8px">Comments</Text>

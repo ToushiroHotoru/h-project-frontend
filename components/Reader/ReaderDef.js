@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import ReaderPage from "./ReaderPage";
 import { BsGearFill } from "react-icons/bs";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 
 export default function RederDef({
@@ -81,11 +81,6 @@ export default function RederDef({
           )}
 
           <Center w="100%" flexDirection="column" justifySelf="center">
-            <Tooltip hasArrow label="Настройки" placement="left">
-              <Box ref={btnRef} className={css.gear} onClick={onOpen}>
-                <BsGearFill size="2em" />
-              </Box>
-            </Tooltip>
             <Box fontSize="18px" mb="15px">
               {mangaTitle}
             </Box>
@@ -159,6 +154,11 @@ export default function RederDef({
               >
                 Next
               </Button>
+              <Tooltip hasArrow label="Настройки" placement="left">
+                <Center ref={btnRef} className={css.gear} onClick={onOpen}>
+                  <BsGearFill className={css.gearIcon} size="1em" />
+                </Center>
+              </Tooltip>
             </HStack>
             <Link href={`/mangas/${id}`}>
               <Button mt="1em">Вернуться на страницу</Button>

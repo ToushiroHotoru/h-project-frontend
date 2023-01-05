@@ -42,7 +42,7 @@ export default function Pagination({ router, total, offset, step }) {
     <Flex justifyContent="center">
       <Button
         mx="2"
-        colorScheme="pink"
+        colorScheme="whatsapp"
         disabled={Number(router.query.page) - 1 === 0 ? true : false}
         onClick={() => {
           router.push(
@@ -64,7 +64,9 @@ export default function Pagination({ router, total, offset, step }) {
           <Button
             key={i + 1}
             mx="2"
-            colorScheme={Number(router.query.page) === item ? "blue" : "pink"}
+            colorScheme={
+              Number(router.query.page) === item ? "gray" : "whatsapp"
+            }
             onClick={() => {
               router.push(
                 `/mangas?page=${item}&sort=${router.query.sort}${
@@ -85,7 +87,7 @@ export default function Pagination({ router, total, offset, step }) {
 
       <Button
         mx="2"
-        colorScheme="pink"
+        colorScheme="whatsapp"
         disabled={
           router.query.page >= Math.ceil(total / step) - 1 ? true : false
         }
