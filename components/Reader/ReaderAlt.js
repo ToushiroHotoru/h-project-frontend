@@ -16,8 +16,6 @@ export default function ReaderAlt({
 }) {
   const [styles, animate] = useSpring(() => ({ right: -200 }));
 
-  const [isMap, setIsMap] = useState(false);
-
   const add_scroll = () => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 1200) {
