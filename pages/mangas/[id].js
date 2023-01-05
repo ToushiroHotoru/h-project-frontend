@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { getPaths } from "../../libs/get_post.js";
 
-import Comments from "../../components/Manga/Comments.js";
-import Pages from "../../components/Manga/Pages.js";
-import HeadTags from "../../components/Manga/HeadTags.js";
-import HeadDesc from "../../components/Manga/HeadDesc.js";
-import HeadImg from "../../components/Manga/HeadImg.js";
+import MangaComments from "../../components/Manga/MangaComments.js";
+import MangaPages from "../../components/Manga/MangaPages.js";
+import MangaTags from "../../components/Manga/MangaTags.js";
+import MangaDesc from "../../components/Manga/MangaDesc.js";
+import MangaImg from "../../components/Manga/MangaImg.js";
 
 import css from "../../styles/pages/Manga.module.css";
 import { LINK } from "../../libs/changeApiUrl.js";
@@ -85,15 +85,15 @@ export default function Manga({ manga, id }) {
           </Flex>
 
           <section className={css.head}>
-            <HeadImg img={manga.cover} id={mangaDynamic?._id} />
-            <HeadDesc
-              tags={mangaDynamic && mangaDynamic["tags"]}
-              manga={manga}
-            />
-            <HeadTags tags={mangaDynamic && mangaDynamic.tags} />
+            <MangaImg img={manga.cover} id={mangaDynamic?._id} />
+            <MangaDesc data={mangaDynamic && mangaDynamic} manga={manga} />
+            <MangaTags tags={mangaDynamic && mangaDynamic["tags"]} />
           </section>
-          <Pages pages={mangaDynamic && mangaDynamic.pages} manga={manga} />
-          <Comments />
+          <MangaPages
+            pages={mangaDynamic && mangaDynamic.pages}
+            manga={manga}
+          />
+          <MangaComments />
         </div>
       </div>
     </>
