@@ -1,6 +1,6 @@
 import AuthTag from "./AuthTag";
 import { AuthContext } from "./AuthContext";
-import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import {
   Input,
   Box,

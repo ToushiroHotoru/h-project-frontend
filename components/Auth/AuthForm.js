@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { AuthContext } from "./AuthContext";
 import { useState, useContext } from "react";
-import css from "../../styles/components/AuthFavorites.module.css";
+import css from "../../styles/components/Auth.module.css";
 
 export default function AuthForm({ stage, setStage }) {
   const [show, setShow] = useState(false);
@@ -40,7 +40,7 @@ export default function AuthForm({ stage, setStage }) {
 
     if (!mailRegex.test(email)) {
       errors["emailError"] = "Поле email не не заполнено!";
-     
+
       if (!email) {
         errors["emailError"] = "Не корректный email";
         errors["status"] = true;
@@ -50,7 +50,7 @@ export default function AuthForm({ stage, setStage }) {
 
     if (!usernameRegex.test(username)) {
       errors["usernameError"] = "Латиница, не менее 3х символов.";
-      
+
       if (!username) {
         errors["usernameError"] = "Поле username не заполнено!";
         errors["status"] = true;
@@ -60,7 +60,7 @@ export default function AuthForm({ stage, setStage }) {
 
     if (!passwordRegex.test(password)) {
       errors["passwordError"] = "Латиница, не менее 8и символов, 1 цифра";
-     
+
       if (!password) {
         errors["passwordError"] = "Поле password не заполнено!";
         errors["status"] = true;

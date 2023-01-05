@@ -13,9 +13,9 @@ import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import AuthAvatar from "./AuthAvatar";
 import { AuthContext } from "./AuthContext";
-import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import "swiper/css";
-import 'swiper/css/navigation';
+import "swiper/css/navigation";
 export default function AuthAvatars({ setStage, onCloseFunc }) {
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");

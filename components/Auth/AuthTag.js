@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
 import Image from "next/image";
-import AuthFavoritesCSS from "../../styles/components/AuthFavorites.module.css";
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import { useState, useEffect } from "react";
 
 export default function AuthTag({
