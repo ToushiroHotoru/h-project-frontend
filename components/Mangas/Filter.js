@@ -215,13 +215,11 @@ export default function Filter({ router }) {
                       }
                     }}
                   />
-                  <InputRightElement
-                    children={
-                      <BsFillTriangleFill
-                        style={showTags && { transform: "rotate(180deg)" }}
-                      />
-                    }
-                  />
+                  <InputRightElement>
+                    <BsFillTriangleFill
+                      style={showTags && { transform: "rotate(180deg)" }}
+                    />
+                  </InputRightElement>
                 </InputGroup>
                 {showTags && (
                   <Box
