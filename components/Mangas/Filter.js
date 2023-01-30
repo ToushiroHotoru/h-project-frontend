@@ -1,4 +1,7 @@
 import {
+  Tag,
+  TagLabel,
+  TagCloseButton,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -21,9 +24,18 @@ import {
   BsFillEyeFill,
 } from "react-icons/bs";
 import css from "../../styles/components/Filter.module.css";
+import { LINK } from "../../libs/changeApiUrl.js";
+import { useState, useEffect } from "react";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { BsFillTriangleFill } from "react-icons/bs";
+import { FiRotateCcw } from "react-icons/fi";
 
 export default function Filter({ router }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [tags, setTags] = useState([]);
+  const [filteredTags, setFilteredTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [showTags, setShowTags] = useState(false);
 
   const theme = extendTheme({
     components: {
@@ -37,6 +49,66 @@ export default function Filter({ router }) {
       },
     },
   });
+
+  // const tagsArrayToUrl = async () => {
+  //   let tagsArray = "";
+
+  //   if (selectedTags.length != 0) {
+  //     tagsArray += `?tags=${selectedTags[0]["id"]}`;
+  //     if (selectedTags.length > 1) {
+  //       for (let i = 1; i < selectedTags.length; i++) {
+  //         tagsArray += `&tags=${selectedTags[i]["id"]}`;
+  //       }
+  //     }
+  //   }
+  //   return tagsArray;
+  // };
+
+  const getTagsFunc = async () => {
+    try {
+      let tagsToSend = selectedTags.map((item) => item["id"]);
+
+      let url =
+        tagsToSend.length != 0
+          ? `${LINK}/get_tags_count?` +
+            new URLSearchParams({
+              tags: tagsToSend,
+            })
+          : `${LINK}/get_tags_count`;
+      const res = await fetch(url);
+      const result = await res.json();
+      setTags(result.tags);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const setSortFunc = (sortType) => {
+    router.push(
+      `/mangas?page=${router.query.page}&sort=${sortType}`,
+      undefined,
+      {
+        shallow: true,
+      }
+    );
+  };
+
+  const selectTagFunc = (id) => {
+    const prevSelectedTags = [...selectedTags];
+    for (let i = 0; i < prevSelectedTags.length; i++) {
+      if (prevSelectedTags[i] == id) {
+        prevSelectedTags.push(id);
+      } else {
+        prevSelectedTags.splice(prevSelectedTags.indexOf(id), 1);
+      }
+    }
+
+    setSelectedTags(prevSelectedTags);
+  };
+
+  useEffect(() => {
+    getTagsFunc();
+  }, [selectedTags]);
 
   return (
     <>
@@ -56,13 +128,7 @@ export default function Filter({ router }) {
                       router.query.sort === "latest" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      router.push(
-                        `/mangas?page=${router.query.page}&sort=latest`,
-                        undefined,
-                        {
-                          shallow: true,
-                        }
-                      );
+                      setSortFunc("latest");
                     }}
                   >
                     <BsFillClockFill size="50%" />
@@ -75,13 +141,7 @@ export default function Filter({ router }) {
                       router.query.sort === "alphabet" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      router.push(
-                        `/mangas?page=${router.query.page}&sort=alphabet`,
-                        undefined,
-                        {
-                          shallow: true,
-                        }
-                      );
+                      setSortFunc("alphabet");
                     }}
                   >
                     <BsSortAlphaDown size="50%" />
@@ -94,13 +154,7 @@ export default function Filter({ router }) {
                       router.query.sort === "rating" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      router.push(
-                        `/mangas?page=${router.query.page}&sort=rating`,
-                        undefined,
-                        {
-                          shallow: true,
-                        }
-                      );
+                      setSortFunc("rating");
                     }}
                   >
                     <BsFillStarFill size="50%" />
@@ -113,13 +167,7 @@ export default function Filter({ router }) {
                       router.query.sort === "likes" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      router.push(
-                        `/mangas?page=${router.query.page}&sort=likes`,
-                        undefined,
-                        {
-                          shallow: true,
-                        }
-                      );
+                      setSortFunc("likes");
                     }}
                   >
                     <BsFillHeartFill size="50%" />
@@ -132,19 +180,97 @@ export default function Filter({ router }) {
                       router.query.sort === "views" && css.sort_item_active
                     }`}
                     onClick={() => {
-                      router.push(
-                        `/mangas?page=${router.query.page}&sort=views`,
-                        undefined,
-                        {
-                          shallow: true,
-                        }
-                      );
+                      setSortFunc("views");
                     }}
                   >
                     <BsFillEyeFill size="50%" />
                   </Box>
                 </Tooltip>
               </Flex>
+              <Box mt="0.8em">
+                <InputGroup
+                  onClick={() => {
+                    setShowTags(!showTags);
+                    setFilteredTags(() => {
+                      return [...tags];
+                    });
+                  }}
+                >
+                  <Input
+                    placeholder="Список тегов"
+                    cursor="pointer"
+                    _placeholder={{ opacity: 0.5, color: "#fff" }}
+                    onChange={(e) => {
+                      if (e.target.value.length != 0) {
+                        setShowTags(true);
+                        setFilteredTags(() => {
+                          return tags.filter((item) => {
+                            return item["name"].includes(e.target.value);
+                          });
+                        });
+                      } else {
+                        setFilteredTags(() => {
+                          return [...tags];
+                        });
+                      }
+                    }}
+                  />
+                  <InputRightElement>
+                    <BsFillTriangleFill
+                      style={showTags && { transform: "rotate(180deg)" }}
+                    />
+                  </InputRightElement>
+                </InputGroup>
+                {showTags && (
+                  <Box
+                    backgroundColor="#000"
+                    maxHeight="200px"
+                    overflowY="auto"
+                  >
+                    {filteredTags.map((item, i) => {
+                      return (
+                        <Box
+                          key={i + 1}
+                          lineHeight="35px"
+                          borderBottom="1px solid gray"
+                          padding="0 10px"
+                          cursor="pointer"
+                          onClick={() => {
+                            let prevSelectedTags = [...selectedTags];
+                            prevSelectedTags.push(item);
+                            setSelectedTags(prevSelectedTags);
+                          }}
+                        >
+                          {` ${item["name"]}  (${item["count"]})`}
+                        </Box>
+                      );
+                    })}
+                  </Box>
+                )}
+                <Box mt="0.8em">
+                  {selectedTags.map((item, i) => {
+                    return (
+                      <Tag
+                        size="md"
+                        minWidth="100px"
+                        width="auto"
+                        key={i + 1}
+                        variant="solid"
+                        mx="3px"
+                        colorScheme="black"
+                      >
+                        <TagLabel>{item["name"]}</TagLabel>
+                        <TagCloseButton
+                          ml="auto"
+                          onClick={() => {
+                            selectTagFunc(item["_id"]);
+                          }}
+                        />
+                      </Tag>
+                    );
+                  })}
+                </Box>
+              </Box>
             </Box>
           </ModalBody>
 

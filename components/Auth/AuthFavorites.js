@@ -35,6 +35,7 @@ export default function AuthFavorites({ stage, setStage }) {
 
   const selectTagFunc = (id) => {
     const prevSelectedTags = [...selectedTags];
+    console.log(prevSelectedTags);
     if (prevSelectedTags.includes(id)) {
       prevSelectedTags.splice(prevSelectedTags.indexOf(id), 1);
     } else {
