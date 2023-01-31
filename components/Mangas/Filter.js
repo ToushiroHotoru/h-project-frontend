@@ -36,6 +36,7 @@ export default function Filter({ router }) {
   const [filteredTags, setFilteredTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [showTags, setShowTags] = useState(false);
+  const [filteredFlag, setFilteredFlag] = useState(false);
 
   const theme = extendTheme({
     components: {
@@ -70,10 +71,12 @@ export default function Filter({ router }) {
 
       let url =
         tagsToSend.length != 0
-          ? `${LINK}/get_tags_count?` +
-            new URLSearchParams({
-              tags: tagsToSend,
-            })
+          ? encodeURI(
+              `${LINK}/get_tags_count?` +
+                new URLSearchParams({
+                  tags: tagsToSend,
+                })
+            )
           : `${LINK}/get_tags_count`;
       const res = await fetch(url);
       const result = await res.json();
@@ -104,6 +107,31 @@ export default function Filter({ router }) {
     }
 
     setSelectedTags(prevSelectedTags);
+  };
+
+  const TagsList = ({ tags }) => {
+    return (
+      <Box backgroundColor="#000" maxHeight="200px" overflowY="auto">
+        {tags.map((item, i) => {
+          return (
+            <Box
+              key={i + 1}
+              lineHeight="35px"
+              borderBottom="1px solid gray"
+              padding="0 10px"
+              cursor="pointer"
+              onClick={() => {
+                let prevSelectedTags = [...selectedTags];
+                prevSelectedTags.push(item);
+                setSelectedTags(prevSelectedTags);
+              }}
+            >
+              {` ${item["name"]}  (${item["count"]})`}
+            </Box>
+          );
+        })}
+      </Box>
+    );
   };
 
   useEffect(() => {
@@ -202,13 +230,14 @@ export default function Filter({ router }) {
                     _placeholder={{ opacity: 0.5, color: "#fff" }}
                     onChange={(e) => {
                       if (e.target.value.length != 0) {
-                        setShowTags(true);
+                        setFilteredFlag(false);
                         setFilteredTags(() => {
                           return tags.filter((item) => {
                             return item["name"].includes(e.target.value);
                           });
                         });
                       } else {
+                        setFilteredFlag(true);
                         setFilteredTags(() => {
                           return [...tags];
                         });
@@ -222,31 +251,15 @@ export default function Filter({ router }) {
                   </InputRightElement>
                 </InputGroup>
                 {showTags && (
-                  <Box
-                    backgroundColor="#000"
-                    maxHeight="200px"
-                    overflowY="auto"
-                  >
-                    {filteredTags.map((item, i) => {
-                      return (
-                        <Box
-                          key={i + 1}
-                          lineHeight="35px"
-                          borderBottom="1px solid gray"
-                          padding="0 10px"
-                          cursor="pointer"
-                          onClick={() => {
-                            let prevSelectedTags = [...selectedTags];
-                            prevSelectedTags.push(item);
-                            setSelectedTags(prevSelectedTags);
-                          }}
-                        >
-                          {` ${item["name"]}  (${item["count"]})`}
-                        </Box>
-                      );
-                    })}
-                  </Box>
+                  <>
+                    {filteredFlag ? (
+                      <TagsList tags={filteredTags} />
+                    ) : (
+                      <TagsList tags={tags} />
+                    )}
+                  </>
                 )}
+
                 <Box mt="0.8em">
                   {selectedTags.map((item, i) => {
                     return (
