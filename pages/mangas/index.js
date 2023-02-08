@@ -10,18 +10,33 @@ import MangaTile from "../../components/Mangas/MangaTile";
 import MangaList from "../../components/Mangas/MangaList";
 import ErrorWrapper from "../../components/partials/ErrorWrapper";
 import Toggler from "../../components/Mangas/Toggler";
-import Filter from "../../components/Mangas/Filter";
+import Filter from "../../components/Mangas/Filter/Filter";
 import Pagination from "../../components/Mangas/Pagination";
 import { LINK } from "../../libs/changeApiUrl.js";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Mangas({ deviceType }) {
   //   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
+  const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
+  const dispatch = useDispatch();
 
-  const fetcher = async (url) => {
+  const fetcher = async (url, selectedTags, page, sort) => {
     if (!router.isReady) return;
-    const res = await fetch(url);
+
+    console.log(selectedTags, router.query.page, router.query.sort);
+
+    const res = await fetch(
+      encodeURI(
+        url +
+          new URLSearchParams({
+            page: page ? page : "1",
+            sort: sort ? sort : "latest",
+            tags: selectedTags ? selectedTags.map((item) => item["id"]) : null,
+          })
+      )
+    );
 
     if (!res.ok) {
       const error = new Error("An error occurred while fetching the data.");
@@ -33,9 +48,7 @@ export default function Mangas({ deviceType }) {
   };
 
   const { data, error } = useSWR(
-    `${LINK}/mangas?page=${router.query.page}&sort=${router.query.sort}${
-      router.query.tag ? "&tag=" + router.query.tag : ""
-    }`,
+    [`${LINK}/mangas?`, selectedTags, router.query.page, router.query.sort],
     fetcher
   );
 
@@ -59,12 +72,20 @@ export default function Mangas({ deviceType }) {
     );
   }
 
+  // useEffect(() => {
+  //   console.log(selectedTags.map((item) => item["id"]));
+  // }, [selectedTags]);
+
   //   useEffect(() => {
   //     if (!router.isReady) return;
   //   }, [router.isReady]);
 
   return (
     <>
+      <Box>
+        {selectedTags &&
+          selectedTags.map((item, i) => <Box key={i + 1}>{item.name}</Box>)}
+      </Box>
       <Head>
         <title>Каталог</title>
       </Head>
