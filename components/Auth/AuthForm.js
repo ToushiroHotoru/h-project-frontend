@@ -1,3 +1,4 @@
+import { useState, useContext } from "react";
 import {
   FormControl,
   FormLabel,
@@ -9,11 +10,12 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { AuthContext } from "./AuthContext";
-import { useState, useContext } from "react";
-import css from "../../styles/components/Auth.module.css";
 
-export default function AuthForm({ stage, setStage }) {
+import { AuthContext } from "./AuthContext";
+import css from "../../styles/components/Auth.module.css";
+import { LINK as API_URL } from "../../libs/changeApiUrl";
+
+export default function AuthForm({ stage, setStage, setUserId }) {
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
   const [email, setEmail] = useState("");
@@ -21,6 +23,22 @@ export default function AuthForm({ stage, setStage }) {
   const [password, setPassword] = useState("");
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
   const handleClick = () => setShow(!show);
+  const registrationHandler = async () => {
+    const request = await fetch(`${API_URL}/registration`, {
+      method: "POST",
+      body: JSON.stringify({
+        email: email,
+        username: username,
+        password: password,
+      }),
+    });
+    const response = await request.json();
+
+    if (response.success) {
+      setStage(2);
+      setUserId(response.userId);
+    }
+  };
 
   const validationFunc = (email, username, password) => {
     let errors = {
@@ -59,7 +77,7 @@ export default function AuthForm({ stage, setStage }) {
     }
 
     if (!passwordRegex.test(password)) {
-      errors["passwordError"] = "Латиница, не менее 8и символов, 1 цифра";
+      errors["passwordError"] = "Латиница, не менее 8 символов, 1 цифра";
 
       if (!password) {
         errors["passwordError"] = "Поле password не заполнено!";
@@ -171,8 +189,9 @@ export default function AuthForm({ stage, setStage }) {
           _hover={{ bg: "#CE39BF" }}
           onClick={() => {
             if (!validationFunc(email, username, password).status) {
-              setStage(2);
+              registrationHandler();
             } else {
+              // setStage(2);
               setShowErrors(true);
               console.log("ошибка вообще то");
             }

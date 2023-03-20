@@ -4,7 +4,6 @@ import header from "../styles/partials/Header.module.css";
 import nav from "../styles/partials/Navigation.module.css";
 import A from "./partials/A";
 import AuthModal from "./Auth/AuthModal";
-
 export default function Header() {
   return (
     <header className={header.header}>
@@ -22,6 +21,7 @@ export default function Header() {
             <Box className={`link ${nav.link}`} cursor="pointer" ml="20px">
               <A href="/tags">Теги</A>
             </Box>
+            
             <Box className={`link ${nav.link}`} ml="20px">
               <AuthModal />
             </Box>

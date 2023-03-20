@@ -134,11 +134,11 @@ export default function AuthFavorites({ stage, setStage }) {
       </ModalBody>
       <ModalFooter display="flex" justifyContent="center" p={0} mt="15px">
         <Button
-          disabled={stage >= 4}
+          // disabled={stage >= 4}
           bg={selectedTags.length != 0 ? "#47F143" : "#A2ACAB"} // #1F0A0E
           _hover={{ bg: selectedTags.length != 0 ? "#3FD23C" : "#727978" }}
           onClick={() => {
-            setStage(3);
+            setStage(4);
           }}
         >
           {selectedTags.length != 0 ? "Подтвердить" : "Пропустить"}
