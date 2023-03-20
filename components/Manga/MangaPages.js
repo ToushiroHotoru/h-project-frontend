@@ -12,6 +12,7 @@ export default function MangaPages({ pages, manga }) {
     setPagesVisibality(!pagesVisibality);
   };
 
+
   return (
     <section className={css.content}>
       <Heading as="h2" size="md" marginBottom="20px">
