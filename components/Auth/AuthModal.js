@@ -2,6 +2,8 @@ import AuthForm from "./AuthForm";
 import AuthFavorites from "./AuthFavorites";
 import AuthUnloved from "./AuthUnloved";
 import AuthAvatars from "./AuthAvatars";
+import AuthRegistered from "./AuthRegistered";
+import AuthComplete from "./AuthComplete";
 import { AuthContext } from "./AuthContext";
 import Image from "next/image";
 import {
@@ -18,20 +20,24 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import { FaRegUserCircle } from "react-icons/fa";
 
 export default function AuthModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [stage, setStage] = useState(1);
+  const [userId, setUserId] = useState(null);
   const [usernameContext, setUsernameContext] = useState();
   const [favorites, setFavorites] = useState();
   const [maskots, setMaskots] = useState([
     "/maskot.png",
+    "/maskot4.png",
     "/maskot2.png",
     "/maskot2.png",
     "/maskot4.png",
   ]);
   const speeches = [
     "Fuck u)",
+    "Успешно зарегистрировался",
     "I like cookies)",
     "My fav color is orange)",
     "Welcome)",
@@ -59,11 +65,14 @@ export default function AuthModal() {
             setStage={(val) => {
               setStage(val);
             }}
+            setUserId={(val) => {
+              setUserId(val);
+            }}
           />
         );
       case 2:
         return (
-          <AuthFavorites
+          <AuthRegistered
             stage={stage}
             setStage={(val) => {
               setStage(val);
@@ -72,7 +81,7 @@ export default function AuthModal() {
         );
       case 3:
         return (
-          <AuthUnloved
+          <AuthFavorites
             stage={stage}
             setStage={(val) => {
               setStage(val);
@@ -81,7 +90,27 @@ export default function AuthModal() {
         );
       case 4:
         return (
+          <AuthUnloved
+            stage={stage}
+            setStage={(val) => {
+              setStage(val);
+            }}
+            userId={userId}
+          />
+        );
+      case 5:
+        return (
           <AuthAvatars
+            stage={stage}
+            setStage={(val) => {
+              setStage(val);
+            }}
+            userId={userId}
+          />
+        );
+      case 6:
+        return (
+          <AuthComplete
             stage={stage}
             setStage={(val) => {
               setStage(val);
@@ -99,14 +128,21 @@ export default function AuthModal() {
       <AuthContext.Provider
         value={{ usernameContext, setUsernameContext, favorites, setFavorites }}
       >
-        <Button
+        {/* <Button
+          width="24px"
+          height="24px"
+          borderRadius="50%"
+          padding="0"
+          minWidth="24px"
+        ></Button> */}
+        <FaRegUserCircle
+          size="30px"
+          cursor="pointer"
           onClick={() => {
             setStage(1);
             onOpen();
           }}
-        >
-          Регистрация
-        </Button>
+        />
         <Modal
           isCentered
           onClose={onClose}

@@ -1,4 +1,4 @@
-const server = "repl";
+const server = "repl1";
 
 export const LINK =
   server !== "repl"

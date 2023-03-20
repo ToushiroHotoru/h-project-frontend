@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   Box,
   Center,
@@ -11,37 +11,53 @@ import {
 } from "@chakra-ui/react";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
 import { AuthContext } from "./AuthContext";
-import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
+import { LINK } from "../../libs/changeApiUrl";
 import "swiper/css";
 import "swiper/css/navigation";
-export default function AuthAvatars({ setStage, onCloseFunc }) {
+
+
+export default function AuthAvatars({ setStage }) {
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
 
-  const [avatars, setAvatars] = useState([
-    "/avatar(NY).png",
-    "/avatar.png",
-    "/avatars/avatar1.png",
-    "/avatars/avatar2.png",
-    "/avatars/avatar3.jpg",
-    "/avatars/avatar4.jpg",
-    "/avatars/avatar5.jpg",
-    "/avatars/avatar6.png",
-    "/avatars/avatar7.jpg",
-    "/avatars/avatar8.jpg",
-    "/avatars/avatar9.png",
-    "/avatars/avatar10.jpg",
-    "/avatars/avatar11.jpg",
-    "/avatars/avatar12.jpg",
-    "/avatars/avatar13.jpg",
-    "/avatars/avatar14.png",
-    "/avatars/avatar15.png",
-    "/avatars/avatar16.jpg",
-    "/avatars/avatar17.png",
-  ]);
+  const getAvatarsFunc = async () => {
+    const response = await fetch(`${LINK}/get_avatars`);
+    const data = await response.json();
+
+    setAvatars(data.avatars);
+  };
+
+  const [avatars, setAvatars] = useState([]);
+  // const [avatars, setAvatars] = useState([
+  //   "/avatar(NY).png",
+  //   "/avatar.png",
+  //   "/avatars/avatar1.png",
+  //   "/avatars/avatar2.png",
+  //   "/avatars/avatar3.jpg",
+  //   "/avatars/avatar4.jpg",
+  //   "/avatars/avatar5.jpg",
+  //   "/avatars/avatar6.png",
+  //   "/avatars/avatar7.jpg",
+  //   "/avatars/avatar8.jpg",
+  //   "/avatars/avatar9.png",
+  //   "/avatars/avatar10.jpg",
+  //   "/avatars/avatar11.jpg",
+  //   "/avatars/avatar12.jpg",
+  //   "/avatars/avatar13.jpg",
+  //   "/avatars/avatar14.png",
+  //   "/avatars/avatar15.png",
+  //   "/avatars/avatar16.jpg",
+  //   "/avatars/avatar17.png",
+  // ]);
+
+  useEffect(() => {
+    getAvatarsFunc();
+  }, []);
 
   return (
     <>
@@ -95,9 +111,9 @@ export default function AuthAvatars({ setStage, onCloseFunc }) {
             >
               {avatars.map((item, i) => {
                 return (
-                  <SwiperSlide key={i + 1}>
+                  <SwiperSlide key={item.id}>
                     <AuthAvatar
-                      avatarImgUrl={item}
+                      avatarImgUrl={item.image}
                       avatarPreview={avatarPreview}
                       setAvatarPreview={(val) => {
                         setUploadFlag(false);
@@ -117,8 +133,7 @@ export default function AuthAvatars({ setStage, onCloseFunc }) {
           bg={avatarPreview != "/zero.png" ? "#43F1DC" : "#A2ACAB"}
           _hover={{ bg: avatarPreview != "/zero.png" ? "#3DD7C4" : "#727978" }}
           onClick={() => {
-            onCloseFunc();
-            setStage(1);
+            setStage(6);
           }}
         >
           {avatarPreview != "/zero.png" ? "Подтвердить" : "Пропустить"}
