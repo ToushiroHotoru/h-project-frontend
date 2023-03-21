@@ -199,6 +199,16 @@ export default function AuthForm({ stage, setStage, setUserId }) {
         >
           Далее
         </Button>
+        <Button
+          bg="#F143E0"
+          _hover={{ bg: "#CE39BF" }}
+          onClick={() => {
+            setStage(2);
+            setUserId("64198fd5c294c57f2e983d90");
+          }}
+        >
+          Пропустить
+        </Button>
       </ModalFooter>
     </>
   );

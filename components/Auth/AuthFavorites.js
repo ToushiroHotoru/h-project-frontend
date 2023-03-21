@@ -16,18 +16,45 @@ import {
 import { LINK } from "../../libs/changeApiUrl.js";
 import { useState, useEffect, useContext } from "react";
 
-export default function AuthFavorites({ stage, setStage }) {
+export default function AuthFavorites({ setStage, userId }) {
+  const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortFlag, setSortFlag] = useState();
   const [sortedTags, setSortedTags] = useState([]);
   const { favorites, setFavorites } = useContext(AuthContext);
-  const [tags, setTags] = useState([]);
 
   const getTagsFunc = async () => {
     try {
       const res = await fetch(`${LINK}/get_tags`);
       const result = await res.json();
       setTags(result.tags);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const sendFavoriteTags = async () => {
+    try {
+      const tagsId = [];
+      for (let i = 0; i < tags.length; i++) {
+        const tag = tags[i];
+        for (let j = 0; j < selectedTags.length; j++) {
+          const selectedTag = selectedTags[j];
+          if (tag["name"] === selectedTag) {
+            tagsId.push(tag._id);
+          }
+        }
+      }
+
+      const body = {
+        id: userId,
+        preferencesTags: tagsId,
+      };
+      const res = await fetch(`${LINK}/set_preferences_tags`, {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+      const result = await res.json();
     } catch (err) {
       console.log(err.message);
     }
@@ -77,6 +104,7 @@ export default function AuthFavorites({ stage, setStage }) {
     <>
       <ModalBody p="0" mt="15px">
         <Center flexDirection="column">
+          <div>{userId}</div>
           <Input
             type="text"
             width="100%"
@@ -92,7 +120,7 @@ export default function AuthFavorites({ stage, setStage }) {
           />
           <Divider mt="20px" width="100%" bg="#47f143" height="2px" />
           <div className={AuthFavoritesCSS.tags}>
-            {toggleSort().length > 0 &&
+            {toggleSort().length &&
               toggleSort().map((item, i) => {
                 return (
                   <AuthTag
@@ -105,7 +133,7 @@ export default function AuthFavorites({ stage, setStage }) {
                 );
               })}
           </div>
-          {selectedTags.length != 0 && (
+          {selectedTags.length && (
             <Box className={AuthFavoritesCSS.subTags}>
               {selectedTags.map((item, i) => {
                 return (
@@ -139,9 +167,10 @@ export default function AuthFavorites({ stage, setStage }) {
           _hover={{ bg: selectedTags.length != 0 ? "#3FD23C" : "#727978" }}
           onClick={() => {
             setStage(4);
+            sendFavoriteTags();
           }}
         >
-          {selectedTags.length != 0 ? "Подтвердить" : "Пропустить"}
+          {selectedTags.length !== 0 ? "Подтвердить" : "Пропустить"}
         </Button>
       </ModalFooter>
     </>

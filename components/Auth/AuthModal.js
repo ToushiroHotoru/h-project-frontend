@@ -34,6 +34,7 @@ export default function AuthModal() {
     "/maskot2.png",
     "/maskot2.png",
     "/maskot4.png",
+    "/maskot4.png",
   ]);
   const speeches = [
     "Fuck u)",
@@ -41,6 +42,7 @@ export default function AuthModal() {
     "I like cookies)",
     "My fav color is orange)",
     "Welcome)",
+    "Настройка завершена",
   ];
 
   const theme = extendTheme({
@@ -86,6 +88,7 @@ export default function AuthModal() {
             setStage={(val) => {
               setStage(val);
             }}
+            userId={userId}
           />
         );
       case 4:

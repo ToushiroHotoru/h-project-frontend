@@ -1,6 +1,6 @@
 import { Center, Button, ModalFooter, ModalBody } from "@chakra-ui/react";
 
-export default function AuthFavorites({ stage, setStage, onCloseFunc }) {
+export default function AuthComplete({ stage, setStage, onCloseFunc }) {
   return (
     <>
       <ModalBody p="0" mt="15px">
