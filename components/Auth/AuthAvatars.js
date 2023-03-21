@@ -15,20 +15,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
 import { AuthContext } from "./AuthContext";
-import { LINK } from "../../libs/changeApiUrl";
+import { LINK as API_URL } from "../../libs/changeApiUrl";
 import "swiper/css";
 import "swiper/css/navigation";
 
-
-export default function AuthAvatars({ setStage }) {
+export default function AuthAvatars({ setStage, userId }) {
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
+  const [activeAvatar, setActiveAvatar] = useState(null);
 
   const getAvatarsFunc = async () => {
-    const response = await fetch(`${LINK}/get_avatars`);
+    const response = await fetch(`${API_URL}/get_avatars`);
     const data = await response.json();
-
     setAvatars(data.avatars);
   };
 
@@ -54,6 +53,23 @@ export default function AuthAvatars({ setStage }) {
   //   "/avatars/avatar16.jpg",
   //   "/avatars/avatar17.png",
   // ]);
+
+  const sendSelectedAvatar = async () => {
+    try {
+      const fd = new FormData();
+      const avatar = !uploadFlag ? activeAvatar : avatarPreview;
+      fd.append("id", userId);
+      fd.append("isUpload", uploadFlag);
+      fd.append("avatar", avatar);
+
+      const res = await fetch(`${API_URL}/set_avatar`, {
+        method: "POST",
+        body: fd,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     getAvatarsFunc();
@@ -111,13 +127,17 @@ export default function AuthAvatars({ setStage }) {
             >
               {avatars.map((item, i) => {
                 return (
-                  <SwiperSlide key={item.id}>
+                  <SwiperSlide key={item._id}>
                     <AuthAvatar
                       avatarImgUrl={item.image}
                       avatarPreview={avatarPreview}
+                      avatarId={item._id}
                       setAvatarPreview={(val) => {
                         setUploadFlag(false);
                         setAvatarPreview(val);
+                      }}
+                      selectAvatar={(val) => {
+                        setActiveAvatar(val);
                       }}
                     />
                   </SwiperSlide>
@@ -134,6 +154,7 @@ export default function AuthAvatars({ setStage }) {
           _hover={{ bg: avatarPreview != "/zero.png" ? "#3DD7C4" : "#727978" }}
           onClick={() => {
             setStage(6);
+            sendSelectedAvatar();
           }}
         >
           {avatarPreview != "/zero.png" ? "Подтвердить" : "Пропустить"}

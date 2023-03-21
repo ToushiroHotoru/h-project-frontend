@@ -7,6 +7,8 @@ export default function AuthAvatar({
   avatarImgUrl, // путь изображения для этого
   avatarPreview, // превью изображения на главной
   setAvatarPreview,
+  avatarId,
+  selectAvatar,
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const [isLoaded, setIsloaded] = useState(false);
@@ -18,9 +20,7 @@ export default function AuthAvatar({
   return (
     <SkeletonCircle
       className={`${AuthFavoritesCSS.avatar_image} ${
-        isClicked
-          ? AuthFavoritesCSS.avatar_image_clicked
-          : AuthFavoritesCSS.avatar_image
+        isClicked ? AuthFavoritesCSS.avatar_image_clicked : ""
       }`}
       width="55px"
       height="55px"
@@ -30,6 +30,7 @@ export default function AuthAvatar({
         setIsClicked(true);
         // установка превью аватарки
         setAvatarPreview(avatarImgUrl);
+        selectAvatar(avatarId);
       }}
     >
       <Image

@@ -16,12 +16,12 @@ import {
 import { LINK } from "../../libs/changeApiUrl.js";
 import { useState, useEffect, useContext } from "react";
 
-export default function AuthFavorites({ stage, setStage }) {
+export default function AuthUnloved({ setStage, userId }) {
+  const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortFlag, setSortFlag] = useState();
   const [sortedTags, setSortedTags] = useState([]);
   const { favorites, setFavorites } = useContext(AuthContext);
-  const [tags, setTags] = useState([]);
 
   const getTagsFunc = async () => {
     try {
@@ -56,6 +56,34 @@ export default function AuthFavorites({ stage, setStage }) {
 
     const newTags = [...filteredTags, ...prevTags];
     setSortedTags(newTags);
+  };
+
+  const sendUnlovedTags = async () => {
+    try {
+      const tagsId = [];
+
+      for (let i = 0; i < tags.length; i++) {
+        const tag = tags[i];
+        for (let j = 0; j < selectedTags.length; j++) {
+          const selectedTag = selectedTags[j];
+          if (tag["name"] === selectedTag) {
+            tagsId.push(tag._id);
+          }
+        }
+      }
+
+      const body = {
+        id: userId,
+        exceptionsTags: tagsId,
+      };
+
+      await fetch(`${LINK}/set_exceptions_tags`, {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const toggleSort = () => {
@@ -93,7 +121,7 @@ export default function AuthFavorites({ stage, setStage }) {
               toggleSort().map((item, i) => {
                 return (
                   <AuthTag
-                    key={i + 1}
+                    key={item._id}
                     data={item}
                     selectTagFunc={selectTagFunc}
                     selectedTags={selectedTags}
@@ -135,14 +163,15 @@ export default function AuthFavorites({ stage, setStage }) {
       <ModalFooter display="flex" justifyContent="center" p={0} mt="15px">
         <Button
           // disabled={stage >= 4}
-          bg={selectedTags.length != 0 ? "#F14343" : "#A2ACAB"}
-          _hover={{ bg: selectedTags.length != 0 ? "#D03939" : "#727978" }}
+          bg={selectedTags.length !== 0 ? "#F14343" : "#A2ACAB"}
+          _hover={{ bg: selectedTags.length !== 0 ? "#D03939" : "#727978" }}
           onClick={() => {
             setFavorites([]); // ! delete later
             setStage(5);
+            sendUnlovedTags();
           }}
         >
-          {selectedTags.length != 0 ? "Подтвердить" : "Пропустить"}
+          {selectedTags.length !== 0 ? "Подтвердить" : "Пропустить"}
         </Button>
       </ModalFooter>
     </>
