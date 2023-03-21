@@ -1,10 +1,12 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import Image from "next/image";
-import useSWR from "swr";
 
+import useSWR from "swr";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
+import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
+
+import Head from "next/head";
 import catalog from "../../styles/pages/Catalog.module.css";
 import MangaTile from "../../components/Mangas/MangaTile";
 import MangaList from "../../components/Mangas/MangaList";
@@ -13,10 +15,8 @@ import Toggler from "../../components/Mangas/Toggler";
 import Filter from "../../components/Mangas/Filter/Filter";
 import Pagination from "../../components/Mangas/Pagination";
 import { LINK } from "../../libs/changeApiUrl.js";
-import { useSelector, useDispatch } from "react-redux";
 
 export default function Mangas({ deviceType }) {
-  //   const fetcher = (...args) => fetch(...args).then((res) => res.json());
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
   const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
@@ -24,8 +24,6 @@ export default function Mangas({ deviceType }) {
 
   const fetcher = async (url, selectedTags, page, sort) => {
     if (!router.isReady) return;
-
-    console.log(selectedTags, router.query.page, router.query.sort);
 
     const res = await fetch(
       encodeURI(
@@ -98,9 +96,7 @@ export default function Mangas({ deviceType }) {
             <Box>
               <Toggler
                 isToggled={isToggled}
-                setIsToggled={(val) => {
-                  setIsToggled(val);
-                }}
+                setIsToggled={(val) => setIsToggled(val)}
               />
             </Box>
           </HStack>

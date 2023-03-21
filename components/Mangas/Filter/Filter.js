@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+
+import { useSelector, useDispatch } from "react-redux";
 import {
   Modal,
   ModalOverlay,
@@ -16,10 +19,8 @@ import TagsList from "./TagsList/TagsList";
 import SortList from "./SortList/SortList";
 import SelectedTagsList from "./SelectedTagsList/SelectedTagsList";
 import InputForFilter from "./InputForFilter/InputForFilter";
-import { LINK } from "../../../libs/changeApiUrl.js";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { setSelectedTagsTest } from "../../../redux/selectedTagsSlice";
+import { LINK } from "../../../libs/changeApiUrl.js";
 
 export default function Filter({ router }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,21 +45,14 @@ export default function Filter({ router }) {
     },
   });
 
-  const getTagsFunc = async () => {
+  const fetchTags = async () => {
     try {
-      let url = null;
-      if (selectedTags) {
-        url = encodeURI(
-          `${LINK}/get_tags_count?` +
-            new URLSearchParams({
-              tags: selectedTags.map((item) => item["id"]),
-            })
-        );
-      } else {
-        url = `${LINK}/get_tags_count`;
-      }
+      let url = new URL(`${LINK}/get_tags_count?`);
+      url.search = new URLSearchParams({
+        tags: selectedTags.map((item) => item["id"]),
+      });
 
-      const res = await fetch(url);
+      const res = await fetch(encodeURI(url));
       const result = await res.json();
       setTags(result.tags);
     } catch (err) {
@@ -66,7 +60,7 @@ export default function Filter({ router }) {
     }
   };
 
-  const removeTagFromSelectedFunc = (id) => {
+  const removeTagFromSelected = (id) => {
     setSelectedTags((prevSelectedTags) =>
       prevSelectedTags.filter((item) => item["id"] != id)
     );
@@ -91,7 +85,7 @@ export default function Filter({ router }) {
   };
 
   useEffect(() => {
-    getTagsFunc();
+    fetchTags();
     dispatch(setSelectedTagsTest(selectedTags));
   }, [selectedTags]);
 
@@ -122,15 +116,12 @@ export default function Filter({ router }) {
                         return [...prevSelectedTags, val];
                       });
                     }}
-                    router={router}
                   />
                 )}
 
                 <SelectedTagsList
                   selectedTags={selectedTags}
-                  removeTagFromSelectedFunc={(val) => {
-                    removeTagFromSelectedFunc(val);
-                  }}
+                  removeTagFromSelected={(val) => removeTagFromSelected(val)}
                 />
               </Box>
             </Box>
