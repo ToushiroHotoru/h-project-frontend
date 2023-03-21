@@ -86,6 +86,7 @@ export default function AuthModal() {
             setStage={(val) => {
               setStage(val);
             }}
+            userId={userId}
           />
         );
       case 4:
