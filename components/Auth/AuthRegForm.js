@@ -9,13 +9,19 @@ import {
   Button,
   InputGroup,
   InputRightElement,
+  Flex,
 } from "@chakra-ui/react";
 
 import { AuthContext } from "./AuthContext";
 import css from "../../styles/components/Auth.module.css";
 import { LINK as API_URL } from "../../libs/changeApiUrl";
 
-export default function AuthForm({ stage, setStage, setUserId }) {
+export default function AuthRegForm({
+  stage,
+  setStage,
+  setUserId,
+  setToggleForm,
+}) {
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
   const [email, setEmail] = useState("");
@@ -182,33 +188,53 @@ export default function AuthForm({ stage, setStage, setUserId }) {
           )}
         </FormControl>
       </ModalBody>
-      <ModalFooter display="flex" justifyContent="center" p={0} pt={24}>
-        <Button
-          disabled={stage >= 4}
-          bg="#F143E0"
-          _hover={{ bg: "#CE39BF" }}
-          onClick={() => {
-            if (!validationFunc(email, username, password).status) {
-              registrationHandler();
-            } else {
-              // setStage(2);
-              setShowErrors(true);
-              console.log("ошибка вообще то");
-            }
-          }}
-        >
-          Далее
-        </Button>
-        <Button
-          bg="#F143E0"
-          _hover={{ bg: "#CE39BF" }}
-          onClick={() => {
-            setStage(2);
-            setUserId("64198fd5c294c57f2e983d90");
-          }}
-        >
-          Пропустить
-        </Button>
+      <ModalFooter
+        display="flex"
+        justifyContent="center"
+        flexDirection="column"
+        p={0}
+        pt={24}
+      >
+        <Flex width="100%" justifyContent="center">
+          <Button
+            disabled={stage >= 4}
+            bg="#F143E0"
+            _hover={{ bg: "#CE39BF" }}
+            onClick={() => {
+              if (!validationFunc(email, username, password).status) {
+                registrationHandler();
+              } else {
+                // setStage(2);
+                setShowErrors(true);
+                console.log("ошибка вообще то");
+              }
+            }}
+          >
+            Далее
+          </Button>
+          <Button
+            bg="#F143E0"
+            _hover={{ bg: "#CE39BF" }}
+            marginLeft="16px"
+            onClick={() => {
+              setStage(2);
+              setUserId("64198fd5c294c57f2e983d90");
+            }}
+          >
+            Пропустить
+          </Button>
+        </Flex>
+        <Flex width="100%" justifyContent="center" marginTop="16px">
+          <Button
+            bg="#F143E0"
+            _hover={{ bg: "#CE39BF" }}
+            onClick={() => {
+              setToggleForm(true);
+            }}
+          >
+            Войти
+          </Button>
+        </Flex>
       </ModalFooter>
     </>
   );

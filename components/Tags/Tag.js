@@ -9,7 +9,7 @@ export default function TagDesktop({ data }) {
   const [isLoaded, setIsloaded] = useState(false);
   return (
     <Link href={`/mangas?page=1&sort=latest&tag=${data._id}`}>
-      <Skeleton className={TagsCss.tag} isLoaded={isLoaded}>
+      <a className={TagsCss.tag}>
         <Box className={TagsCss.tagImage}>
           <Image
             src={data.image}
@@ -54,7 +54,7 @@ export default function TagDesktop({ data }) {
             </Flex>
           </Box>
         </Box>
-      </Skeleton>
+      </a>
     </Link>
   );
 }

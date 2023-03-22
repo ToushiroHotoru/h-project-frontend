@@ -1,4 +1,5 @@
-import AuthForm from "./AuthForm";
+import AuthRegForm from "./AuthRegForm";
+import AuthLoginForm from "./AuthLoginForm";
 import AuthFavorites from "./AuthFavorites";
 import AuthUnloved from "./AuthUnloved";
 import AuthAvatars from "./AuthAvatars";
@@ -28,6 +29,7 @@ export default function AuthModal() {
   const [userId, setUserId] = useState(null);
   const [usernameContext, setUsernameContext] = useState();
   const [favorites, setFavorites] = useState();
+  const [toggleForm, setToggleForm] = useState(true);
   const [maskots, setMaskots] = useState([
     "/maskot.png",
     "/maskot4.png",
@@ -57,18 +59,25 @@ export default function AuthModal() {
       },
     },
   });
+  const closeFunc = () => {
+    onClose();
+    setToggleForm(true);
+  };
 
   const renderSwitchFunc = (value) => {
     switch (value) {
       case 1:
         return (
-          <AuthForm
+          <AuthRegForm
             stage={stage}
             setStage={(val) => {
               setStage(val);
             }}
             setUserId={(val) => {
               setUserId(val);
+            }}
+            setToggleForm={(val) => {
+              setToggleForm(val);
             }}
           />
         );
@@ -148,7 +157,7 @@ export default function AuthModal() {
         />
         <Modal
           isCentered
-          onClose={onClose}
+          onClose={closeFunc}
           isOpen={isOpen}
           motionPreset="slideInBottom"
           theme={theme}
@@ -196,13 +205,23 @@ export default function AuthModal() {
                 zIndex={2}
               >
                 <ModalHeader position="relative" p={0}>
-                  <Heading size="md"> Этап регистрации</Heading>
+                  <Heading size="md">
+                    {toggleForm ? "Авторизация" : "Регистрации"}
+                  </Heading>
                   <ModalCloseButton
                     top={{ base: "-18px", sm: "-25px" }}
                     right={{ base: "-15px", sm: "-16px" }}
                   />
                 </ModalHeader>
-                {renderSwitchFunc(stage)}
+                {toggleForm ? (
+                  <AuthLoginForm
+                    setToggleForm={(val) => {
+                      setToggleForm(val);
+                    }}
+                  />
+                ) : (
+                  renderSwitchFunc(stage)
+                )}
               </Box>
             </Box>
           </ModalContent>
