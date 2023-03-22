@@ -15,8 +15,10 @@ import {
 import { AuthContext } from "./AuthContext";
 import css from "../../styles/components/Auth.module.css";
 import { LINK as API_URL } from "../../libs/changeApiUrl";
+import { useRouter } from "next/router";
 
 export default function AuthLoginForm({ setToggleForm }) {
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
   const [email, setEmail] = useState("");
@@ -36,6 +38,7 @@ export default function AuthLoginForm({ setToggleForm }) {
     if (response.success) {
       localStorage.setItem("access_token", response.access_token);
       localStorage.setItem("refresh_token", response.refresh_token);
+      router.reload();
     }
   };
 
