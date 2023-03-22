@@ -1,37 +1,28 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
 import Tag from "../../components/Tags/Tag";
 import TagsCss from "../../styles/components/Tags.module.css";
-import { LINK } from "../../libs/changeApiUrl.js";
+import { LINK as API_URL } from "../../libs/changeApiUrl.js";
 
-export default function Tags() {
-  const [tags, setTags] = useState([]);
+export async function getStaticProps() {
+  const res = await fetch(`${API_URL}/get_tags`);
+  const tags = await res.json();
 
-  const getTagsFunc = async () => {
-    try {
-      const res = await fetch(`${LINK}/get_tags`);
-      const result = await res.json();
-      setTags(result.tags);
-     
-    } catch (err) {
-      console.log(err.message);
-    }
+  return {
+    props: { tags: tags.tags },
+    revalidate: 10,
   };
+}
 
-  useEffect(() => {
-    getTagsFunc();
-  }, []);
-
+export default function Tags({ tags }) {
   return (
     <div className="container">
       <Head>
         <title>Теги</title>
       </Head>
       <div className={TagsCss.tagsDesktop}>
-        {tags &&
-          tags.map((item, i) => {
-            return <Tag data={item} key={i + 1} />;
-          })}
+        {tags.map((item) => (
+          <Tag data={item} key={item._id} />
+        ))}
       </div>
     </div>
   );
