@@ -7,6 +7,12 @@ export async function getStaticProps() {
   const res = await fetch(`${API_URL}/get_tags`);
   const tags = await res.json();
 
+  if (!tags) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: { tags: tags.tags },
     revalidate: 10,

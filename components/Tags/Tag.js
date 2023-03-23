@@ -8,13 +8,14 @@ import { LINK } from "../../libs/changeApiUrl.js";
 export default function TagDesktop({ data }) {
   const [isLoaded, setIsloaded] = useState(false);
   return (
-    <Link href={`/mangas?page=1&sort=latest&tag=${data._id}`}>
+    <Link href={`/mangas?page=1&sort=latest&tags=${data._id}`}>
       <a className={TagsCss.tag}>
         <Box className={TagsCss.tagImage}>
           <Image
             src={data.image}
             alt="Picture of the author"
             layout="fill"
+            objectFit="cover"
             onLoadingComplete={() => {
               setIsloaded(true);
             }}
