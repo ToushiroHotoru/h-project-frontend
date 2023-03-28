@@ -6,6 +6,8 @@ import {
 import { useEffect } from "react";
 
 export default function Pagination({ router, total, offset, step }) {
+  const currentPage = router.query?.page ? router.query?.page : 1;
+  const currentSort = router.query?.sort ? router.query.sort : "latest";
   const create_pagination = () => {
     let start_page_offset = offset - step * 2;
     let end_page_offset = offset + step * 3;
@@ -40,36 +42,39 @@ export default function Pagination({ router, total, offset, step }) {
 
   return (
     <Flex justifyContent="center">
-      <Button
-        mx="2"
-        colorScheme="whatsapp"
-        disabled={Number(router.query.page) - 1 === 0 ? true : false}
-        onClick={() => {
-          router.push(
-            `/mangas?page=${Number(router.query.page) - 1}&sort=${
-              router.query.sort
-            }${router.query.tag ? "&tag=" + router.query.tag : ""}`,
-            undefined,
-            {
-              scroll: true,
-              shallow: true,
-            }
-          );
-        }}
-      >
-        <MdOutlineArrowBackIosNew />
-      </Button>
+      {Number(currentPage) - 1 !== 0 ? (
+        <Button
+          mx="2"
+          colorScheme="whatsapp"
+          disabled={Number(currentPage) - 1 === 0 ? true : false}
+          onClick={() => {
+            router.push(
+              `/mangas?page=${Number(currentPage) - 1}&sort=${currentSort}${
+                router.query.tag ? "&tag=" + router.query.tag : ""
+              }`,
+              undefined,
+              {
+                scroll: true,
+                shallow: true,
+              }
+            );
+          }}
+        >
+          <MdOutlineArrowBackIosNew />
+        </Button>
+      ) : (
+        ""
+      )}
+
       {create_pagination().map((item, i) => {
         return (
           <Button
             key={i + 1}
             mx="2"
-            colorScheme={
-              Number(router.query.page) === item ? "gray" : "whatsapp"
-            }
+            colorScheme={Number(currentPage) === item ? "gray" : "whatsapp"}
             onClick={() => {
               router.push(
-                `/mangas?page=${item}&sort=${router.query.sort}${
+                `/mangas?page=${item}&sort=${currentSort}${
                   router.query.tag ? "&tag=" + router.query.tag : ""
                 }`,
                 undefined,
@@ -85,27 +90,29 @@ export default function Pagination({ router, total, offset, step }) {
         );
       })}
 
-      <Button
-        mx="2"
-        colorScheme="whatsapp"
-        disabled={
-          router.query.page >= Math.ceil(total / step) - 1 ? true : false
-        }
-        onClick={() => {
-          router.push(
-            `/mangas?page=${Number(router.query.page) + 1}&sort=${
-              router.query.sort
-            }${router.query.tag ? "&tag=" + router.query.tag : ""}`,
-            undefined,
-            {
-              scroll: true,
-              shallow: true,
-            }
-          );
-        }}
-      >
-        <MdOutlineArrowForwardIos />
-      </Button>
+      {currentPage <= Math.ceil(total / step) - 1 ? (
+        <Button
+          mx="2"
+          colorScheme="whatsapp"
+          disabled={currentPage >= Math.ceil(total / step) - 1 ? true : false}
+          onClick={() => {
+            router.push(
+              `/mangas?page=${Number(currentPage) + 1}&sort=${currentSort}${
+                router.query.tag ? "&tag=" + router.query.tag : ""
+              }`,
+              undefined,
+              {
+                scroll: true,
+                shallow: true,
+              }
+            );
+          }}
+        >
+          <MdOutlineArrowForwardIos />
+        </Button>
+      ) : (
+        ""
+      )}
     </Flex>
   );
 }

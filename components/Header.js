@@ -16,7 +16,7 @@ export default function Header() {
           </A>
           <Flex alignItems="center">
             <Box className={`link ${nav.link}`} cursor="pointer" ml="20px">
-              <A href="/mangas?page=1&sort=latest">Каталог</A>
+              <A href="/mangas">Каталог</A>
             </Box>
             <Box className={`link ${nav.link}`} cursor="pointer" ml="20px">
               <A href="/tags">Теги</A>
