@@ -16,8 +16,7 @@ import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
 import { AuthContext } from "./AuthContext";
 import { LINK as API_URL } from "../../libs/changeApiUrl";
-import "swiper/css";
-import "swiper/css/navigation";
+
 
 export default function AuthAvatars({ setStage, userId }) {
   const [uploadFlag, setUploadFlag] = useState(false);

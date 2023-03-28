@@ -37,6 +37,7 @@ export default function AuthLoginForm({ setToggleForm }) {
 
     if (response.success) {
       localStorage.setItem("token", response.access_token);
+      localStorage.setItem("tokenR", response.refresh_token);
       router.push("/profile", undefined, {
         scroll: true,
       });

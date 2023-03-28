@@ -1,9 +1,9 @@
 import Head from "next/head";
-import axiosPrivate from "./../../libs/axiosPrivate";
+import axios from "../../libs/axios";
 import { LINK as API_URL } from "../../libs/changeApiUrl";
 
 export async function getServerSideProps(context) {
-  const res = await axiosPrivate.post(`${API_URL}/profile`, {
+  const res = await axios.post(`/profile`, {
     username: context.params.username,
   });
   const data = res.data.message;
