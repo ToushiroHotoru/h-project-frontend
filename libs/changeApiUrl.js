@@ -1,6 +1,6 @@
 const server = "repl";
 
 export const LINK =
-  server !== "repl1"
+  server !== "repl"
     ? "http://localhost:8080"
     : "https://h-project.toushirohotoru.repl.co";
