@@ -4,8 +4,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
-import { store } from "../redux/store";
-
+import { wrapper, store } from "../redux/store";
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
@@ -18,4 +17,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
