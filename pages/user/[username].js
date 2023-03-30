@@ -1,20 +1,16 @@
 import Head from "next/head";
-import axios from "../../libs/axios";
+import axios from "../../libs/axiosBack";
 
 export async function getServerSideProps(context) {
   const accessToken = context.req.cookies.accessToken;
-  console.log(context.req.cookies)
-  const res = await axios.post(
-    `/profile`,
-    {
+  const res = await axios.get(`/user`, {
+    params: {
       username: context.params.username,
     },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   const data = res.data.profile;
 
