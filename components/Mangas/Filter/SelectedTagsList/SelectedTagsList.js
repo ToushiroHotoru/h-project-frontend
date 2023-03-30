@@ -2,7 +2,7 @@ import { Tag, TagLabel, TagCloseButton, Box } from "@chakra-ui/react";
 
 export default function SelectedTagsList({
   selectedTags,
-  removeTagFromSelectedFunc,
+  removeTagFromSelected,
 }) {
   return (
     <Box mt="0.8em">
@@ -20,7 +20,7 @@ export default function SelectedTagsList({
             <TagLabel>{item["name"]}</TagLabel>
             <TagCloseButton
               ml="auto"
-              onClick={() => removeTagFromSelectedFunc(item["id"])}
+              onClick={() => removeTagFromSelected(item["id"])}
             />
           </Tag>
         );
