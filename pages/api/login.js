@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import axios from "../../libs/axios";
+import axios from "../../libs/axiosBack";
 import { NextApiRequest, NextApiResponse } from "next/server";
 
 export default async (NextApiRequest, NextApiResponse) => {

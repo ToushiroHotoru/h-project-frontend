@@ -11,10 +11,12 @@ import {
   InputRightElement,
   Flex,
 } from "@chakra-ui/react";
-
+import { useRouter } from "next/router";
 import { AuthContext } from "./AuthContext";
 import css from "../../styles/components/Auth.module.css";
-import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
+import { login } from "../../redux/slices/AuthSlice";
 
 export default function AuthLoginForm({ setToggleForm }) {
   const router = useRouter();
@@ -24,21 +26,22 @@ export default function AuthLoginForm({ setToggleForm }) {
   const [password, setPassword] = useState("");
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
   const handleClick = () => setShow(!show);
+
+  const dispatch = useDispatch();
+
   const loginHandler = async () => {
-    const request = await fetch(`/api/login`, {
-      method: "POST",
-      body: JSON.stringify({
+    dispatch(
+      login({
         email: email,
         password: password,
-      }),
-    });
-    const response = await request.json();
+      })
+    );
 
-    if (response.success) {
-      router.push(`/profile/${response.user.userName}`, undefined, {
-        scroll: true,
-      });
-    }
+    // if (response.success) {
+    //   router.push(`/user/${response.user.userName}`, undefined, {
+    //     scroll: true,
+    //   });
+    // }
   };
 
   const validationFunc = (email, password) => {
