@@ -6,7 +6,7 @@ import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import newMangaCss from "./../styles/components/NewManga.module.css";
-import axios from "../libs/axios";
+import axios from "../libs/axiosBack";
 import A from "../components/partials/A";
 
 export async function getStaticProps() {
