@@ -1,26 +1,26 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "../../libs/axios";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next/server";
+import Cookies from "js-cookie";
 
 export default async (NextApiRequest, NextApiResponse) => {
-  const { headers } = NextApiRequest;
   try {
-    const { data, headers: returnedHeaders } = await axios.post(
-      "/refresh", // refresh token Node.js server path
-      undefined,
-      {
-        headers,
-      }
-    );
+    console.log(NextApiRequest.cookies);
+    const { headers } = NextApiRequest;
+    const res = NextApiResponse;
+    const response = await axios.get("/refresh");
 
-    //  Update headers on requester using headers from Node.js server response
-    Object.keys(returnedHeaders).forEach((key) =>
-      res.setHeader(key, returnedHeaders[key])
-    );
+    // const data = response.data;
+    const returnedHeaders = response.headers;
 
-    res.status(200).json(data);
+    // console.log(returnedHeaders);
+    Object.entries(returnedHeaders).forEach((keyArr) =>
+      res.setHeader(keyArr[0], keyArr[1])
+    );
+    // res.send(data);
   } catch (error) {
     // we don't want to send status 401 here.
-    res.send(error);
+    // res.send(error);
+    // console.log(error);
   }
 };

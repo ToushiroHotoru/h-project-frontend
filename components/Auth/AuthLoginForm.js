@@ -14,7 +14,6 @@ import {
 
 import { AuthContext } from "./AuthContext";
 import css from "../../styles/components/Auth.module.css";
-import { LINK as API_URL } from "../../libs/changeApiUrl";
 import { useRouter } from "next/router";
 
 export default function AuthLoginForm({ setToggleForm }) {
@@ -26,7 +25,7 @@ export default function AuthLoginForm({ setToggleForm }) {
   const { usernameContext, setUsernameContext } = useContext(AuthContext);
   const handleClick = () => setShow(!show);
   const loginHandler = async () => {
-    const request = await fetch(`${API_URL}/login`, {
+    const request = await fetch(`/api/login`, {
       method: "POST",
       body: JSON.stringify({
         email: email,
@@ -36,9 +35,7 @@ export default function AuthLoginForm({ setToggleForm }) {
     const response = await request.json();
 
     if (response.success) {
-      localStorage.setItem("token", response.access_token);
-      localStorage.setItem("tokenR", response.refresh_token);
-      router.push("/profile", undefined, {
+      router.push(`/profile/${response.user.userName}`, undefined, {
         scroll: true,
       });
     }
