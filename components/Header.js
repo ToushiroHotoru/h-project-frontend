@@ -30,7 +30,7 @@ export default function Header() {
             </Box>
             {isAuth ? (
               <A href={`/user/${userNameLetter}`}>
-                <Button>{userNameLetter.split("")[0].toUpperCase()}</Button>
+                <Button ml="20px">{userNameLetter.split("")[0].toUpperCase()}</Button>
               </A>
             ) : (
               <Box className={`link ${nav.link}`} ml="20px">
