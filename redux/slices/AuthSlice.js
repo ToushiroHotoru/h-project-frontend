@@ -3,7 +3,7 @@ import axiosFront from "../../libs/axiosFront";
 
 const intenalInitialState = {
   isAuth: false,
-  accessToken: null,
+  accessToken: "",
   error: null,
   user: {
     id: null,
@@ -20,8 +20,8 @@ export const login = createAsyncThunk(
         password: password,
       });
       return {
-        user: loginResponse.data.user,
         accessToken: loginResponse.data.accessToken,
+        user: loginResponse.data.user,
       };
     } catch (error) {
       thunkAPI.rejectWithValue("Не удалось авторизоваться");
@@ -43,7 +43,10 @@ export const authSlice = createSlice({
   initialState: intenalInitialState,
   reducers: {
     updateAccessToken: (state, action) => {
-      state.accessToken = action.payload.token;
+      state.accessToken = action.payload.accessToken;
+    },
+    updateUserInfo: (state, action) => {
+      state.user = action.payload.user;
     },
     reset: () => intenalInitialState,
   },
@@ -54,11 +57,11 @@ export const authSlice = createSlice({
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
-      state.error = "";
-      state.accessToken = action.payload.token;
+      state.accessToken = action.payload.accessToken;
       state.user = action.payload.user;
       state.isLoading = false;
       state.isAuth = true;
+      state.error = "";
     });
 
     builder.addCase(login.rejected, (state, action) => {

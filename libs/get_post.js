@@ -1,4 +1,4 @@
-import { LINK } from "./changeApiUrl.js";
+import { LINK } from "./API_URL.js";
 
 export async function getPaths() {
 	const res = await fetch(`${LINK}/get_paths`);

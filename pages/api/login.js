@@ -1,11 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
-import axios from "../../libs/axiosBack";
 import { NextApiRequest, NextApiResponse } from "next/server";
+import axios from "../../libs/axiosBack";
 
 export default async (NextApiRequest, NextApiResponse) => {
+  const res = NextApiResponse;
   try {
     const { headers, body } = NextApiRequest;
-    const res = NextApiResponse;
     const response = await axios.post("/login", body, {
       headers: headers,
     });
@@ -17,7 +17,6 @@ export default async (NextApiRequest, NextApiResponse) => {
     );
     res.send(data);
   } catch (error) {
-    console.log(error);
-    // NextApiResponse.status(status).json(data);
+    res.send(error.message);
   }
 };

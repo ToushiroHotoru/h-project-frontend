@@ -1,13 +1,15 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next/server";
-import axiosBack from "/libs/axiosBack";
+import axiosBack from "../../libs/axiosBack";
 
-export default async function ProfileApi(NextApiRequest, NextApiResponse) {
+export default async (NextApiRequest, NextApiResponse) => {
+  const res = NextApiResponse;
   try {
-    const { headers, params } = NextApiRequest;
+    const { headers, query } = NextApiRequest;
     const response = await axiosBack.get("/user", {
       headers,
       params: {
-        username: params.username,
+        username: query.username,
       },
     });
 
@@ -17,8 +19,8 @@ export default async function ProfileApi(NextApiRequest, NextApiResponse) {
     Object.entries(returnedHeaders).forEach((keyArr) =>
       res.setHeader(keyArr[0], keyArr[1])
     );
-    NextApiResponse.send(data);
+    res.send(data);
   } catch (error) {
-    NextApiResponse.send(error);
+    res.send(error);
   }
-}
+};

@@ -20,7 +20,7 @@ import SortList from "./SortList/SortList";
 import SelectedTagsList from "./SelectedTagsList/SelectedTagsList";
 import InputForFilter from "./InputForFilter/InputForFilter";
 import { setSelectedTagsTest } from "../../../redux/selectedTagsSlice";
-import { LINK } from "../../../libs/changeApiUrl.js";
+import { LINK } from "../../../libs/API_URL.js";
 
 export default function Filter({ router }) {
   const { isOpen, onOpen, onClose } = useDisclosure();

@@ -14,7 +14,56 @@ import {
 
 import { AuthContext } from "./AuthContext";
 import css from "../../styles/components/Auth.module.css";
-import { LINK as API_URL } from "../../libs/changeApiUrl";
+import { LINK as API_URL } from "../../libs/API_URL";
+
+const validationFunc = (email, username, password) => {
+  let errors = {
+    status: false,
+    emailError: "",
+    usernameError: "",
+    passwordError: "",
+  };
+
+  const mailRegex = new RegExp(
+    /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+  );
+  const usernameRegex = new RegExp(
+    /^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){1,18}[a-zA-Z0-9]$/
+  );
+  const passwordRegex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
+
+  if (!mailRegex.test(email)) {
+    errors["emailError"] = "Поле email не не заполнено!";
+
+    if (!email) {
+      errors["emailError"] = "Не корректный email";
+      errors["status"] = true;
+    }
+    errors["status"] = true;
+  }
+
+  if (!usernameRegex.test(username)) {
+    errors["usernameError"] = "Латиница, не менее 3х символов.";
+
+    if (!username) {
+      errors["usernameError"] = "Поле username не заполнено!";
+      errors["status"] = true;
+    }
+    errors["status"] = true;
+  }
+
+  if (!passwordRegex.test(password)) {
+    errors["passwordError"] = "Латиница, не менее 8 символов, 1 цифра";
+
+    if (!password) {
+      errors["passwordError"] = "Поле password не заполнено!";
+      errors["status"] = true;
+    }
+    errors["status"] = true;
+  }
+
+  return errors;
+};
 
 export default function AuthRegForm({
   stage,
@@ -44,55 +93,6 @@ export default function AuthRegForm({
       setStage(2);
       setUserId(response.userId);
     }
-  };
-
-  const validationFunc = (email, username, password) => {
-    let errors = {
-      status: false,
-      emailError: "",
-      usernameError: "",
-      passwordError: "",
-    };
-
-    const mailRegex = new RegExp(
-      /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
-    );
-    const usernameRegex = new RegExp(
-      /^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){1,18}[a-zA-Z0-9]$/
-    );
-    const passwordRegex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/);
-
-    if (!mailRegex.test(email)) {
-      errors["emailError"] = "Поле email не не заполнено!";
-
-      if (!email) {
-        errors["emailError"] = "Не корректный email";
-        errors["status"] = true;
-      }
-      errors["status"] = true;
-    }
-
-    if (!usernameRegex.test(username)) {
-      errors["usernameError"] = "Латиница, не менее 3х символов.";
-
-      if (!username) {
-        errors["usernameError"] = "Поле username не заполнено!";
-        errors["status"] = true;
-      }
-      errors["status"] = true;
-    }
-
-    if (!passwordRegex.test(password)) {
-      errors["passwordError"] = "Латиница, не менее 8 символов, 1 цифра";
-
-      if (!password) {
-        errors["passwordError"] = "Поле password не заполнено!";
-        errors["status"] = true;
-      }
-      errors["status"] = true;
-    }
-
-    return errors;
   };
 
   return (

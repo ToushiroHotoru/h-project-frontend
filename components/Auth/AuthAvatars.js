@@ -15,7 +15,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
 import { AuthContext } from "./AuthContext";
-import { LINK as API_URL } from "../../libs/changeApiUrl";
+import { LINK as API_URL } from "../../libs/API_URL";
 
 
 export default function AuthAvatars({ setStage, userId }) {
@@ -31,27 +31,6 @@ export default function AuthAvatars({ setStage, userId }) {
   };
 
   const [avatars, setAvatars] = useState([]);
-  // const [avatars, setAvatars] = useState([
-  //   "/avatar(NY).png",
-  //   "/avatar.png",
-  //   "/avatars/avatar1.png",
-  //   "/avatars/avatar2.png",
-  //   "/avatars/avatar3.jpg",
-  //   "/avatars/avatar4.jpg",
-  //   "/avatars/avatar5.jpg",
-  //   "/avatars/avatar6.png",
-  //   "/avatars/avatar7.jpg",
-  //   "/avatars/avatar8.jpg",
-  //   "/avatars/avatar9.png",
-  //   "/avatars/avatar10.jpg",
-  //   "/avatars/avatar11.jpg",
-  //   "/avatars/avatar12.jpg",
-  //   "/avatars/avatar13.jpg",
-  //   "/avatars/avatar14.png",
-  //   "/avatars/avatar15.png",
-  //   "/avatars/avatar16.jpg",
-  //   "/avatars/avatar17.png",
-  // ]);
 
   const sendSelectedAvatar = async () => {
     try {
