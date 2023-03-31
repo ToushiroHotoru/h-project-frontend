@@ -1,7 +1,8 @@
-import axiosBack from "@libs/axiosBack";
+/* eslint-disable import/no-anonymous-default-export */
 import { NextApiRequest, NextApiResponse } from "next/server";
+import axiosBack from "../../libs/axiosBack";
 
-export default async function ProfileLogout(NextApiRequest, NextApiResponse) {
+export default async (NextApiRequest, NextApiResponse) => {
   const { headers } = req;
 
   try {
@@ -19,4 +20,4 @@ export default async function ProfileLogout(NextApiRequest, NextApiResponse) {
   } catch ({ response: { status, data } }) {
     res.status(status).json(data);
   }
-}
+};
