@@ -1,39 +1,62 @@
 import Head from "next/head";
-import axios from "../../libs/axiosBack";
+import instance from "/libs/axiosFront";
+import store from "../../redux/store";
+// export const getServerSideProps = user({
+//   callback: async (_, store) => {
+//     const dispatch = store;
+//     await dispatch(fetchFrogs());
 
+//     return {
+//       props: {
+//         frogs: store.getState().frogsReducer.frogs,
+//       },
+//     };
+//   },
+// });
 export async function getServerSideProps(context) {
-  const accessToken = context.req.cookies.accessToken;
-  const res = await axios.get(`/user`, {
+  const username = context.query.username;
+  const res = await instance.get(`/api/user`, {
     params: {
-      username: context.params.username,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
+      username: username,
     },
   });
-
-  const data = res.data.profile;
-
+  const user = res.data.user;
   return {
-    props: {
-      data,
-    },
+    props: { user },
   };
 }
 
-export default function Profile({ data }) {
-  return (
-    <>
-      <Head>
-        <title>Профиль</title>
-      </Head>
+export default function Profile({ user }) {
+  if (!user) {
+    return (
+      <>
+        <Head>
+          <title>Профиль</title>
+        </Head>
 
-      <div className="profile">
-        <div className="container">
-          <h1>Профиль</h1>
-          <div>{data.username}</div>
+        <div className="profile">
+          <div className="container">
+            <h1>Не авторизованы</h1>
+          </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+
+  if (user) {
+    return (
+      <>
+        <Head>
+          <title>Профиль</title>
+        </Head>
+
+        <div className="profile">
+          <div className="container">
+            <h1>Профиль</h1>
+            <div>{user.username}</div>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
