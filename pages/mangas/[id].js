@@ -12,7 +12,7 @@ import MangaDesc from "../../components/Manga/MangaDesc.js";
 import MangaImg from "../../components/Manga/MangaImg.js";
 
 import css from "../../styles/pages/Manga.module.css";
-import { LINK } from "../../libs/changeApiUrl.js";
+import { LINK } from "../../libs/API_URL.js";
 
 export async function getStaticProps({ params }) {
   const { id } = params;

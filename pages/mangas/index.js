@@ -14,7 +14,7 @@ import ErrorWrapper from "../../components/partials/ErrorWrapper";
 import Toggler from "../../components/Mangas/Toggler";
 import Filter from "../../components/Mangas/Filter/Filter";
 import Pagination from "../../components/Mangas/Pagination";
-import { LINK } from "../../libs/changeApiUrl.js";
+import { LINK } from "../../libs/API_URL.js";
 
 export default function Mangas({ deviceType }) {
   const router = useRouter();
