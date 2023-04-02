@@ -13,7 +13,7 @@ import {
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
-import { LINK } from "../../libs/changeApiUrl.js";
+import { LINK } from "../../libs/API_URL.js";
 import { useState, useEffect, useContext } from "react";
 
 export default function AuthUnloved({ setStage, userId }) {

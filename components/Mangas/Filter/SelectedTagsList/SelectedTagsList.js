@@ -21,14 +21,7 @@ export default function SelectedTagsList({ selectedTags, setSelectedTags }) {
             <TagLabel>{item["name"]}</TagLabel>
             <TagCloseButton
               ml="auto"
-              onClick={() =>
-                setSelectedTags(
-                  removeTagFromSelectedFunc({
-                    id: item["id"],
-                    selectedTags: selectedTags,
-                  })
-                )
-              }
+              onClick={() => removeTagFromSelectedFunc(item["id"])}
             />
           </Tag>
         );
