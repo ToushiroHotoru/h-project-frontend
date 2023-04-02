@@ -91,7 +91,7 @@ export default function Mangas({ deviceType }) {
         <div className="container">
           <HStack w="100%" align="center" justify="right">
             <Box>
-              <Filter router={router} />
+              <Filter />
             </Box>
             <Box>
               <Toggler

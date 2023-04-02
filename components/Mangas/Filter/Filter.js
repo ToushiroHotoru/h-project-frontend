@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import instance from "../../../libs/instanceAutoToken";
 import {
   Modal,
   ModalOverlay,
@@ -14,74 +15,63 @@ import {
   Box,
   extendTheme,
 } from "@chakra-ui/react";
+import { parse, stringify } from "qs";
 
 import TagsList from "./TagsList/TagsList";
 import SortList from "./SortList/SortList";
 import SelectedTagsList from "./SelectedTagsList/SelectedTagsList";
 import InputForFilter from "./InputForFilter/InputForFilter";
 import { setSelectedTagsTest } from "../../../redux/selectedTagsSlice";
-import { LINK } from "../../../libs/API_URL.js";
 
-export default function Filter({ router }) {
+const theme = extendTheme({
+  components: {
+    Modal: {
+      baseStyle: (props) => ({
+        dialog: {
+          bg: "#1A202C",
+          boxShadow: "none",
+        },
+      }),
+    },
+  },
+});
+
+export default function Filter() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [tags, setTags] = useState([]);
-  const [filteredTags, setFilteredTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [showTags, setShowTags] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
+  const [filterValue, setFilterValue] = useState(false);
   // const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
 
-  const theme = extendTheme({
-    components: {
-      Modal: {
-        baseStyle: (props) => ({
-          dialog: {
-            bg: "#1A202C",
-            boxShadow: "none",
-          },
-        }),
-      },
-    },
-  });
-
   const fetchTags = async () => {
     try {
-      let url = new URL(`${LINK}/get_tags_count?`);
-      url.search = new URLSearchParams({
-        tags: selectedTags.map((item) => item["id"]),
-      });
-
-      const res = await fetch(encodeURI(url));
-      const result = await res.json();
+      const tags = selectedTags.map((item) => item["id"]);
+      const res = await instance.get(
+        "get_tags_count?" + new URLSearchParams({ tags: tags })
+      );
+      const result = res.data;
+      console.log("TAGS", result);
       setTags(result.tags);
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  const removeTagFromSelected = (id) => {
-    setSelectedTags((prevSelectedTags) =>
-      prevSelectedTags.filter((item) => item["id"] != id)
-    );
-  };
-
-  const inputGroupOnClickHandler = () => {
-    setShowTags(!showTags);
-    setFilteredTags(() => {
-      return [...tags];
-    });
+  const filterTags = () => {
+    switch (isFiltered) {
+      case false:
+        return tags;
+      case true:
+        return tags.filter((item) => item["name"].includes(filterValue));
+    }
   };
 
   const inputOnChange = (e) => {
     setIsFiltered(e.target.value ? true : false);
-    setFilteredTags(() => {
-      return e.target.value
-        ? tags.filter((item) => {
-            return item["name"].includes(e.target.value);
-          })
-        : tags;
-    });
+    setFilterValue(e.target.value);
   };
 
   useEffect(() => {
@@ -99,19 +89,19 @@ export default function Filter({ router }) {
           <ModalCloseButton />
           <ModalBody display="flex" justifyContent="center">
             <Box w="100%">
-              <SortList router={router} />
+              <SortList />
               <Box mt="0.8em">
                 <InputForFilter
                   showTags={showTags}
                   inputOnChange={inputOnChange}
-                  inputGroupOnClickHandler={inputGroupOnClickHandler}
+                  onClickHandler={() => setShowTags(!showTags)}
                 />
 
                 {showTags && (
                   <TagsList
-                    tags={isFiltered ? filteredTags : tags}
+                    tags={filterTags()}
                     selectedTags={selectedTags}
-                    setSelectedTags={(val) => {
+                    addToSelectedTags={(val) => {
                       setSelectedTags((prevSelectedTags) => {
                         return [...prevSelectedTags, val];
                       });
@@ -121,7 +111,7 @@ export default function Filter({ router }) {
 
                 <SelectedTagsList
                   selectedTags={selectedTags}
-                  removeTagFromSelected={(val) => removeTagFromSelected(val)}
+                  setSelectedTags={(val) => setSelectedTags(val)}
                 />
               </Box>
             </Box>

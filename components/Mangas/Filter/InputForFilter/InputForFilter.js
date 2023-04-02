@@ -4,10 +4,10 @@ import { BsFillTriangleFill } from "react-icons/bs";
 export default function InputForFilter({
   showTags,
   inputOnChange,
-  inputGroupOnClickHandler,
+  onClickHandler,
 }) {
   return (
-    <InputGroup onClick={inputGroupOnClickHandler}>
+    <InputGroup onClick={onClickHandler}>
       <Input
         placeholder="Список тегов"
         cursor="pointer"
