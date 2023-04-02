@@ -1,18 +1,19 @@
 import { Tag, TagLabel, TagCloseButton, Box } from "@chakra-ui/react";
 
-export default function SelectedTagsList({
-  selectedTags,
-  removeTagFromSelectedFunc,
-}) {
+const removeTagFromSelectedFunc = ({ id, selectedTags }) => {
+  return selectedTags.filter((item) => item["id"] != id);
+};
+
+export default function SelectedTagsList({ selectedTags, setSelectedTags }) {
   return (
     <Box mt="0.8em">
       {selectedTags.map((item, i) => {
         return (
           <Tag
+            key={i + 1}
             size="md"
             minWidth="100px"
             width="auto"
-            key={i + 1}
             variant="solid"
             mx="3px"
             colorScheme="black"
@@ -20,7 +21,14 @@ export default function SelectedTagsList({
             <TagLabel>{item["name"]}</TagLabel>
             <TagCloseButton
               ml="auto"
-              onClick={() => removeTagFromSelectedFunc(item["id"])}
+              onClick={() =>
+                setSelectedTags(
+                  removeTagFromSelectedFunc({
+                    id: item["id"],
+                    selectedTags: selectedTags,
+                  })
+                )
+              }
             />
           </Tag>
         );

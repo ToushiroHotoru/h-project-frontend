@@ -1,5 +1,5 @@
 import Head from "next/head";
-import axiosPrivate from "./../../libs/axiosPrivate";
+import axiosPrivate from "../../libs/instanceAutoToken";
 import { LINK as API_URL } from "../../libs/changeApiUrl";
 
 export async function getServerSideProps(context) {

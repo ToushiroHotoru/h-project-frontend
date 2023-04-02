@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { Flex, Box, Tooltip } from "@chakra-ui/react";
 import css from "../../../../styles/components/Filter.module.css";
 import {
@@ -8,85 +10,65 @@ import {
   BsFillEyeFill,
 } from "react-icons/bs";
 
-export default function SortList({ router }) {
-  const setSortFunc = (sortType) => {
-    router.push(
-      `/mangas?page=${router.query.page}&sort=${sortType}`,
-      undefined,
-      {
-        shallow: true,
-      }
-    );
-  };
+const sortTypes = [
+  { name: "latest", tooltip: "Дата" },
+  { name: "alphabet", tooltip: "Алфавит" },
+  { name: "rating", tooltip: "Рейтинг" },
+  { name: "likes", tooltip: "Нравится" },
+  { name: "views", tooltip: "Просмотры" },
+];
+
+const iconRender = (sortType) => {
+  switch (sortType) {
+    case "latest":
+      return <BsFillClockFill size="50%" />;
+    case "alphabet":
+      return <BsSortAlphaDown size="50%" />;
+    case "rating":
+      return <BsFillStarFill size="50%" />;
+    case "likes":
+      return <BsFillHeartFill size="50%" />;
+    case "views":
+      return <BsFillEyeFill size="50%" />;
+    default:
+      return <BsFillClockFill size="50%" />;
+  }
+};
+
+const setSortFunc = ({ router, sortType }) => {
+  router.push({
+    pathname: `/mangas`,
+    query: { page: router.query.page, sort: sortType },
+    options: { shallow: true },
+  });
+};
+
+export default function SortList() {
+  const router = useRouter();
 
   return (
     <>
       <Box>Сортировка</Box>
       <Flex w="100%" mt="10px">
-        <Tooltip label="Дата" hasArrow>
-          <div
-            className={`${css.sort_item} ${
-              router.query.sort === "latest" && css.sort_item_active
-            }`}
-            onClick={() => {
-              setSortFunc("latest");
-            }}
-          >
-            <BsFillClockFill size="50%" />
-          </div>
-        </Tooltip>
-
-        <Tooltip label="Алфавит" hasArrow>
-          <div
-            className={`${css.sort_item} ${
-              router.query.sort === "alphabet" && css.sort_item_active
-            }`}
-            onClick={() => {
-              setSortFunc("alphabet");
-            }}
-          >
-            <BsSortAlphaDown size="50%" />
-          </div>
-        </Tooltip>
-
-        <Tooltip label="Рейтинг" hasArrow>
-          <div
-            className={`${css.sort_item} ${
-              router.query.sort === "rating" && css.sort_item_active
-            }`}
-            onClick={() => {
-              setSortFunc("rating");
-            }}
-          >
-            <BsFillStarFill size="50%" />
-          </div>
-        </Tooltip>
-
-        <Tooltip label="Нравится" hasArrow>
-          <div
-            className={`${css.sort_item} ${
-              router.query.sort === "likes" && css.sort_item_active
-            }`}
-            onClick={() => {
-              setSortFunc("likes");
-            }}
-          >
-            <BsFillHeartFill size="50%" />
-          </div>
-        </Tooltip>
-
-        <Tooltip label="Просмотры" hasArrow>
-          <Box
-            className={`${css.sort_item} ${
-              router.query.sort === "views" && css.sort_item_active
-            }`}
-            onClick={() => {
-              setSortFunc("views");
-            }}
-          >
-            <BsFillEyeFill size="50%" />
-          </Box>
-        </Tooltip>
+        {sortTypes.map((item, i) => {
+          return (
+            <Tooltip key={i + 1} label={item["tooltip"]} hasArrow>
+              <div
+                className={`${css.sort_item} ${
+                  router.query.sort === item["name"] && css.sort_item_active
+                }`}
+                onClick={() => {
+                  setSortFunc({
+                    sortType: item["name"],
+                    router: router,
+                  });
+                }}
+              >
+                {iconRender(item["name"])}
+              </div>
+            </Tooltip>
+          );
+        })}
       </Flex>
     </>
   );
