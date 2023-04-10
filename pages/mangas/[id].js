@@ -14,6 +14,9 @@ import MangaImg from "../../components/Manga/MangaImg.js";
 import css from "../../styles/pages/Manga.module.css";
 import { LINK } from "../../libs/API_URL.js";
 
+import axiosBack from "../../libs/axiosBack.js";
+import { useRouter } from "next/router";
+
 export async function getStaticProps({ params }) {
   const { id } = params;
   const res = await fetch(`${LINK}/manga-static`, {
@@ -43,6 +46,7 @@ export async function getStaticPaths(context) {
 }
 
 export default function Manga({ manga, id }) {
+  const router = useRouter();
   moment.locale("ru");
   const [mangaDynamic, setMangaDynamic] = useState();
 
@@ -57,7 +61,7 @@ export default function Manga({ manga, id }) {
       });
 
       const data = await res.json();
-      console.log(data["tags"]);
+      // console.log(data["tags"]);
       setMangaDynamic(data);
     } catch (err) {
       console.log(err);
