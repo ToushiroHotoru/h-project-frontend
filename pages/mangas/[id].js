@@ -49,7 +49,6 @@ export default function Manga({ manga, id }) {
   const router = useRouter();
   moment.locale("ru");
   const [mangaDynamic, setMangaDynamic] = useState();
-  const [comments, setComments] = useState([]);
 
   const onLoadHander = async () => {
     try {
@@ -62,26 +61,15 @@ export default function Manga({ manga, id }) {
       });
 
       const data = await res.json();
-      console.log(data["tags"]);
+      // console.log(data["tags"]);
       setMangaDynamic(data);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const getComments = async () => {
-    const response = await axiosBack.get("/get_comments", {
-      params: {
-        mangaId: router.query.id,
-      },
-    });
-
-    setComments(response.data.comments);
-  };
-
   useEffect(() => {
     onLoadHander();
-    getComments();
   }, []);
 
   return (
@@ -109,7 +97,7 @@ export default function Manga({ manga, id }) {
             pages={mangaDynamic && mangaDynamic.pages}
             manga={manga}
           />
-          <MangaComments comments={comments} />
+          <MangaComments />
         </div>
       </div>
     </>
