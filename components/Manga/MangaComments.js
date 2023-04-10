@@ -10,7 +10,7 @@ import {
 import { BsXLg } from "react-icons/bs";
 import css from "../../styles/components/manga/Comments.module.css";
 
-export default function MangaComments() {
+export default function MangaComments({ comments }) {
   return (
     <section className={css.comments}>
       <Text mb="8px">Comments</Text>
@@ -20,26 +20,30 @@ export default function MangaComments() {
         resize="none"
       />
       <Button mt="5px">Отправить</Button>
+      {comments.map((comment) => {
+        return (
+          <div className={css.comment_example} key={comment._id}>
+            <Divider />
+            <Box pl="1em" py="1em">
+              <Flex alignItems="center">
+                <Avatar name="Toushiro Hotoru" src="/avatar.png" />
+                <Box ml="1em" className={css.username}>
+                  {comment.user}
+                </Box>
+                <Box ml="1em">12.12.2022</Box>
+              </Flex>
 
-      <div className={css.comment_example}>
-        <Divider />
-        <Box pl="1em" py="1em">
-          <Flex alignItems="center">
-            <Avatar name="Toushiro Hotoru" src="/avatar.png" />
-            <Box ml="1em" className={css.username}>
-              ToushiroHotoru
+              <Box my="2em" className={css.comment_text}>
+                {comment.text}
+              </Box>
+              <Flex w="100%" justifyContent="flex-end">
+                <Button>Ответить</Button>
+              </Flex>
             </Box>
-            <Box ml="1em">12.12.2022</Box>
-          </Flex>
+          </div>
+        );
+      })}
 
-          <Box my="2em" className={css.comment_text}>
-            Комментарий
-          </Box>
-          <Flex w="100%" justifyContent="flex-end">
-            <Button>Ответить</Button>
-          </Flex>
-        </Box>
-      </div>
       <div className={css.comment_answer_example}>
         <Divider />
         <Box pl="1em" py="1em">
