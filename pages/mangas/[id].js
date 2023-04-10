@@ -14,6 +14,9 @@ import MangaImg from "../../components/Manga/MangaImg.js";
 import css from "../../styles/pages/Manga.module.css";
 import { LINK } from "../../libs/API_URL.js";
 
+import axiosBack from "../../libs/axiosBack.js";
+import { useRouter } from "next/router";
+
 export async function getStaticProps({ params }) {
   const { id } = params;
   const res = await fetch(`${LINK}/manga-static`, {
@@ -43,8 +46,10 @@ export async function getStaticPaths(context) {
 }
 
 export default function Manga({ manga, id }) {
+  const router = useRouter();
   moment.locale("ru");
   const [mangaDynamic, setMangaDynamic] = useState();
+  const [comments, setComments] = useState([]);
 
   const onLoadHander = async () => {
     try {
@@ -64,8 +69,19 @@ export default function Manga({ manga, id }) {
     }
   };
 
+  const getComments = async () => {
+    const response = await axiosBack.get("/get_comments", {
+      params: {
+        mangaId: router.query.id,
+      },
+    });
+
+    setComments(response.data.comments);
+  };
+
   useEffect(() => {
     onLoadHander();
+    getComments();
   }, []);
 
   return (
@@ -93,7 +109,7 @@ export default function Manga({ manga, id }) {
             pages={mangaDynamic && mangaDynamic.pages}
             manga={manga}
           />
-          <MangaComments />
+          <MangaComments comments={comments} />
         </div>
       </div>
     </>
