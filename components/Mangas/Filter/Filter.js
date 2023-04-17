@@ -69,11 +69,6 @@ export default function Filter() {
     }
   };
 
-  const inputOnChange = (e) => {
-    setIsFiltered(e.target.value ? true : false);
-    setFilterValue(e.target.value);
-  };
-
   useEffect(() => {
     fetchTags();
     dispatch(setSelectedTagsTest(selectedTags));
@@ -93,14 +88,14 @@ export default function Filter() {
               <Box mt="0.8em">
                 <InputForFilter
                   showTags={showTags}
-                  inputOnChange={inputOnChange}
+                  setIsFiltered={(val) => setIsFiltered(val)}
+                  setFilterValue={(val) => setFilterValue(val)}
                   onClickHandler={() => setShowTags(!showTags)}
                 />
 
                 {showTags && (
                   <TagsList
                     tags={filterTags()}
-                    selectedTags={selectedTags}
                     addToSelectedTags={(val) => {
                       setSelectedTags((prevSelectedTags) => {
                         return [...prevSelectedTags, val];
