@@ -14,18 +14,14 @@ import ReaderPage from "./ReaderPage";
 import { BsGearFill } from "react-icons/bs";
 import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import useStore from "../../zustand/reader.zustand";
 
-export default function RederDef({
-  id,
-  readerAltMode,
-  router,
-  mangaPages,
-  onOpen,
-  btnRef,
-  mangaTitle,
-  quality,
-  showMap,
-}) {
+export default function RederDef({ onOpen, btnRef }) {
+  const { mangaPages, readerAltMode, mangaTitle, quality, showMap } =
+    useStore();
+  const router = useRouter();
+
   useEffect(() => {
     if (!router.isReady) return;
   }, [router.isReady]);
@@ -52,7 +48,10 @@ export default function RederDef({
                 mangaPages.map((item, i) => {
                   return (
                     <>
-                      <Link href={`/reader?id=${id}&page=${i + 1}`} key={i + 1}>
+                      <Link
+                        href={`/reader?id=${router.query.id}&page=${i + 1}`}
+                        key={i + 1}
+                      >
                         <Flex flexDirection="column" alignItems="center">
                           <Box
                             border={
@@ -160,7 +159,7 @@ export default function RederDef({
                 </Center>
               </Tooltip>
             </HStack>
-            <Link href={`/mangas/${id}`}>
+            <Link href={`/mangas/${router.query.id}`}>
               <Button mt="1em">Вернуться на страницу</Button>
             </Link>
           </Center>

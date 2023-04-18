@@ -9,17 +9,6 @@ import newMangaCss from "./../styles/components/NewManga.module.css";
 import axios from "../libs/axiosBack";
 import A from "../components/partials/A";
 
-export async function getStaticProps() {
-  const response = await axios.get("/new_manga");
-  const manga = response.data.manga;
-  return {
-    props: {
-      manga,
-    },
-    revalidate: 10,
-  };
-}
-
 export default function Index({ manga }) {
   // const { toggleColorMode } = useColorMode();
   return (
@@ -80,4 +69,15 @@ export default function Index({ manga }) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const response = await axios.get("/new_manga");
+  const manga = response.data.manga;
+  return {
+    props: {
+      manga,
+    },
+    revalidate: 10,
+  };
 }

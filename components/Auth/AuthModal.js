@@ -22,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
+import useStore from "../../zustand/auth.zustand";
 
 export default function AuthModal() {
   const { isOpen, onOpen, onClose } = useDisclosure();
