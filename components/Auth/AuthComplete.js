@@ -1,6 +1,9 @@
 import { Center, Button, ModalFooter, ModalBody } from "@chakra-ui/react";
+import useStore from "../../zustand/auth.zustand";
 
-export default function AuthComplete({ stage, setStage, onCloseFunc }) {
+export default function AuthComplete({ onCloseFunc }) {
+  const { stage } = useStore();
+  const controls = useStore(({ controls }) => controls);
   return (
     <>
       <ModalBody p="0" mt="15px">
@@ -17,7 +20,7 @@ export default function AuthComplete({ stage, setStage, onCloseFunc }) {
         <Button
           onClick={() => {
             onCloseFunc();
-            setStage(1);
+            controls.setStage(1);
           }}
           disabled={stage > 6}
         >

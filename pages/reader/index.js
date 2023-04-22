@@ -9,22 +9,19 @@ import useStore from "../../zustand/reader.zustand";
 import instance from "../../libs/instance";
 
 export default function Reader() {
-  const { setMangaTitle, setMangaPages } = useStore();
+  const { setMangaTitle, setMangaPages } = useStore((state) => state.controls);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
   const router = useRouter();
 
   const fetchMangaDynamic = async () => {
     try {
-      const res = await instance("manga-dynamic", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: router.query.id }),
+      const res = await instance.post("/manga-dynamic", {
+        id: router.query.id,
       });
 
       const result = res.data;
+      console.log("TEST", result);
       setMangaPages(result.pages);
       setMangaTitle(result.series);
     } catch (err) {

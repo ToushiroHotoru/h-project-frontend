@@ -84,7 +84,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 borderTopLeftRadius="0"
                 borderBottomLeftRadius="0"
                 colorScheme={quality === 100 ? "blue" : "gray"}
-                onClick={() => controls.setQuality(50)}
+                onClick={() => controls.setQuality(100)}
               >
                 Quality MODE
               </Button>

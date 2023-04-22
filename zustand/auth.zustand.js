@@ -3,6 +3,7 @@ import { create } from "zustand";
 const useStore = create((set) => ({
   stage: 1,
   userId: null,
+  userName: "",
   favorites: [],
   maskots: [
     "/maskot.png",
@@ -26,11 +27,13 @@ const useStore = create((set) => ({
 
     setUserId: (payload) => set(() => ({ userId: payload })),
 
-    setfavorites: (payload) => set(() => ({ favorites: payload })),
+    setFavorites: (payload) => set(() => ({ favorites: payload })),
 
     setMaskots: (payload) => set(() => ({ maskots: payload })),
 
     setSpeeches: (payload) => set(() => ({ speeches: payload })),
+
+    setUserName: (payload) => set(() => ({ userName: payload })),
   },
 }));
 

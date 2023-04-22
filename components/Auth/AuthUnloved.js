@@ -1,6 +1,6 @@
-import AuthTag from "./AuthTag";
-import { AuthContext } from "./AuthContext";
-import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
+import { useState, useEffect, useContext } from "react";
+
+import useStore from "../../zustand/auth.zustand";
 import {
   Input,
   Box,
@@ -13,15 +13,18 @@ import {
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
-import { LINK } from "../../libs/API_URL.js";
-import { useState, useEffect, useContext } from "react";
 
-export default function AuthUnloved({ setStage, userId }) {
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
+import AuthTag from "./AuthTag";
+import { LINK } from "../../libs/API_URL.js";
+
+export default function AuthUnloved() {
+  const { favorites, userId } = useStore();
+  const controls = useStore(({ controls }) => controls);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortFlag, setSortFlag] = useState();
   const [sortedTags, setSortedTags] = useState([]);
-  const { favorites, setFavorites } = useContext(AuthContext);
 
   const getTagsFunc = async () => {
     try {
@@ -60,26 +63,16 @@ export default function AuthUnloved({ setStage, userId }) {
 
   const sendUnlovedTags = async () => {
     try {
-      const tagsId = [];
-
-      for (let i = 0; i < tags.length; i++) {
-        const tag = tags[i];
-        for (let j = 0; j < selectedTags.length; j++) {
-          const selectedTag = selectedTags[j];
-          if (tag["name"] === selectedTag) {
-            tagsId.push(tag._id);
-          }
-        }
-      }
-
-      const body = {
-        id: userId,
-        exceptionsTags: tagsId,
-      };
+      const tagsIds = tags
+        .filter((tag) => selectedTags.includes(tag["name"]))
+        .map((item) => item._id);
 
       await fetch(`${LINK}/set_exceptions_tags`, {
         method: "POST",
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          id: userId,
+          exceptionsTags: tagsIds,
+        }),
       });
     } catch (err) {
       console.log(err.message);
@@ -118,7 +111,7 @@ export default function AuthUnloved({ setStage, userId }) {
           <Divider mt="20px" width="100%" bg="#f14343" height="2px" />
           <div className={AuthFavoritesCSS.tags}>
             {toggleSort().length > 0 &&
-              toggleSort().map((item, i) => {
+              toggleSort().map((item) => {
                 return (
                   <AuthTag
                     key={item._id}
@@ -133,7 +126,7 @@ export default function AuthUnloved({ setStage, userId }) {
                 );
               })}
           </div>
-          {selectedTags.length != 0 && (
+          {selectedTags.length > 0 && (
             <Box className={AuthFavoritesCSS.subTags}>
               {selectedTags.map((item, i) => {
                 return (
@@ -166,8 +159,8 @@ export default function AuthUnloved({ setStage, userId }) {
           bg={selectedTags.length !== 0 ? "#F14343" : "#A2ACAB"}
           _hover={{ bg: selectedTags.length !== 0 ? "#D03939" : "#727978" }}
           onClick={() => {
-            setFavorites([]); // ! delete later
-            setStage(5);
+            controls.setFavorites([]); // ! delete later
+            controls.setStage(5);
             sendUnlovedTags();
           }}
         >
