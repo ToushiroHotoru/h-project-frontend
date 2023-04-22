@@ -4,17 +4,12 @@ import Image from "next/image";
 import { BsGearFill, BsArrowUpCircle } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import { useSpring, animated } from "@react-spring/web";
+import useStore from "../../zustand/reader.zustand";
 
-export default function ReaderAlt({
-  readerAltMode,
-  mangaPages,
-  btnRef,
-  onOpen,
-  mangaTitle,
-  quality,
-  showMap,
-}) {
+export default function ReaderAlt({ btnRef, onOpen }) {
   const [styles, animate] = useSpring(() => ({ right: -200 }));
+  const { mangaPages, readerAltMode, mangaTitle, quality, showMap } =
+    useStore();
 
   const add_scroll = () => {
     window.addEventListener("scroll", () => {

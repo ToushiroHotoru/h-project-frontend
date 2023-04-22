@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -12,9 +12,9 @@ import {
   Flex,
 } from "@chakra-ui/react";
 
-import { AuthContext } from "./AuthContext";
 import css from "../../styles/components/Auth.module.css";
 import { LINK as API_URL } from "../../libs/API_URL";
+import useStore from "../../zustand/auth.zustand";
 
 const validationFunc = (email, username, password) => {
   let errors = {
@@ -65,35 +65,44 @@ const validationFunc = (email, username, password) => {
   return errors;
 };
 
-export default function AuthRegForm({
-  stage,
-  setStage,
-  setUserId,
-  setToggleForm,
-}) {
+export default function AuthRegForm({ setToggleForm }) {
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { usernameContext, setUsernameContext } = useContext(AuthContext);
-  const handleClick = () => setShow(!show);
-  const registrationHandler = async () => {
-    const request = await fetch(`${API_URL}/registration`, {
-      method: "POST",
-      body: JSON.stringify({
-        email: email,
-        username: username,
-        password: password,
-      }),
-    });
-    const response = await request.json();
+  const { stage } = useStore();
+  const controls = useStore(({ controls }) => controls);
 
-    if (response.success) {
-      setStage(2);
-      setUserId(response.userId);
+  const fetchRegsiter = async () => {
+    try {
+      if (validationFunc(email, username, password).status) {
+        setShowErrors(true);
+        return false;
+      }
+
+      // const res = await fetch(`${API_URL}/registration`, {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     email: email,
+      //     username: username,
+      //     password: password,
+      //   }),
+      // });
+      // const result = await request.json();
+
+      if (true) {
+        controls.setStage(2);
+        controls.setUserId(result.userId);
+      }
+    } catch (err) {
+      console.log(err.message);
     }
   };
+
+  useEffect(() => {
+    console.log(stage);
+  }, [stage]);
 
   return (
     <>
@@ -107,7 +116,7 @@ export default function AuthRegForm({
         mx="auto"
       >
         <FormControl>
-          <FormLabel mb="4px">Email*</FormLabel>
+          <FormLabel mb="4px">Email</FormLabel>
           <Input
             bg="#fff"
             type="email"
@@ -117,9 +126,7 @@ export default function AuthRegForm({
             p="10px 36px 10px 12px"
             placeholder="example@gmail.com"
             _placeholder={{ color: "#8b8b8b;" }}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => setEmail(e.target.value)}
           />
           {showErrors && (
             <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
@@ -128,7 +135,7 @@ export default function AuthRegForm({
           )}
         </FormControl>
         <FormControl mt="10px">
-          <FormLabel mb="4px">Никнейм</FormLabel>
+          <FormLabel mb="4px">Имя</FormLabel>
           <Input
             bg="#fff"
             type="text"
@@ -140,7 +147,7 @@ export default function AuthRegForm({
             _placeholder={{ color: "#8b8b8b;" }}
             onChange={(e) => {
               setUsername(e.target.value);
-              setUsernameContext(e.target.value);
+              controls.setUserName(e.target.value);
             }}
           />
           {showErrors && (
@@ -150,7 +157,7 @@ export default function AuthRegForm({
           )}
         </FormControl>
         <FormControl mt="10px">
-          <FormLabel mb="4px">Пароль*</FormLabel>
+          <FormLabel mb="4px">Пароль</FormLabel>
           <InputGroup size="md">
             <Input
               bg="#fff"
@@ -161,16 +168,14 @@ export default function AuthRegForm({
               p="10px 36px 10px 12px"
               type={show ? "text" : "password"}
               _placeholder={{ color: "#8b8b8b;" }}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <InputRightElement width="36px" right="4px" height="100%">
               <Box
                 width="24px"
                 height="24px"
-                onClick={handleClick}
+                onClick={() => setShow(!show)}
                 cursor="pointer"
                 bgPosition="center"
                 bgRepeat="no-repeat"
@@ -200,37 +205,16 @@ export default function AuthRegForm({
             disabled={stage >= 4}
             bg="#F143E0"
             _hover={{ bg: "#CE39BF" }}
-            onClick={() => {
-              if (!validationFunc(email, username, password).status) {
-                registrationHandler();
-              } else {
-                // setStage(2);
-                setShowErrors(true);
-                console.log("ошибка вообще то");
-              }
-            }}
+            onClick={() => fetchRegsiter()}
           >
             Далее
-          </Button>
-          <Button
-            bg="#F143E0"
-            _hover={{ bg: "#CE39BF" }}
-            marginLeft="16px"
-            onClick={() => {
-              setStage(2);
-              setUserId("64198fd5c294c57f2e983d90");
-            }}
-          >
-            Пропустить
           </Button>
         </Flex>
         <Flex width="100%" justifyContent="center" marginTop="16px">
           <Button
             bg="#F143E0"
             _hover={{ bg: "#CE39BF" }}
-            onClick={() => {
-              setToggleForm(true);
-            }}
+            onClick={() => setToggleForm(true)}
           >
             Войти
           </Button>

@@ -1,5 +1,6 @@
+import { useState, useEffect } from "react";
+
 import Image from "next/image";
-import { useState, useContext, useEffect } from "react";
 import {
   Box,
   Center,
@@ -11,18 +12,19 @@ import {
 } from "@chakra-ui/react";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import useStore from "../../zustand/auth.zustand";
 
 import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
-import { AuthContext } from "./AuthContext";
 import { LINK as API_URL } from "../../libs/API_URL";
 
-
-export default function AuthAvatars({ setStage, userId }) {
+export default function AuthAvatars() {
+  const { userId, userName } = useStore();
+  const controls = useStore(({ controls }) => controls);
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
-  const { usernameContext, setUsernameContext } = useContext(AuthContext);
   const [activeAvatar, setActiveAvatar] = useState(null);
+  const [avatars, setAvatars] = useState([]);
 
   const getAvatarsFunc = async () => {
     const response = await fetch(`${API_URL}/get_avatars`);
@@ -30,19 +32,17 @@ export default function AuthAvatars({ setStage, userId }) {
     setAvatars(data.avatars);
   };
 
-  const [avatars, setAvatars] = useState([]);
-
   const sendSelectedAvatar = async () => {
     try {
-      const fd = new FormData();
+      const formData = new FormData();
       const avatar = !uploadFlag ? activeAvatar : avatarPreview;
-      fd.append("id", userId);
-      fd.append("isUpload", uploadFlag);
-      fd.append("avatar", avatar);
+      formData.append("id", userId);
+      formData.append("isUpload", uploadFlag);
+      formData.append("avatar", avatar);
 
-      const res = await fetch(`${API_URL}/set_avatar`, {
+      await fetch(`${API_URL}/set_avatar`, {
         method: "POST",
-        body: fd,
+        body: formData,
       });
     } catch (error) {
       console.log(error);
@@ -90,7 +90,7 @@ export default function AuthAvatars({ setStage, userId }) {
           </Tooltip>
         </Center>
         <Center fontSize="24px" mt="15px">
-          {usernameContext ? usernameContext : "no username"}
+          {userName ? userName : "no username"}
         </Center>
         <Divider mt="20px" />
         <Center>
@@ -131,7 +131,7 @@ export default function AuthAvatars({ setStage, userId }) {
           bg={avatarPreview != "/zero.png" ? "#43F1DC" : "#A2ACAB"}
           _hover={{ bg: avatarPreview != "/zero.png" ? "#3DD7C4" : "#727978" }}
           onClick={() => {
-            setStage(6);
+            controls.setStage(6);
             sendSelectedAvatar();
           }}
         >

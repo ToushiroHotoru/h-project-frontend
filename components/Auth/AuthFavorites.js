@@ -1,6 +1,6 @@
-import AuthTag from "./AuthTag";
-import { AuthContext } from "./AuthContext";
-import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
+import { useState, useEffect } from "react";
+
+import useStore from "../../zustand/auth.zustand";
 import {
   Input,
   Box,
@@ -14,19 +14,23 @@ import {
   TagCloseButton,
 } from "@chakra-ui/react";
 import { LINK } from "../../libs/API_URL.js";
-import { useState, useEffect, useContext } from "react";
 
-export default function AuthFavorites({ setStage, userId }) {
+import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
+import AuthTag from "./AuthTag";
+
+export default function AuthFavorites() {
+  const { userId } = useStore();
+  const controls = useStore(({ controls }) => controls);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortFlag, setSortFlag] = useState();
   const [sortedTags, setSortedTags] = useState([]);
-  const { favorites, setFavorites } = useContext(AuthContext);
 
   const getTagsFunc = async () => {
     try {
       const res = await fetch(`${LINK}/get_tags`);
       const result = await res.json();
+      console.log("TAGS", result.tags);
       setTags(result.tags);
     } catch (err) {
       console.log(err.message);
@@ -35,26 +39,17 @@ export default function AuthFavorites({ setStage, userId }) {
 
   const sendFavoriteTags = async () => {
     try {
-      const tagsId = [];
-      for (let i = 0; i < tags.length; i++) {
-        const tag = tags[i];
-        for (let j = 0; j < selectedTags.length; j++) {
-          const selectedTag = selectedTags[j];
-          if (tag["name"] === selectedTag) {
-            tagsId.push(tag._id);
-          }
-        }
-      }
+      const tagsIds = tags
+        .filter((tag) => selectedTags.includes(tag["name"]))
+        .map((item) => item._id);
 
-      const body = {
-        id: userId,
-        preferencesTags: tagsId,
-      };
-      const res = await fetch(`${LINK}/set_preferences_tags`, {
+      await fetch(`${LINK}/set_preferences_tags`, {
         method: "POST",
-        body: JSON.stringify(body),
+        body: JSON.stringify({
+          id: userId,
+          preferencesTags: tagsIds,
+        }),
       });
-      const result = await res.json();
     } catch (err) {
       console.log(err.message);
     }
@@ -62,14 +57,14 @@ export default function AuthFavorites({ setStage, userId }) {
 
   const selectTagFunc = (id) => {
     const prevSelectedTags = [...selectedTags];
-    console.log(prevSelectedTags);
+
     if (prevSelectedTags.includes(id)) {
       prevSelectedTags.splice(prevSelectedTags.indexOf(id), 1);
     } else {
       prevSelectedTags.push(id);
     }
     setSelectedTags(prevSelectedTags);
-    setFavorites(prevSelectedTags);
+    controls.setFavorites(prevSelectedTags);
   };
 
   // сортировка тегов по запросу
@@ -104,7 +99,6 @@ export default function AuthFavorites({ setStage, userId }) {
     <>
       <ModalBody p="0" mt="15px">
         <Center flexDirection="column">
-          <div>{userId}</div>
           <Input
             type="text"
             width="100%"
@@ -120,7 +114,7 @@ export default function AuthFavorites({ setStage, userId }) {
           />
           <Divider mt="20px" width="100%" bg="#47f143" height="2px" />
           <div className={AuthFavoritesCSS.tags}>
-            {toggleSort().length &&
+            {toggleSort().length > 0 &&
               toggleSort().map((item, i) => {
                 return (
                   <AuthTag
@@ -133,7 +127,7 @@ export default function AuthFavorites({ setStage, userId }) {
                 );
               })}
           </div>
-          {selectedTags.length && (
+          {selectedTags.length > 0 && (
             <Box className={AuthFavoritesCSS.subTags}>
               {selectedTags.map((item, i) => {
                 return (
@@ -149,9 +143,7 @@ export default function AuthFavorites({ setStage, userId }) {
                     <TagLabel>{item}</TagLabel>
                     <TagCloseButton
                       ml="auto"
-                      onClick={() => {
-                        selectTagFunc(item);
-                      }}
+                      onClick={() => selectTagFunc(item)}
                     />
                   </Tag>
                 );
@@ -166,7 +158,7 @@ export default function AuthFavorites({ setStage, userId }) {
           bg={selectedTags.length != 0 ? "#47F143" : "#A2ACAB"} // #1F0A0E
           _hover={{ bg: selectedTags.length != 0 ? "#3FD23C" : "#727978" }}
           onClick={() => {
-            setStage(4);
+            controls.setStage(4);
             sendFavoriteTags();
           }}
         >

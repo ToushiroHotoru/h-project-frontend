@@ -11,18 +11,12 @@ import {
   Box,
 } from "@chakra-ui/react";
 import SideDrawerCSS from "../../styles/components/SideDrawer.module.css";
+import useStore from "../../zustand/reader.zustand";
 
-export default function SideDrawer({
-  isOpen,
-  onClose,
-  btnRef,
-  readerAltMode,
-  setReaderAltMode,
-  quality,
-  setQuality,
-  showMap,
-  setShowMap,
-}) {
+export default function SideDrawer({ isOpen, onClose, btnRef }) {
+  const { readerAltMode, quality, showMap } = useStore();
+  const controls = useStore(({ controls }) => controls);
+
   return (
     <Drawer
       isOpen={isOpen}
@@ -48,9 +42,7 @@ export default function SideDrawer({
                 borderBottomRightRadius="0"
                 flex="1"
                 colorScheme={readerAltMode ? "gray" : "blue"}
-                onClick={() => {
-                  setReaderAltMode();
-                }}
+                onClick={() => controls.setReaderAltMode(false)}
               >
                 Default MODE
               </Button>
@@ -59,9 +51,7 @@ export default function SideDrawer({
                 borderTopLeftRadius="0"
                 borderBottomLeftRadius="0"
                 colorScheme={readerAltMode ? "blue" : "gray"}
-                onClick={() => {
-                  setReaderAltMode();
-                }}
+                onClick={() => controls.setReaderAltMode(true)}
               >
                 Alternate MODE
               </Button>
@@ -77,9 +67,7 @@ export default function SideDrawer({
                 borderBottomRightRadius="0"
                 flex="1"
                 colorScheme={quality === 1 ? "blue" : "gray"}
-                onClick={() => {
-                  setQuality(1);
-                }}
+                onClick={() => controls.setQuality(1)}
               >
                 Perfomance MODE
               </Button>
@@ -87,9 +75,7 @@ export default function SideDrawer({
                 flex="1"
                 borderRadius="0"
                 colorScheme={quality === 50 ? "blue" : "gray"}
-                onClick={() => {
-                  setQuality(50);
-                }}
+                onClick={() => controls.setQuality(50)}
               >
                 Balanced MODE
               </Button>
@@ -98,9 +84,7 @@ export default function SideDrawer({
                 borderTopLeftRadius="0"
                 borderBottomLeftRadius="0"
                 colorScheme={quality === 100 ? "blue" : "gray"}
-                onClick={() => {
-                  setQuality(100);
-                }}
+                onClick={() => controls.setQuality(100)}
               >
                 Quality MODE
               </Button>
@@ -116,9 +100,7 @@ export default function SideDrawer({
                 borderBottomRightRadius="0"
                 flex="1"
                 colorScheme={showMap ? "gray" : "blue"}
-                onClick={() => {
-                  setShowMap(false);
-                }}
+                onClick={() => controls.setShowMap(false)}
               >
                 OFF
               </Button>
@@ -127,9 +109,7 @@ export default function SideDrawer({
                 borderTopLeftRadius="0"
                 borderBottomLeftRadius="0"
                 colorScheme={showMap ? "blue" : "gray"}
-                onClick={() => {
-                  setShowMap(true);
-                }}
+                onClick={() => controls.setShowMap(true)}
               >
                 ON
               </Button>

@@ -6,12 +6,13 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
 
+import { FiList } from "react-icons/fi";
+import { BsImage } from "react-icons/bs";
 import Head from "next/head";
 import catalog from "../../styles/pages/Catalog.module.css";
 import MangaTile from "../../components/Mangas/MangaTile";
 import MangaList from "../../components/Mangas/MangaList";
 import ErrorWrapper from "../../components/partials/ErrorWrapper";
-import Toggler from "../../components/Mangas/Toggler";
 import Filter from "../../components/Mangas/Filter/Filter";
 import Pagination from "../../components/Mangas/Pagination";
 import { LINK } from "../../libs/API_URL.js";
@@ -29,8 +30,8 @@ export default function Mangas({ deviceType }) {
       encodeURI(
         url +
           new URLSearchParams({
-            page: page ? page : "1",
-            sort: sort ? sort : "latest",
+            page: page ?? "1",
+            sort: sort ?? "latest",
             tags: selectedTags ? selectedTags.map((item) => item["id"]) : null,
           })
       )
@@ -94,10 +95,24 @@ export default function Mangas({ deviceType }) {
               <Filter />
             </Box>
             <Box>
-              <Toggler
-                isToggled={isToggled}
-                setIsToggled={(val) => setIsToggled(val)}
-              />
+              <div className={catalog.toggler}>
+                <Center
+                  className={`${catalog.toggle_common} ${
+                    !isToggled && catalog.toggle_active
+                  }`}
+                  onClick={() => setIsToggled(false)}
+                >
+                  <BsImage />
+                </Center>
+                <Center
+                  className={`${catalog.toggle_detail} ${
+                    isToggled && catalog.toggle_active
+                  }`}
+                  onClick={() => setIsToggled(true)}
+                >
+                  <FiList />
+                </Center>
+              </div>
             </Box>
           </HStack>
 
@@ -106,22 +121,8 @@ export default function Mangas({ deviceType }) {
               isToggled ? catalog.grid_detail : catalog.grid_common
             }`}
           >
-            {!data &&
-              [...Array(24)].map((_, i) => {
-                return (
-                  <Flex flexDirection="column" key={i + 1}>
-                    <Skeleton height="380px" />
-                  </Flex>
-                );
-              })}
-            {data &&
-              data.mangas.map((item, i) => {
-                return isToggled ? (
-                  <MangaList data={item} key={i + 1} />
-                ) : (
-                  <MangaTile props={item} key={i + 1} />
-                );
-              })}
+            {!data && <Skeletons />}
+            {data && <MangaItems data={data} isToggled={isToggled} />}
           </div>
 
           {data && (
@@ -137,3 +138,27 @@ export default function Mangas({ deviceType }) {
     </>
   );
 }
+
+const Skeletons = () => {
+  [...Array(24)].map((_, i) => {
+    return (
+      <Flex flexDirection="column" key={i + 1}>
+        <Skeleton height="380px" />
+      </Flex>
+    );
+  });
+};
+
+const MangaItems = ({ data, isToggled }) => {
+  return (
+    <>
+      {data.mangas.map((item, i) => {
+        return isToggled ? (
+          <MangaList data={item} key={i + 1} />
+        ) : (
+          <MangaTile props={item} key={i + 1} />
+        );
+      })}
+    </>
+  );
+};

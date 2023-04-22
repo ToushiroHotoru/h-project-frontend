@@ -1,4 +1,6 @@
 import { useState, useContext } from "react";
+import { useRouter } from "next/router";
+
 import {
   FormControl,
   FormLabel,
@@ -10,26 +12,32 @@ import {
   InputGroup,
   InputRightElement,
   Flex,
+  Divider,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { AuthContext } from "./AuthContext";
-import css from "../../styles/components/Auth.module.css";
 import { useDispatch } from "react-redux";
-
 import { login } from "../../redux/slices/AuthSlice";
+import useStore from "../../zustand/auth.zustand";
+
+import css from "../../styles/components/Auth.module.css";
 
 export default function AuthLoginForm({ setToggleForm }) {
   const router = useRouter();
+  const { stage } = useStore();
+  const controls = useStore(({ controls }) => controls);
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { usernameContext, setUsernameContext } = useContext(AuthContext);
   const handleClick = () => setShow(!show);
 
   const dispatch = useDispatch();
 
   const loginHandler = async () => {
+    if (!validationFunc(email, password).status) {
+      setShowErrors(true);
+      return false;
+    }
+
     dispatch(
       login({
         email: email,
@@ -124,9 +132,7 @@ export default function AuthLoginForm({ setToggleForm }) {
               p="10px 36px 10px 12px"
               type={show ? "text" : "password"}
               _placeholder={{ color: "#8b8b8b;" }}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <InputRightElement width="36px" right="4px" height="100%">
@@ -151,35 +157,26 @@ export default function AuthLoginForm({ setToggleForm }) {
           )}
         </FormControl>
       </ModalBody>
-      <ModalFooter
-        display="flex"
-        justifyContent="center"
-        flexDirection="column"
-        p={0}
-        pt={24}
-      >
+      <ModalFooter display="flex" justifyContent="center" p={0} pt={24}>
         <Flex width="100%" justifyContent="center">
           <Button
-            bg="#F143E0"
-            _hover={{ bg: "#CE39BF" }}
-            onClick={() => {
-              if (!validationFunc(email, password).status) {
-                loginHandler();
-              } else {
-                setShowErrors(true);
-              }
-            }}
+            me="2px"
+            variant="link"
+            colorScheme="teal"
+            onClick={() => loginHandler()}
           >
             Войти
           </Button>
-        </Flex>
-        <Flex width="100%" marginTop="16px" justifyContent="center">
+          <Divider
+            orientation="vertical"
+            colorScheme="whiteAlpha"
+            size="10px"
+          />
           <Button
-            bg="#F143E0"
-            _hover={{ bg: "#CE39BF" }}
-            onClick={() => {
-              setToggleForm(false);
-            }}
+            ms="2px"
+            variant="link"
+            colorScheme="teal"
+            onClick={() => setToggleForm(false)}
           >
             Регистрация
           </Button>

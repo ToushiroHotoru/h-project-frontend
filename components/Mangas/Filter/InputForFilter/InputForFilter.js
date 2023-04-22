@@ -3,16 +3,22 @@ import { BsFillTriangleFill } from "react-icons/bs";
 
 export default function InputForFilter({
   showTags,
-  inputOnChange,
+  setIsFiltered,
+  setFilterValue,
   onClickHandler,
 }) {
+  const onChangeHandler = () => {
+    setIsFiltered(e.target.value ? true : false);
+    setFilterValue(e.target.value);
+  };
+
   return (
     <InputGroup onClick={onClickHandler}>
       <Input
         placeholder="Список тегов"
         cursor="pointer"
         _placeholder={{ opacity: 0.5, color: "#fff" }}
-        onChange={inputOnChange}
+        onChange={onChangeHandler}
       />
       <InputRightElement>
         <BsFillTriangleFill

@@ -12,15 +12,15 @@ export default function MangaList({ data }) {
   console.log(data);
 
   const reviewPicsArrayFunc = () => {
-    if (isHovored) {
-      return [data.pages[0], data.pages[1], data.pages[2]];
+    if (width > 600) {
+      return [data.cover, data.pages[0], data.pages[1]];
     } else {
-      if (width > 600) {
-        return [data.cover, data.pages[0], data.pages[1]];
-      } else {
-        return [data.cover, data.pages[0]];
-      }
+      return [data.cover, data.pages[0]];
     }
+
+    return isHovored
+      ? data.pages.slice(0, 3)
+      : [data.cover, data.pages.slice(0, 2)];
   };
 
   return (
@@ -33,9 +33,7 @@ export default function MangaList({ data }) {
           setIsHovored(true);
         }
       }}
-      onMouseLeave={() => {
-        setIsHovored(false);
-      }}
+      onMouseLeave={() => setIsHovored(false)}
     >
       <Link href={`/mangas/${data._id}`}>
         <a>
