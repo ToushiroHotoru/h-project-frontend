@@ -2,9 +2,10 @@ import axios from "axios";
 import * as cookie from "cookie";
 import * as setCookie from "set-cookie-parser";
 import createAuthRefreshInterceptor from "axios-auth-refresh";
+// import {store} from "../redux/store";
 
 const $api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: process.env.LOCAL_HOST,
   withCredentials: true,
 });
 
@@ -13,10 +14,11 @@ createAuthRefreshInterceptor($api, (failedRequest) =>
   // 1. First try request fails - refresh the token.
   $api.get("/api/refreshToken").then((resp) => {
     // 1a. Clear old helper cookie used in 'authorize.ts' higher order function.
+    console.log(resp);
     if ($api.defaults.headers.setCookie) {
       delete $api.defaults.headers.setCookie;
     }
-    const { accessToken } = resp.data;
+    const { accessToken, user } = resp.data;
     // 2. Set up new access token
     const bearer = `Bearer ${accessToken}`;
     $api.defaults.headers.Authorization = bearer;
@@ -30,7 +32,16 @@ createAuthRefreshInterceptor($api, (failedRequest) =>
     );
     // 4. Set up access token of the failed request.
     failedRequest.response.config.headers.Authorization = bearer;
-
+    // store.dispatch(
+    //   updateAccessToken({
+    //     token: accessToken,
+    //   })
+    // );
+    // store.dispatch(
+    //   updateUserInfo({
+    //     user: user,
+    //   })
+    // );
     // 5. Retry the request with new setup!
     return Promise.resolve();
   })

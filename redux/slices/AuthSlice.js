@@ -47,6 +47,7 @@ export const authSlice = createSlice({
     },
     updateUserInfo: (state, action) => {
       state.user = action.payload.user;
+      state.isAuth = true;
     },
     reset: () => intenalInitialState,
   },
@@ -77,5 +78,6 @@ export const authSlice = createSlice({
     builder.addCase(logout.fulfilled, (state, action) => intenalInitialState);
   },
 });
+export const { updateAccessToken, updateUserInfo, reset } = authSlice.actions;
 
 export default authSlice.reducer;
