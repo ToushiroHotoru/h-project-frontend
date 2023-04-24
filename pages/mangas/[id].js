@@ -1,6 +1,4 @@
 import Head from "next/head";
-import moment from "moment";
-import "moment/locale/ru";
 import { useEffect, useState } from "react";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { getPaths } from "../../libs/get_post.js";
@@ -13,23 +11,19 @@ import MangaImg from "../../components/Manga/MangaImg.js";
 
 import css from "../../styles/pages/Manga.module.css";
 import { LINK } from "../../libs/API_URL.js";
-
 import axiosBack from "../../libs/axiosBack.js";
-import { useRouter } from "next/router";
 
 export async function getStaticProps({ params }) {
+  console.log(params);
   const { id } = params;
-  const res = await fetch(`${LINK}/manga-static`, {
-    method: "POST",
-    body: JSON.stringify({ id: id }),
-    headers: {
-      "Content-Type": "application/json",
+  const res = await axiosBack.get(`/manga-static`, { params: { id: id } });
+  const comments = await axiosBack.get("/get_comments", {
+    params: {
+      mangaId: id,
     },
   });
-
-  const data = await res.json();
   return {
-    props: { manga: data, id: id }, // will be passed to the page component as props
+    props: { manga: res.data, id: id, comments: comments.data.comments }, // will be passed to the page component as props
   };
 }
 
@@ -45,24 +39,13 @@ export async function getStaticPaths(context) {
   };
 }
 
-export default function Manga({ manga, id }) {
-  const router = useRouter();
-  moment.locale("ru");
+export default function Manga({ manga, id, comments }) {
   const [mangaDynamic, setMangaDynamic] = useState();
 
   const onLoadHander = async () => {
     try {
-      const res = await fetch(`${LINK}/manga-dynamic`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: id }),
-      });
-
-      const data = await res.json();
-      // console.log(data["tags"]);
-      setMangaDynamic(data);
+      const res = await axiosBack.get(`/manga-dynamic`, { params: { id: id } });
+      setMangaDynamic(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -83,9 +66,7 @@ export default function Manga({ manga, id }) {
             <Heading as="h1" size="md" className={css.title}>
               Manga - {manga.title}
             </Heading>
-            <Box mt="auto">
-              {moment(manga.updatedAt).format("DD MMMM YYYY")}
-            </Box>
+            <Box mt="auto">{manga.createdAt}</Box>
           </Flex>
 
           <section className={css.head}>
@@ -97,7 +78,7 @@ export default function Manga({ manga, id }) {
             pages={mangaDynamic && mangaDynamic.pages}
             manga={manga}
           />
-          <MangaComments />
+          <MangaComments comments={comments} />
         </div>
       </div>
     </>
