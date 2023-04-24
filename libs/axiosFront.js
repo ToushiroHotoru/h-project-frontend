@@ -5,7 +5,7 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 // import {store} from "../redux/store";
 
 const $api = axios.create({
-  baseURL: process.env.LOCAL_HOST,
+  // baseURL: process.env.LOCAL_HOST,
   withCredentials: true,
 });
 
