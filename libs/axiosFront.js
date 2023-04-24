@@ -9,6 +9,7 @@ const $api = axios.create({
   withCredentials: true,
 });
 
+
 // Create axios interceptor
 createAuthRefreshInterceptor($api, (failedRequest) =>
   // 1. First try request fails - refresh the token.
