@@ -5,7 +5,7 @@ import createAuthRefreshInterceptor from "axios-auth-refresh";
 // import {store} from "../redux/store";
 
 const $api = axios.create({
-  // baseURL: process.env.LOCAL_HOST,
+  baseURL: process.env.LOCAL_HOST,
   withCredentials: true,
 });
 
@@ -14,7 +14,6 @@ createAuthRefreshInterceptor($api, (failedRequest) =>
   // 1. First try request fails - refresh the token.
   $api.get("/api/refreshToken").then((resp) => {
     // 1a. Clear old helper cookie used in 'authorize.ts' higher order function.
-    console.log(resp);
     if ($api.defaults.headers.setCookie) {
       delete $api.defaults.headers.setCookie;
     }
