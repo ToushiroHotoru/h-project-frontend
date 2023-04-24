@@ -10,30 +10,30 @@ import { useEffect } from "react";
 import { updateAccessToken, updateUserInfo } from "./../redux/slices/AuthSlice";
 export default function Header() {
   const isAuth = useSelector((store) => store.authReducer.isAuth);
+  const userNameLetter = useSelector(
+    (store) => store.authReducer.user.userName
+  );
   const dispatch = useDispatch();
 
   const reLogin = async () => {
     const response = await axiosFront.get("/api/refreshToken");
-    console.log(response);
-    dispatch(
-      updateAccessToken({
-        token: response.data.accessToken,
-      })
-    );
-    dispatch(
-      updateUserInfo({
-        user: response.data.user,
-      })
-    );
+    if (response.data.status !== 401) {
+      dispatch(
+        updateAccessToken({
+          token: response.data.accessToken,
+        })
+      );
+      dispatch(
+        updateUserInfo({
+          user: response.data.user,
+        })
+      );
+    }
   };
 
   useEffect(() => {
     reLogin();
   }, []);
-
-  const userNameLetter = useSelector(
-    (store) => store.authReducer.user.userName
-  );
 
   return (
     <header className={header.header}>

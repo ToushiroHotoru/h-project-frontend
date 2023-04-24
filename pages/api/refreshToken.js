@@ -18,6 +18,6 @@ export default async (NextApiRequest, NextApiResponse) => {
     res.send(data);
   } catch (error) {
     // we don't want to send status 401 here.
-    // res.send(error);
+    res.send(error);
   }
 };

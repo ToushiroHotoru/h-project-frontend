@@ -20,7 +20,7 @@ export default function MangaCommentsExist({ comments }) {
                 <Box ml="1em" className={css.username}>
                   {comment.user.username}
                 </Box>
-                <Box ml="1em">12.12.2022</Box>
+                <Box ml="1em">{comment.createdAt}</Box>
               </Flex>
 
               <Box my="2em" className={css.comment_text}>

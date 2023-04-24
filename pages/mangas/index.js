@@ -16,41 +16,41 @@ import ErrorWrapper from "../../components/partials/ErrorWrapper";
 import Filter from "../../components/Mangas/Filter/Filter";
 import Pagination from "../../components/Mangas/Pagination";
 import { LINK } from "../../libs/API_URL.js";
+import axiosBack from "../../libs/axiosBack";
 
-export default function Mangas({ deviceType }) {
+export async function getStaticProps(context) {
+  console.log(context.params);
+  return {
+    props: {},
+  };
+}
+
+export default function Mangas() {
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
   const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
-  const dispatch = useDispatch();
-
-  const fetcher = async (url, selectedTags, page, sort) => {
+  
+  const fetcher = async (selectedTags, page, sort) => {
     if (!router.isReady) return;
-
-    const res = await fetch(
-      encodeURI(
-        url +
-          new URLSearchParams({
-            page: page ?? "1",
-            sort: sort ?? "latest",
-            tags: selectedTags ? selectedTags.map((item) => item["id"]) : null,
-          })
-      )
-    );
-
-    if (!res.ok) {
+    const pageQ = page || 1;
+    const sortQ = sort || "latest";
+    const tagsQ = selectedTags ? selectedTags.map((item) => item["id"]) : null;
+    const { data, status } = await axiosBack.get("/mangas", {
+      params: { page: pageQ, sort: sortQ, tags: tagsQ },
+    });
+    if (status !== 200) {
       const error = new Error("An error occurred while fetching the data.");
-      error.info = await res.json();
+      error.info = await data;
       throw error;
     }
 
-    return res.json();
+    return data;
   };
 
   const { data, error } = useSWR(
-    [`${LINK}/mangas?`, selectedTags, router.query.page, router.query.sort],
+    [selectedTags, router.query.page, router.query.sort],
     fetcher
   );
-
   if (error) {
     return (
       <ErrorWrapper

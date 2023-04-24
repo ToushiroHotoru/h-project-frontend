@@ -2,7 +2,6 @@ import manga from "../../styles/components/MangaList.module.css";
 import Image from "next/image";
 import { Flex, Box } from "@chakra-ui/react";
 import Link from "next/link";
-import moment from "moment";
 import { useState } from "react";
 import useMeasure from "react-use-measure";
 
@@ -93,7 +92,7 @@ export default function MangaList({ data }) {
             <Flex mb="5px">
               <Box minW="100px">Дата</Box>
               <Box ml="2%" w="100%">
-                {moment(data.createdAt).format("DD-MM-YYYY")}
+                {data.createdAt}
               </Box>
             </Flex>
             <Flex mb="5px">
