@@ -6,7 +6,7 @@ import SideDrawer from "../../components/Reader/SideDrawer";
 import ReaderAlt from "../../components/Reader/ReaderAlt";
 import ReaderDef from "../../components/Reader/ReaderDef";
 import useStore from "../../zustand/reader.zustand";
-import instance from "../../libs/instance";
+import instance from "../../libs/axiosBack";
 
 export default function Reader() {
   const { setMangaTitle, setMangaPages } = useStore((state) => state.controls);
@@ -16,12 +16,13 @@ export default function Reader() {
 
   const fetchMangaDynamic = async () => {
     try {
-      const res = await instance.post("/manga-dynamic", {
-        id: router.query.id,
+      const res = await instance.get("/manga-dynamic", {
+        params: {
+          id: router.query.id,
+        },
       });
 
       const result = res.data;
-      console.log("TEST", result);
       setMangaPages(result.pages);
       setMangaTitle(result.series);
     } catch (err) {
