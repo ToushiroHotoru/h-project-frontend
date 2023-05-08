@@ -53,7 +53,6 @@ export default function Filter() {
         "get_tags_count?" + new URLSearchParams({ tags: tags })
       );
       const result = res.data;
-      console.log("TAGS", result);
       setTags(result.tags);
     } catch (err) {
       console.log(err.message);

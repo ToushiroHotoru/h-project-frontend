@@ -17,7 +17,6 @@ export default function Header() {
 
   const reLogin = async () => {
     const response = await axiosFront.get("/api/refreshToken");
-    console.log(response.status);
     if (response.data.status !== null && response.data.status === 200) {
       dispatch(
         updateAccessToken({

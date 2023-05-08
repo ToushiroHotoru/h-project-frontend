@@ -5,7 +5,6 @@ import Image from "next/image";
 
 export default function MangaTags({ tags }) {
   const [isLoaded, setIsloaded] = useState(false);
-  // console.log(tags);
   return (
     <div className={MangaHeadCSS.head_tags}>
       <Flex alignItems="flex-start" flexWrap="wrap" spacing="5px">

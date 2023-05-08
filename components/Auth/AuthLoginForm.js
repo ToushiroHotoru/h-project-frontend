@@ -68,7 +68,6 @@ export default function AuthLoginForm({ setToggleForm }) {
   const dispatch = useDispatch();
 
   const loginHandler = async () => {
-    console.log(validationFunc(email, password))
     if (validationFunc(email, password).status) {
       setShowErrors(true);
       return false;

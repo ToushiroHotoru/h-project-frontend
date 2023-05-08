@@ -18,23 +18,17 @@ import Pagination from "../../components/Mangas/Pagination";
 import { LINK } from "../../libs/API_URL.js";
 import axiosBack from "../../libs/axiosBack";
 
-export async function getStaticProps(context) {
-  console.log(context.params);
-  return {
-    props: {},
-  };
-}
-
 export default function Mangas() {
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
   const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
-  
+
   const fetcher = async (selectedTags, page, sort) => {
     if (!router.isReady) return;
     const pageQ = page || 1;
     const sortQ = sort || "latest";
     const tagsQ = selectedTags ? selectedTags.map((item) => item["id"]) : null;
+    console.log(tagsQ, "<<<");
     const { data, status } = await axiosBack.get("/mangas", {
       params: { page: pageQ, sort: sortQ, tags: tagsQ },
     });

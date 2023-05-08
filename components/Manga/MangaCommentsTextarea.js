@@ -15,7 +15,7 @@ export default function MangaCommentsTextarea({ comments }) {
       mangaId: manga,
       text: comment,
     });
-    setComment('')
+    setComment("");
     await axiosBack.get("/get_comments", {
       params: {
         mangaId: manga,
@@ -23,10 +23,9 @@ export default function MangaCommentsTextarea({ comments }) {
     });
   };
   const getComment = (e) => {
-    console.log(e);
     setComment(e.target.value);
   };
-  console.log(comment);
+
   return (
     <section className={css.comments}>
       <Text mb="8px">Комментарии</Text>
@@ -36,7 +35,9 @@ export default function MangaCommentsTextarea({ comments }) {
         resize="none"
         onChange={getComment}
       />
-      <Button mt="5px" onClick={sendComment}>Отправить</Button>
+      <Button mt="5px" onClick={sendComment}>
+        Отправить
+      </Button>
     </section>
   );
 }
