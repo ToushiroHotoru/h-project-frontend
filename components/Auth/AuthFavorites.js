@@ -30,7 +30,6 @@ export default function AuthFavorites() {
     try {
       const res = await fetch(`${LINK}/get_tags`);
       const result = await res.json();
-      console.log("TAGS", result.tags);
       setTags(result.tags);
     } catch (err) {
       console.log(err.message);

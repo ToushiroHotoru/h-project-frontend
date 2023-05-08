@@ -14,7 +14,6 @@ import { LINK } from "../../libs/API_URL.js";
 import axiosBack from "../../libs/axiosBack.js";
 
 export async function getStaticProps({ params }) {
-  console.log(params);
   const { id } = params;
   const res = await axiosBack.get(`/manga-static`, { params: { id: id } });
   const comments = await axiosBack.get("/get_comments", {

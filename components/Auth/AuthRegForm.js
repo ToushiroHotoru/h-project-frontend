@@ -100,9 +100,7 @@ export default function AuthRegForm({ setToggleForm }) {
     }
   };
 
-  useEffect(() => {
-    console.log(stage);
-  }, [stage]);
+  useEffect(() => {}, [stage]);
 
   return (
     <>
