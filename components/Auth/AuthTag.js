@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import { Skeleton } from "@chakra-ui/react";
 import Image from "next/image";
-import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
+import css from "../../styles/components/Auth.module.css";
 import { useState, useEffect } from "react";
 
 export default function AuthTag({
@@ -14,6 +14,31 @@ export default function AuthTag({
   const [isClicked, setIsClicked] = useState();
   const [isLoaded, setIsloaded] = useState(false);
 
+  // выборка класса для элемента тега
+  const classNameChosserForItem = () => {
+    switch (true) {
+      case isClicked == true && type === "favs":
+        return css.item_clicked;
+      case isClicked == true && type !== "favs":
+        return css.unloved_item_clicked;
+      case isClicked == false && isFavorited == true:
+        return css.item_is_favorited;
+      case isClicked == false && isFavorited == false:
+        return css.item;
+    }
+  };
+  // выборка класса для имени тега
+  const classNameChosserForTagName = () => {
+    switch (true) {
+      case isClicked == true && type === "favs":
+        return css.tag_name_clicked;
+      case isClicked == true && type !== "favs":
+        return css.unloved_tag_name_clicked;
+      case isClicked == false:
+        return css.tag_name;
+    }
+  };
+
   useEffect(() => {
     setIsClicked(selectedTags.includes(data["name"]) ? true : false);
   }, [selectedTags]);
@@ -21,15 +46,7 @@ export default function AuthTag({
   return (
     <Skeleton
       isLoaded={isLoaded}
-      className={`${AuthFavoritesCSS.item} ${
-        isClicked
-          ? type === "favs"
-            ? AuthFavoritesCSS.item_clicked
-            : AuthFavoritesCSS.unloved_item_clicked
-          : isFavorited
-          ? AuthFavoritesCSS.item_is_favorited
-          : AuthFavoritesCSS.item
-      }`}
+      className={`${css.item} ${classNameChosserForItem()}`}
       onClick={() => {
         if (!isFavorited) {
           selectTagFunc(data["name"]);
@@ -49,15 +66,7 @@ export default function AuthTag({
         objectFit="cover"
         draggable="false"
       />
-      <Box
-        className={`${AuthFavoritesCSS.tag_name} ${
-          isClicked
-            ? type === "favs"
-              ? AuthFavoritesCSS.tag_name_clicked
-              : AuthFavoritesCSS.unloved_tag_name_clicked
-            : AuthFavoritesCSS.tag_name
-        }`}
-      >
+      <Box className={`${css.tag_name} ${classNameChosserForTagName()}`}>
         {data["name"]}
       </Box>
     </Skeleton>
