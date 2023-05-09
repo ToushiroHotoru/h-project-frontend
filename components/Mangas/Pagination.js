@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { Button, Flex } from "@chakra-ui/react";
 import {
   MdOutlineArrowForwardIos,
@@ -5,10 +6,12 @@ import {
 } from "react-icons/md";
 import { useEffect } from "react";
 
-export default function Pagination({ router, total, offset, step }) {
+export default function Pagination({ total, offset, step }) {
+  console.log(total, "<<<");
+  const router = useRouter();
   const currentPage = router.query?.page ? router.query?.page : 1;
   const currentSort = router.query?.sort ? router.query.sort : "latest";
-  const create_pagination = () => {
+  const createPagination = () => {
     let start_page_offset = offset - step * 2;
     let end_page_offset = offset + step * 3;
     let page_offset = start_page_offset;
@@ -42,7 +45,7 @@ export default function Pagination({ router, total, offset, step }) {
 
   return (
     <Flex justifyContent="center">
-      {Number(currentPage) - 1 !== 0 ? (
+      {Number(currentPage) - 1 !== 0 && (
         <Button
           mx="2"
           colorScheme="whatsapp"
@@ -62,35 +65,34 @@ export default function Pagination({ router, total, offset, step }) {
         >
           <MdOutlineArrowBackIosNew />
         </Button>
-      ) : (
-        ""
       )}
 
-      {create_pagination().map((item, i) => {
-        return (
-          <Button
-            key={i + 1}
-            mx="2"
-            colorScheme={Number(currentPage) === item ? "gray" : "whatsapp"}
-            onClick={() => {
-              router.push(
-                `/mangas?page=${item}&sort=${currentSort}${
-                  router.query.tag ? "&tag=" + router.query.tag : ""
-                }`,
-                undefined,
-                {
-                  scroll: true,
-                  shallow: true,
-                }
-              );
-            }}
-          >
-            {item}
-          </Button>
-        );
-      })}
+      {total > step &&
+        createPagination().map((item, i) => {
+          return (
+            <Button
+              key={i + 1}
+              mx="2"
+              colorScheme={Number(currentPage) === item ? "gray" : "whatsapp"}
+              onClick={() => {
+                router.push(
+                  `/mangas?page=${item}&sort=${currentSort}${
+                    router.query.tag ? "&tag=" + router.query.tag : ""
+                  }`,
+                  undefined,
+                  {
+                    scroll: true,
+                    shallow: true,
+                  }
+                );
+              }}
+            >
+              {item}
+            </Button>
+          );
+        })}
 
-      {currentPage <= Math.ceil(total / step) - 1 ? (
+      {currentPage <= Math.ceil(total / step) - 1 && (
         <Button
           mx="2"
           colorScheme="whatsapp"
@@ -110,8 +112,6 @@ export default function Pagination({ router, total, offset, step }) {
         >
           <MdOutlineArrowForwardIos />
         </Button>
-      ) : (
-        ""
       )}
     </Flex>
   );
