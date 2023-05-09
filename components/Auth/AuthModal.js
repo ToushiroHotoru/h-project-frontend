@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { FaRegUserCircle } from "react-icons/fa";
 import useStore from "../../zustand/auth.zustand";
@@ -9,7 +9,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   useDisclosure,
-  Button,
   Box,
   Tooltip,
   extendTheme,
@@ -18,36 +17,17 @@ import {
 
 import AuthRegForm from "./AuthRegForm";
 import AuthLoginForm from "./AuthLoginForm";
-import AuthFavorites from "./AuthFavorites";
-import AuthUnloved from "./AuthUnloved";
+import AuthTags from "./AuthTags";
 import AuthAvatars from "./AuthAvatars";
 import AuthRegistered from "./AuthRegistered";
 import AuthComplete from "./AuthComplete";
 import Image from "next/image";
 
 export default function AuthModal() {
-  const { stage } = useStore();
+  const { stage, maskots, speeches } = useStore();
   const controls = useStore(({ controls }) => controls);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [usernameContext, setUsernameContext] = useState();
-  const [favorites, setFavorites] = useState();
   const [toggleForm, setToggleForm] = useState(true);
-  const [maskots, setMaskots] = useState([
-    "/maskot.png",
-    "/maskot4.png",
-    "/maskot2.png",
-    "/maskot2.png",
-    "/maskot4.png",
-    "/maskot4.png",
-  ]);
-  const speeches = [
-    "Fuck u)",
-    "Успешно зарегистрировался",
-    "I like cookies)",
-    "My fav color is orange)",
-    "Welcome)",
-    "Настройка завершена",
-  ];
 
   const theme = extendTheme({
     components: {
@@ -65,6 +45,8 @@ export default function AuthModal() {
   const closeFunc = () => {
     onClose();
     setToggleForm(true);
+    controls.setStage(1);
+    controls.setFavorites([]);
   };
 
   const renderSwitchFunc = (value) => {
@@ -74,9 +56,9 @@ export default function AuthModal() {
       case 2:
         return <AuthRegistered />;
       case 3:
-        return <AuthFavorites />;
+        return <AuthTags />;
       case 4:
-        return <AuthUnloved />;
+        return <AuthTags />;
       case 5:
         return <AuthAvatars />;
       case 6:
