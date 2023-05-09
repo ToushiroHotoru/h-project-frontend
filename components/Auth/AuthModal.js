@@ -17,8 +17,7 @@ import {
 
 import AuthRegForm from "./AuthRegForm";
 import AuthLoginForm from "./AuthLoginForm";
-import AuthFavorites from "./AuthFavorites";
-import AuthUnloved from "./AuthUnloved";
+import AuthTags from "./AuthTags";
 import AuthAvatars from "./AuthAvatars";
 import AuthRegistered from "./AuthRegistered";
 import AuthComplete from "./AuthComplete";
@@ -46,6 +45,8 @@ export default function AuthModal() {
   const closeFunc = () => {
     onClose();
     setToggleForm(true);
+    controls.setStage(1);
+    controls.setFavorites([]);
   };
 
   const renderSwitchFunc = (value) => {
@@ -55,9 +56,9 @@ export default function AuthModal() {
       case 2:
         return <AuthRegistered />;
       case 3:
-        return <AuthFavorites />;
+        return <AuthTags />;
       case 4:
-        return <AuthUnloved />;
+        return <AuthTags />;
       case 5:
         return <AuthAvatars />;
       case 6:

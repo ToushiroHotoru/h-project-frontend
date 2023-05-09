@@ -8,7 +8,6 @@ import useMeasure from "react-use-measure";
 export default function MangaList({ data }) {
   const [isHovored, setIsHovored] = useState();
   const [ref, { width }] = useMeasure();
-  console.log(data);
 
   const reviewPicsArrayFunc = () => {
     if (width > 600) {

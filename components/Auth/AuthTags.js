@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 import useStore from "../../zustand/auth.zustand";
 import {
@@ -8,19 +8,18 @@ import {
   Button,
   ModalFooter,
   ModalBody,
-  Divider,
   Tag,
+  Divider,
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
 import instance from "../../libs/instance";
 
-import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
+import css from "../../styles/components/Auth.module.css";
 import AuthTag from "./AuthTag";
-import { LINK } from "../../libs/API_URL.js";
 
-export default function AuthUnloved() {
-  const { favorites, userId } = useStore();
+export default function AuthTags() {
+  const { userId, stage, favorites } = useStore();
   const controls = useStore(({ controls }) => controls);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -29,22 +28,49 @@ export default function AuthUnloved() {
 
   const getTagsFunc = async () => {
     try {
-      const res = await fetch(`${LINK}/get_tags`);
-      const result = await res.json();
+      const res = await instance.get(`get_tags`);
+      const result = res.data;
       setTags(result.tags);
     } catch (err) {
       console.log(err.message);
     }
   };
 
+  const sendTags = async () => {
+    try {
+      console.log(stage, "<<<");
+
+      const tagsIds = tags
+        .filter((tag) => selectedTags.includes(tag["name"]))
+        .map((item) => item._id);
+
+      await instance.post(
+        `${stage == 4 ? "set_exceptions_tags" : "set_preferences_tags"}`,
+        {
+          // id: userId
+          id: userId,
+          tags: tagsIds,
+        }
+      );
+
+      setSelectedTags([]); // !delete later
+      controls.setStage(stage == 3 ? 4 : 5);
+      console.log(stage, "<<<");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const selectTagFunc = (id) => {
     const prevSelectedTags = [...selectedTags];
+
     if (prevSelectedTags.includes(id)) {
       prevSelectedTags.splice(prevSelectedTags.indexOf(id), 1);
     } else {
       prevSelectedTags.push(id);
     }
     setSelectedTags(prevSelectedTags);
+    if (stage == 3) controls.setFavorites(prevSelectedTags);
   };
 
   // сортировка тегов по запросу
@@ -59,25 +85,8 @@ export default function AuthUnloved() {
     });
 
     const newTags = [...filteredTags, ...prevTags];
+
     setSortedTags(newTags);
-  };
-
-  const sendUnlovedTags = async () => {
-    try {
-      const tagsIds = tags
-        .filter((tag) => selectedTags.includes(tag["name"]))
-        .map((item) => item._id);
-
-      await instance(`set_exceptions_tags`, {
-        method: "POST",
-        body: JSON.stringify({
-          id: userId,
-          exceptionsTags: tagsIds,
-        }),
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
   };
 
   const toggleSort = () => {
@@ -94,7 +103,7 @@ export default function AuthUnloved() {
 
   return (
     <>
-      <ModalBody p={0} mt="15px">
+      <ModalBody p="0" mt="15px">
         <Center flexDirection="column">
           <Input
             type="text"
@@ -109,17 +118,17 @@ export default function AuthUnloved() {
               sortByQuery(e.target.value);
             }}
           />
-          <Divider mt="20px" width="100%" bg="#f14343" height="2px" />
-          <div className={AuthFavoritesCSS.tags}>
+          <Divider mt="20px" width="100%" bg="#47f143" height="2px" />
+          <div className={css.tags}>
             {toggleSort().length > 0 &&
-              toggleSort().map((item) => {
+              toggleSort().map((item, i) => {
                 return (
                   <AuthTag
-                    key={item._id}
+                    key={i + 1}
                     data={item}
                     selectTagFunc={selectTagFunc}
                     selectedTags={selectedTags}
-                    type={"unfavs"}
+                    type={stage == 4 ? "unfavs" : "favs"}
                     isFavorited={
                       favorites ? favorites.includes(item.name) : false
                     }
@@ -128,7 +137,7 @@ export default function AuthUnloved() {
               })}
           </div>
           {selectedTags.length > 0 && (
-            <Box className={AuthFavoritesCSS.subTags}>
+            <Box className={css.subTags}>
               {selectedTags.map((item, i) => {
                 return (
                   <Tag
@@ -143,9 +152,7 @@ export default function AuthUnloved() {
                     <TagLabel>{item}</TagLabel>
                     <TagCloseButton
                       ml="auto"
-                      onClick={() => {
-                        selectTagFunc(item);
-                      }}
+                      onClick={() => selectTagFunc(item)}
                     />
                   </Tag>
                 );
@@ -157,13 +164,22 @@ export default function AuthUnloved() {
       <ModalFooter display="flex" justifyContent="center" p={0} mt="15px">
         <Button
           // disabled={stage >= 4}
-          bg={selectedTags.length !== 0 ? "#F14343" : "#A2ACAB"}
-          _hover={{ bg: selectedTags.length !== 0 ? "#D03939" : "#727978" }}
-          onClick={() => {
-            controls.setFavorites([]); // ! delete later
-            controls.setStage(5);
-            sendUnlovedTags();
+          bg={
+            selectedTags.length != 0
+              ? stage == 3
+                ? "#47F143"
+                : "#F14343"
+              : "#A2ACAB"
+          } // #1F0A0E
+          _hover={{
+            bg:
+              selectedTags.length != 0
+                ? stage == 3
+                  ? "#D03939"
+                  : "#3FD23C"
+                : "#727978",
           }}
+          onClick={() => sendTags()}
         >
           {selectedTags.length !== 0 ? "Подтвердить" : "Пропустить"}
         </Button>
