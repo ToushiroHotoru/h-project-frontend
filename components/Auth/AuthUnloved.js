@@ -13,6 +13,7 @@ import {
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
+import instance from "../../libs/instance";
 
 import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthTag from "./AuthTag";
@@ -67,7 +68,7 @@ export default function AuthUnloved() {
         .filter((tag) => selectedTags.includes(tag["name"]))
         .map((item) => item._id);
 
-      await fetch(`${LINK}/set_exceptions_tags`, {
+      await instance(`set_exceptions_tags`, {
         method: "POST",
         body: JSON.stringify({
           id: userId,

@@ -14,6 +14,7 @@ import {
   TagCloseButton,
 } from "@chakra-ui/react";
 import { LINK } from "../../libs/API_URL.js";
+import instance from "../../libs/instance";
 
 import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthTag from "./AuthTag";
@@ -28,8 +29,8 @@ export default function AuthFavorites() {
 
   const getTagsFunc = async () => {
     try {
-      const res = await fetch(`${LINK}/get_tags`);
-      const result = await res.json();
+      const res = await instance.get(`get_tags`);
+      const result = res.data;
       setTags(result.tags);
     } catch (err) {
       console.log(err.message);

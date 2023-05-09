@@ -13,6 +13,7 @@ import {
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useStore from "../../zustand/auth.zustand";
+import instance from "../../libs/instance";
 
 import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
@@ -27,8 +28,8 @@ export default function AuthAvatars() {
   const [avatars, setAvatars] = useState([]);
 
   const getAvatarsFunc = async () => {
-    const response = await fetch(`${API_URL}/get_avatars`);
-    const data = await response.json();
+    const response = await instance.get(`${API_URL}/get_avatars`);
+    const data = response.data;
     setAvatars(data.avatars);
   };
 
@@ -40,7 +41,7 @@ export default function AuthAvatars() {
       formData.append("isUpload", uploadFlag);
       formData.append("avatar", avatar);
 
-      await fetch(`${API_URL}/set_avatar`, {
+      await fetch(`set_avatar`, {
         method: "POST",
         body: formData,
       });
