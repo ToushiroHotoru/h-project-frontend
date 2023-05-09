@@ -15,7 +15,6 @@ import {
   Box,
   extendTheme,
 } from "@chakra-ui/react";
-import { parse, stringify } from "qs";
 
 import TagsList from "./TagsList/TagsList";
 import SortList from "./SortList/SortList";
@@ -43,7 +42,6 @@ export default function Filter() {
   const [showTags, setShowTags] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
   const [filterValue, setFilterValue] = useState(false);
-  // const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
 
   const fetchTags = async () => {
@@ -102,11 +100,13 @@ export default function Filter() {
                     }}
                   />
                 )}
-
-                <SelectedTagsList
-                  selectedTags={selectedTags}
-                  setSelectedTags={(val) => setSelectedTags(val)}
-                />
+                <Box mt="0.8em">
+                  <SelectedTagsList
+                    selectedTags={selectedTags}
+                    size={"md"}
+                    setSelectedTags={(val) => setSelectedTags(val)}
+                  />
+                </Box>
               </Box>
             </Box>
           </ModalBody>

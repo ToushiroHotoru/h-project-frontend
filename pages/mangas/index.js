@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
+import { setSelectedTagsTest } from "../../redux/selectedTagsSlice";
 
 import { FiList } from "react-icons/fi";
 import { BsImage } from "react-icons/bs";
@@ -15,11 +16,12 @@ import MangaList from "../../components/Mangas/MangaList";
 import ErrorWrapper from "../../components/partials/ErrorWrapper";
 import Filter from "../../components/Mangas/Filter/Filter";
 import Pagination from "../../components/Mangas/Pagination";
-import { LINK } from "../../libs/API_URL.js";
+import SelectedTagsList from "../../components/Mangas/Filter/SelectedTagsList/SelectedTagsList";
 import axiosBack from "../../libs/axiosBack";
 
 export default function Mangas() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [isToggled, setIsToggled] = useState(false);
   const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
 
@@ -75,16 +77,16 @@ export default function Mangas() {
 
   return (
     <>
-      <Box>
-        {selectedTags &&
-          selectedTags.map((item, i) => <Box key={i + 1}>{item.name}</Box>)}
-      </Box>
       <Head>
         <title>Каталог</title>
       </Head>
+
       <div className={catalog.catalog}>
         <div className="container">
           <HStack w="100%" align="center" justify="right">
+            <Box>
+              <SelectedTagsList selectedTags={selectedTags} size={"lg"} />
+            </Box>
             <Box>
               <Filter />
             </Box>
@@ -121,7 +123,6 @@ export default function Mangas() {
 
           {data && (
             <Pagination
-              router={router}
               total={data.total}
               offset={data.offset}
               step={data.step}
