@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 const useStore = create((set) => ({
   stage: 1,
-  userId: null,
+  userId: "6443dd58db0e525d6f77f2be",
   userName: "",
   favorites: [],
   maskots: [

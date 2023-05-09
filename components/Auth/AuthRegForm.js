@@ -11,6 +11,7 @@ import {
   InputRightElement,
   Flex,
 } from "@chakra-ui/react";
+import instance from "../../libs/instance";
 
 import css from "../../styles/components/Auth.module.css";
 import { LINK as API_URL } from "../../libs/API_URL";
@@ -81,15 +82,15 @@ export default function AuthRegForm({ setToggleForm }) {
         return false;
       }
 
-      // const res = await fetch(`${API_URL}/registration`, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     email: email,
-      //     username: username,
-      //     password: password,
-      //   }),
-      // });
-      // const result = await request.json();
+      const res = instance.get(`registration`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: email,
+          username: username,
+          password: password,
+        }),
+      });
+      const result = res.data;
 
       if (true) {
         controls.setStage(2);
