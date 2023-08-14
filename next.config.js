@@ -10,6 +10,7 @@ const nextConfig = {
       "yandex.ru",
       "img10.reactor.cc",
       "h-project.toushirohotoru.repl.co",
+      "api.h-project.fun",
       "localhost",
     ],
   },
