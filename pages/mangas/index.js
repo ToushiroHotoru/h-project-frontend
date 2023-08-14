@@ -30,10 +30,10 @@ export default function Mangas() {
     const pageQ = page || 1;
     const sortQ = sort || "latest";
     const tagsQ = selectedTags ? selectedTags.map((item) => item["id"]) : null;
-    console.log(tagsQ, "<<<");
     const { data, status } = await axiosBack.get("/mangas", {
       params: { page: pageQ, sort: sortQ, tags: tagsQ },
     });
+    console.log(data, "<<<data");
     if (status !== 200) {
       const error = new Error("An error occurred while fetching the data.");
       error.info = await data;
@@ -47,6 +47,7 @@ export default function Mangas() {
     [selectedTags, router.query.page, router.query.sort],
     fetcher
   );
+
   if (error) {
     return (
       <ErrorWrapper
