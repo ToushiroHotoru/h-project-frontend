@@ -1,17 +1,27 @@
 import { Tag, TagLabel, TagCloseButton, Box } from "@chakra-ui/react";
+import { setSelectedTagsTest } from "../../../../redux/selectedTagsSlice";
+import { useSelector, useDispatch } from "react-redux";
 
-const removeTagFromSelectedFunc = ({ id, selectedTags }) => {
-  return selectedTags.filter((item) => item["id"] != id);
-};
+export default function SelectedTagsList({
+  selectedTags,
+  size,
+  setSelectedTags,
+}) {
+  const dispatch = useDispatch();
+  const removeTagFromSelectedFunc = ({ id, selectedTags }) => {
+    setSelectedTags(selectedTags.filter((item) => item["id"] != id));
+    // dispatch(
+    //   setSelectedTagsTest(selectedTags.filter((item) => item["id"] != id))
+    // );
+  };
 
-export default function SelectedTagsList({ selectedTags, setSelectedTags }) {
   return (
-    <Box mt="0.8em">
+    <Box display="flex" flexWrap="nowrap" overflow="auto">
       {selectedTags.map((item, i) => {
         return (
           <Tag
             key={i + 1}
-            size="md"
+            size={size}
             minWidth="100px"
             width="auto"
             variant="solid"
@@ -21,7 +31,12 @@ export default function SelectedTagsList({ selectedTags, setSelectedTags }) {
             <TagLabel>{item["name"]}</TagLabel>
             <TagCloseButton
               ml="auto"
-              onClick={() => removeTagFromSelectedFunc(item["id"])}
+              onClick={() =>
+                removeTagFromSelectedFunc({
+                  selectedTags: selectedTags,
+                  id: item["id"],
+                })
+              }
             />
           </Tag>
         );
