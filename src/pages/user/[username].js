@@ -1,5 +1,5 @@
 import Head from "next/head";
-import instance from "/libs/axiosFront";
+import instance from "@/utils/axiosFront";
 import store from "../../redux/store";
 // export const getServerSideProps = user({
 //   callback: async (_, store) => {
