@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import { getPaths } from "../../utils/get_post.js";
 
-import MangaComments from "../../components/manga/MangaComments.js";
-import MangaPages from "../../components/manga/MangaPages.js";
-import MangaTags from "../../components/manga/MangaTags.js";
-import MangaDesc from "../../components/manga/MangaDesc.js";
-import MangaImg from "../../components/manga/MangaImg.js";
+import MangaComments from "@/components/manga/MangaComments.js";
+import MangaPages from "@/components/manga/MangaPages.js";
+import MangaTags from "@/components/manga/MangaTags.js";
+import MangaDesc from "@/components/manga/MangaDesc.js";
+import MangaImg from "@/components/manga/MangaImg.js";
 
 import css from "../../styles/pages/Manga.module.css";
 import { LINK } from "../../utils/API_URL.js";
