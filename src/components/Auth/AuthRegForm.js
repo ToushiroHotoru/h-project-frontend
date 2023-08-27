@@ -11,10 +11,10 @@ import {
   InputRightElement,
   Flex,
 } from "@chakra-ui/react";
-import instance from "../../libs/instance";
+import instance from "../../utils/instance";
 
 import css from "../../styles/components/Auth.module.css";
-import { LINK as API_URL } from "../../libs/API_URL";
+import { LINK as API_URL } from "../../utils/API_URL";
 import useStore from "../../zustand/auth.zustand";
 
 const validationFunc = (email, username, password) => {

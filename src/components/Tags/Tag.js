@@ -3,7 +3,7 @@ import Image from "next/image";
 import TagsCss from "../../styles/components/Tags.module.css";
 import { useState } from "react";
 import Link from "next/link";
-import { LINK } from "../../libs/API_URL.js";
+import { LINK } from "../../utils/API_URL.js";
 
 export default function TagDesktop({ data }) {
   const [isLoaded, setIsloaded] = useState(false);

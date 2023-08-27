@@ -3,11 +3,10 @@ import { ChakraProvider } from "@chakra-ui/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "../styles/globals.css";
-import Layout from "../components/Layout";
+import Layout from "../components/layout/Layout";
 import { store } from "../redux/store";
 
 function MyApp({ Component, pageProps }) {
-
   return (
     <ChakraProvider>
       <Provider store={store}>

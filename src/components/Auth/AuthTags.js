@@ -13,7 +13,7 @@ import {
   TagLabel,
   TagCloseButton,
 } from "@chakra-ui/react";
-import instance from "../../libs/instance";
+import instance from "../../utils/instance";
 
 import css from "../../styles/components/Auth.module.css";
 import AuthTag from "./AuthTag";

@@ -1,10 +1,10 @@
-import footer from "@/styles/partials/Footer.module.css";
+import styles from "./styles.module.css";
 
 export default function Footer() {
   return (
-    <footer className={footer.footer}>
+    <footer className={styles.footer}>
       <div className="container">
-        <div className={footer.wrap}>
+        <div className={styles.wrap}>
           <h1>Footer</h1>
         </div>
       </div>

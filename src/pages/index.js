@@ -1,13 +1,13 @@
 // import { useColorMode } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { Flex, Box, Heading } from "@chakra-ui/react";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import newMangaCss from "./../styles/components/NewManga.module.css";
-import axios from "../libs/axiosBack";
-import A from "../components/partials/A";
+import axios from "../utils/axiosBack";
 
 export default function Index({ manga }) {
   // const { toggleColorMode } = useColorMode();
@@ -30,8 +30,8 @@ export default function Index({ manga }) {
           {manga.map((item, i) => {
             return (
               <SwiperSlide key={item._id}>
-                <A href={`/mangas/${item._id}`}>
-                  <a>
+                <Link href={`/mangas/${item._id}`}>
+                  <>
                     <Image
                       src={item.cover}
                       layout="responsive"
@@ -60,8 +60,8 @@ export default function Index({ manga }) {
                         {item.title}
                       </Box>
                     </Flex>
-                  </a>
-                </A>
+                  </>
+                </Link>
               </SwiperSlide>
             );
           })}

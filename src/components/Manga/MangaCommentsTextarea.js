@@ -1,7 +1,7 @@
 import { Text, Textarea, Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import css from "../../styles/components/manga/Comments.module.css";
-import axiosBack from "../../libs/axiosBack";
+import axiosBack from "../../utils/axiosBack";
 import { useState } from "react";
 import { useRouter } from "next/router";
 export default function MangaCommentsTextarea({ comments }) {

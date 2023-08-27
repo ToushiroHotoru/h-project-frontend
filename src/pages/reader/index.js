@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/react";
 
-import SideDrawer from "../../components/Reader/SideDrawer";
-import ReaderAlt from "../../components/Reader/ReaderAlt";
-import ReaderDef from "../../components/Reader/ReaderDef";
+import SideDrawer from "../../components/reader/SideDrawer";
+import ReaderAlt from "../../components/reader/ReaderAlt";
+import ReaderDef from "../../components/reader/ReaderDef";
 import useStore from "../../zustand/reader.zustand";
-import instance from "../../libs/axiosBack";
+import instance from "../../utils/axiosBack";
 
 export default function Reader() {
   const { setMangaTitle, setMangaPages } = useStore((state) => state.controls);

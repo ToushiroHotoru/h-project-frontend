@@ -13,11 +13,11 @@ import {
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import useStore from "../../zustand/auth.zustand";
-import instance from "../../libs/instance";
+import instance from "../../utils/instance";
 
 import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
-import { LINK as API_URL } from "../../libs/API_URL";
+import { LINK as API_URL } from "../../utils/API_URL";
 
 export default function AuthAvatars() {
   const { userId, userName } = useStore();

@@ -13,11 +13,10 @@ import Head from "next/head";
 import catalog from "../../styles/pages/Catalog.module.css";
 import MangaTile from "../../components/Mangas/MangaTile";
 import MangaList from "../../components/Mangas/MangaList";
-import ErrorWrapper from "../../components/partials/ErrorWrapper";
 import Filter from "../../components/Mangas/Filter/Filter";
 import Pagination from "../../components/Mangas/Pagination";
 import SelectedTagsList from "../../components/Mangas/Filter/SelectedTagsList/SelectedTagsList";
-import axiosBack from "../../libs/axiosBack";
+import axiosBack from "../../utils/axiosBack";
 
 export default function Mangas() {
   const router = useRouter();
@@ -49,32 +48,8 @@ export default function Mangas() {
   );
 
   if (error) {
-    return (
-      <ErrorWrapper
-        link="/mangas?page=1&sort=latest"
-        linkTitle="Перейти на существующую страницу"
-      >
-        <Image
-          src="/manga_cover/cover_error.png"
-          layout="intrinsic"
-          alt="error"
-          width={723}
-          height={693}
-        />
-        <Center color="red" fontSize="24px">
-          Error: {error.message}
-        </Center>
-      </ErrorWrapper>
-    );
+    return <>error occured</>;
   }
-
-  // useEffect(() => {
-  //   console.log(selectedTags.map((item) => item["id"]));
-  // }, [selectedTags]);
-
-  //   useEffect(() => {
-  //     if (!router.isReady) return;
-  //   }, [router.isReady]);
 
   return (
     <>

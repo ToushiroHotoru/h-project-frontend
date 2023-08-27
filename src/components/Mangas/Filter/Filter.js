@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import instance from "../../../libs/instanceAutoToken";
+import instance from "../../../utils/instanceAutoToken";
 import {
   Modal,
   ModalOverlay,

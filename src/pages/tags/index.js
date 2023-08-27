@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Tag from "../../components/Tags/Tag";
+import Tag from "../../components/tags/Tag";
 import TagsCss from "../../styles/components/Tags.module.css";
-import { LINK as API_URL } from "../../libs/API_URL.js";
+import { LINK as API_URL } from "../../utils/API_URL.js";
 
 export async function getStaticProps() {
   const res = await fetch(`${API_URL}/get_tags`);

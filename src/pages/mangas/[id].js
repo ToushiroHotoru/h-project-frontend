@@ -1,17 +1,17 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import { getPaths } from "../../libs/get_post.js";
+import { getPaths } from "../../utils/get_post.js";
 
-import MangaComments from "../../components/Manga/MangaComments.js";
-import MangaPages from "../../components/Manga/MangaPages.js";
-import MangaTags from "../../components/Manga/MangaTags.js";
-import MangaDesc from "../../components/Manga/MangaDesc.js";
-import MangaImg from "../../components/Manga/MangaImg.js";
+import MangaComments from "../../components/manga/MangaComments.js";
+import MangaPages from "../../components/manga/MangaPages.js";
+import MangaTags from "../../components/manga/MangaTags.js";
+import MangaDesc from "../../components/manga/MangaDesc.js";
+import MangaImg from "../../components/manga/MangaImg.js";
 
 import css from "../../styles/pages/Manga.module.css";
-import { LINK } from "../../libs/API_URL.js";
-import axiosBack from "../../libs/axiosBack.js";
+import { LINK } from "../../utils/API_URL.js";
+import axiosBack from "../../utils/axiosBack.js";
 
 export async function getStaticProps({ params }) {
   const { id } = params;

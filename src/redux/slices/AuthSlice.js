@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosFront from "../../libs/axiosFront";
+import axiosFront from "../../utils/axiosFront";
 
 const intenalInitialState = {
   isAuth: false,
