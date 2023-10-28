@@ -6,7 +6,7 @@ import SideDrawer from "../../components/reader/SideDrawer";
 import ReaderAlt from "../../components/reader/ReaderAlt";
 import ReaderDef from "../../components/reader/ReaderDef";
 import useStore from "../../zustand/reader.zustand";
-import instance from "../../utils/axiosBack";
+import instance from "../../utils/axios";
 
 export default function Reader() {
   const { setMangaTitle, setMangaPages } = useStore((state) => state.controls);

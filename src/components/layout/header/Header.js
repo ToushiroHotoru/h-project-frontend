@@ -17,33 +17,49 @@ export default function Header() {
   );
   const dispatch = useDispatch();
 
-  const reLogin = async () => {
-    const response = await axiosFront.get("/api/refreshToken");
-    if (response.data.status !== null && response.data.status === 200) {
-      dispatch(
-        updateAccessToken({
-          token: response.data.accessToken,
-        })
-      );
-      dispatch(
-        updateUserInfo({
-          user: response.data.user,
-        })
-      );
-    }
-  };
+  // const reLogin = async () => {
+  //   const response = await axiosFront.get("/api/refreshToken");
+  //   if (response.data.status !== null && response.data.status === 200) {
+  //     dispatch(
+  //       updateAccessToken({
+  //         token: response.data.accessToken,
+  //       })
+  //     );
+  //     dispatch(
+  //       updateUserInfo({
+  //         user: response.data.user,
+  //       })
+  //     );
+  //   }
+  // };
 
-  useEffect(() => {
-    reLogin();
-  }, []);
+  // useEffect(() => {
+  //   reLogin();
+  // }, []);
 
   return (
     <header className={styles.header}>
       <div className="container">
         <div className={styles.wrap}>
-          {/* <Link href="/" className={styles.logo}>
-            <Image src="/logo.svg" layout="fill" alt="logo" />
-          </Link> */}
+          <Box
+            position="relative"
+            display="flex"
+            justifyContent="flex-start"
+            width="150px"
+            height="26px"
+          >
+            <Link href="/" className={styles.logo}>
+              <a>
+                <Image
+                  src="/logo.svg"
+                  layout="fill"
+                  alt="logo"
+                  style={{ height: "26px" }}
+                />
+              </a>
+            </Link>
+          </Box>
+
           <Flex alignItems="center">
             <Box className={`link ${styles.link}`} cursor="pointer" ml="20px">
               <Link href="/mangas">Каталог</Link>

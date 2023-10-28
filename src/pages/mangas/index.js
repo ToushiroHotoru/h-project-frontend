@@ -1,49 +1,28 @@
 import { useState, useEffect } from "react";
 
 import useSWR from "swr";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
-import { setSelectedTagsTest } from "../../redux/selectedTagsSlice";
 
 import { FiList } from "react-icons/fi";
 import { BsImage } from "react-icons/bs";
 import Head from "next/head";
-import catalog from "../../styles/pages/Catalog.module.css";
-import MangaTile from "../../components/Mangas/MangaTile";
-import MangaList from "../../components/Mangas/MangaList";
-import Filter from "../../components/Mangas/Filter/Filter";
-import Pagination from "../../components/Mangas/Pagination";
-import SelectedTagsList from "../../components/Mangas/Filter/SelectedTagsList/SelectedTagsList";
-import axiosBack from "../../utils/axiosBack";
+import catalog from "@/styles/pages/Catalog.module.css";
+import MangaTile from "@/components/mangas/MangaTile";
+import MangaList from "@/components/mangas/MangaList";
+import Filter from "@/components/mangas/Filter/Filter";
+import Pagination from "@/components/mangas/Pagination";
+import SelectedTagsList from "@/components/mangas/Filter/SelectedTagsList/SelectedTagsList";
+import axios from "@/utils/axios";
 
 export default function Mangas() {
   const router = useRouter();
-  const dispatch = useDispatch();
   const [isToggled, setIsToggled] = useState(false);
   const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
 
-  const fetcher = async (selectedTags, page, sort) => {
-    if (!router.isReady) return;
-    const pageQ = page || 1;
-    const sortQ = sort || "latest";
-    const tagsQ = selectedTags ? selectedTags.map((item) => item["id"]) : null;
-    const { data, status } = await axiosBack.get("/mangas", {
-      params: { page: pageQ, sort: sortQ, tags: tagsQ },
-    });
-    console.log(data, "<<<data");
-    if (status !== 200) {
-      const error = new Error("An error occurred while fetching the data.");
-      error.info = await data;
-      throw error;
-    }
-
-    return data;
-  };
-
   const { data, error } = useSWR(
-    [selectedTags, router.query.page, router.query.sort],
+    [router.query.tags, router.query.page, router.query.sort],
     fetcher
   );
 
@@ -93,7 +72,7 @@ export default function Mangas() {
               isToggled ? catalog.grid_detail : catalog.grid_common
             }`}
           >
-            {!data && <Skeletons />}
+            {!data && Skeletons()}
             {data && <MangaItems data={data} isToggled={isToggled} />}
           </div>
 
@@ -109,9 +88,26 @@ export default function Mangas() {
     </>
   );
 }
+const fetcher = async (selectedTags, page, sort) => {
+  const pageQ = page || 1;
+  const sortQ = sort || "latest";
+  const tagsQ = selectedTags || null;
+  const { data, status } = await axios.get("/mangas", {
+    params: { page: pageQ, sort: sortQ, tags: tagsQ },
+  });
+  console.log(data);
+
+  if (status !== 200) {
+    const error = new Error("An error occurred while fetching the data.");
+    error.info = await data;
+    throw error;
+  }
+
+  return data;
+};
 
 const Skeletons = () => {
-  [...Array(24)].map((_, i) => {
+  return [...Array(24)].map((_, i) => {
     return (
       <Flex flexDirection="column" key={i + 1}>
         <Skeleton height="380px" />
@@ -133,3 +129,10 @@ const MangaItems = ({ data, isToggled }) => {
     </>
   );
 };
+// export async function getServerSideProps(params) {
+//   const { query } = params;
+//   console.log(params);
+//   const data = await fetcher([], Number(query.page), query.sort);
+//   console.log(data);
+//   return { props: { data } };
+// }
