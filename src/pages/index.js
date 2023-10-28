@@ -7,10 +7,19 @@ import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import newMangaCss from "./../styles/components/NewManga.module.css";
-import axios from "../utils/axiosBack";
+import axios from "../utils/axios";
+import { useEffect, useState } from "react";
 
-export default function Index({ manga }) {
-  // const { toggleColorMode } = useColorMode();
+export default function Index() {
+  const [newManges, setNewMangas] = useState([]);
+  const loadNewMangas = async () => {
+    const response = await axios.get("/new_manga");
+    setNewMangas(response.data.manga);
+  };
+
+  useEffect(() => {
+    loadNewMangas();
+  }, []);
   return (
     <div className="container">
       <Head>
@@ -24,14 +33,25 @@ export default function Index({ manga }) {
           modules={[Navigation]}
           navigation
           spaceBetween={14}
-          slidesPerView={5}
+          slidesPerView={2}
           loop={true}
+          breakpoints={{
+            1000: {
+              slidesPerView: 5,
+            },
+            700: {
+              slidesPerView: 4,
+            },
+            700: {
+              slidesPerView: 3,
+            },
+          }}
         >
-          {manga.map((item, i) => {
+          {newManges.map((item, i) => {
             return (
               <SwiperSlide key={item._id}>
                 <Link href={`/mangas/${item._id}`}>
-                  <>
+                  <a>
                     <Image
                       src={item.cover}
                       layout="responsive"
@@ -60,7 +80,7 @@ export default function Index({ manga }) {
                         {item.title}
                       </Box>
                     </Flex>
-                  </>
+                  </a>
                 </Link>
               </SwiperSlide>
             );
@@ -69,15 +89,4 @@ export default function Index({ manga }) {
       </div>
     </div>
   );
-}
-
-export async function getStaticProps() {
-  const response = await axios.get("/new_manga");
-  const manga = response.data.manga;
-  return {
-    props: {
-      manga,
-    },
-    revalidate: 10,
-  };
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button, Flex } from "@chakra-ui/react";
 import {
@@ -7,7 +8,6 @@ import {
 import { useEffect } from "react";
 
 export default function Pagination({ total, offset, step }) {
-  console.log(total, "<<<");
   const router = useRouter();
   const currentPage = router.query?.page ? router.query?.page : 1;
   const currentSort = router.query?.sort ? router.query.sort : "latest";
@@ -39,79 +39,65 @@ export default function Pagination({ total, offset, step }) {
     return page_offsets;
   };
 
-  useEffect(() => {
-    if (!router.isReady) return;
-  }, [router.isReady]);
-
   return (
     <Flex justifyContent="center">
       {Number(currentPage) - 1 !== 0 && (
-        <Button
-          mx="2"
-          colorScheme="whatsapp"
-          disabled={Number(currentPage) - 1 === 0 ? true : false}
-          onClick={() => {
-            router.push(
-              `/mangas?page=${Number(currentPage) - 1}&sort=${currentSort}${
-                router.query.tag ? "&tag=" + router.query.tag : ""
-              }`,
-              undefined,
-              {
-                scroll: true,
-                shallow: true,
-              }
-            );
-          }}
+        <Link
+          href={`/mangas?page=${Number(currentPage) - 1}&sort=${currentSort}${
+            router.query.tags ? "&tags=" + router.query.tags : ""
+          }`}
         >
-          <MdOutlineArrowBackIosNew />
-        </Button>
+          <a>
+            <Button
+              mx="2"
+              colorScheme="whatsapp"
+              disabled={Number(currentPage) - 1 === 0 ? true : false}
+            >
+              <MdOutlineArrowBackIosNew />
+            </Button>
+          </a>
+        </Link>
       )}
 
       {total > step &&
         createPagination().map((item, i) => {
           return (
-            <Button
+            <Link
               key={i + 1}
-              mx="2"
-              colorScheme={Number(currentPage) === item ? "gray" : "whatsapp"}
-              onClick={() => {
-                router.push(
-                  `/mangas?page=${item}&sort=${currentSort}${
-                    router.query.tag ? "&tag=" + router.query.tag : ""
-                  }`,
-                  undefined,
-                  {
-                    scroll: true,
-                    shallow: true,
-                  }
-                );
-              }}
+              href={`/mangas?page=${item}&sort=${currentSort}${
+                router.query.tags ? "&tags=" + router.query.tags : ""
+              }`}
             >
-              {item}
-            </Button>
+              <a>
+                <Button
+                  mx="2"
+                  colorScheme={i === currentPage - 1 ? "pink" : "whatsapp"}
+                >
+                  {item}
+                </Button>
+              </a>
+            </Link>
           );
         })}
 
       {currentPage <= Math.ceil(total / step) - 1 && (
-        <Button
-          mx="2"
-          colorScheme="whatsapp"
-          disabled={currentPage >= Math.ceil(total / step) - 1 ? true : false}
-          onClick={() => {
-            router.push(
-              `/mangas?page=${Number(currentPage) + 1}&sort=${currentSort}${
-                router.query.tag ? "&tag=" + router.query.tag : ""
-              }`,
-              undefined,
-              {
-                scroll: true,
-                shallow: true,
-              }
-            );
-          }}
+        <Link
+          href={`/mangas?page=${Number(currentPage) + 1}&sort=${currentSort}${
+            router.query.tags ? "&tags=" + router.query.tags : ""
+          }`}
         >
-          <MdOutlineArrowForwardIos />
-        </Button>
+          <a>
+            <Button
+              mx="2"
+              colorScheme="whatsapp"
+              disabled={
+                Number(currentPage) === Math.ceil(total / step) ? true : false
+              }
+            >
+              <MdOutlineArrowForwardIos />
+            </Button>
+          </a>
+        </Link>
       )}
     </Flex>
   );

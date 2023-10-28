@@ -1,14 +1,13 @@
-import { Box, Flex, Skeleton } from "@chakra-ui/react";
 import Image from "next/image";
-import TagsCss from "../../styles/components/Tags.module.css";
-import { useState } from "react";
 import Link from "next/link";
-import { LINK } from "../../utils/API_URL.js";
+import { useState } from "react";
+import { Box, Flex, Skeleton } from "@chakra-ui/react";
+import TagsCss from "@/styles/components/Tags.module.css";
 
 export default function TagDesktop({ data }) {
   const [isLoaded, setIsloaded] = useState(false);
   return (
-    <Link href={`/mangas?page=1&sort=latest&tags=${data._id}`}>
+    <Link href={`/mangas?tags=${data._id}`}>
       <a className={TagsCss.tag}>
         <Box className={TagsCss.tagImage}>
           <Image
@@ -16,10 +15,11 @@ export default function TagDesktop({ data }) {
             alt="Picture of the author"
             layout="fill"
             objectFit="cover"
+            width={250}
+            height={250}
             onLoadingComplete={() => {
               setIsloaded(true);
             }}
-            draggable={false}
           />
         </Box>
         <Box className={TagsCss.tagInfo}>

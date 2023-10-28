@@ -10,13 +10,12 @@ import MangaDesc from "@/components/manga/MangaDesc.js";
 import MangaImg from "@/components/manga/MangaImg.js";
 
 import css from "../../styles/pages/Manga.module.css";
-import { LINK } from "../../utils/API_URL.js";
-import axiosBack from "../../utils/axiosBack.js";
+import axios from "../../utils/axios.js";
 
 export async function getStaticProps({ params }) {
   const { id } = params;
-  const res = await axiosBack.get(`/manga-static`, { params: { id: id } });
-  const comments = await axiosBack.get("/get_comments", {
+  const res = await axios.get(`/manga-static`, { params: { id: id } });
+  const comments = await axios.get("/get_comments", {
     params: {
       mangaId: id,
     },
@@ -43,7 +42,8 @@ export default function Manga({ manga, id, comments }) {
 
   const onLoadHander = async () => {
     try {
-      const res = await axiosBack.get(`/manga-dynamic`, { params: { id: id } });
+      const res = await axios.get(`/manga-dynamic`, { params: { id: id } });
+      console.log(res)
       setMangaDynamic(res.data);
     } catch (err) {
       console.log(err);
@@ -73,8 +73,9 @@ export default function Manga({ manga, id, comments }) {
             <MangaDesc data={mangaDynamic && mangaDynamic} manga={manga} />
             <MangaTags tags={mangaDynamic && mangaDynamic["tags"]} />
           </section>
+          
           <MangaPages
-            pages={mangaDynamic && mangaDynamic.pages}
+            pages={mangaDynamic}
             manga={manga}
           />
           <MangaComments comments={comments} />

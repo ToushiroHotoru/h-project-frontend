@@ -1,21 +1,9 @@
 import Head from "next/head";
-import instance from "@/utils/axiosFront";
-import store from "../../redux/store";
-// export const getServerSideProps = user({
-//   callback: async (_, store) => {
-//     const dispatch = store;
-//     await dispatch(fetchFrogs());
+import axios from "@/utils/axios";
 
-//     return {
-//       props: {
-//         frogs: store.getState().frogsReducer.frogs,
-//       },
-//     };
-//   },
-// });
 export async function getServerSideProps(context) {
   const username = context.query.username;
-  const res = await instance.get(`/api/user`, {
+  const res = await axios.get(`/api/user`, {
     params: {
       username: username,
     },
