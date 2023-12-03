@@ -16,10 +16,10 @@ import {
   extendTheme,
 } from "@chakra-ui/react";
 
-import TagsList from "./TagsList/TagsList";
-import SortList from "./SortList/SortList";
-import SelectedTagsList from "./SelectedTagsList/SelectedTagsList";
-import InputForFilter from "./InputForFilter/InputForFilter";
+import TagsList from "./tagsList/TagsList";
+import SortList from "./sortList/SortList";
+import SelectedTagsList from "./selectedTagsList/SelectedTagsList";
+import InputForFilter from "./inputForFilter/InputForFilter";
 import { setSelectedTagsTest } from "../../../redux/selectedTagsSlice";
 
 const theme = extendTheme({
