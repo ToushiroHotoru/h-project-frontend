@@ -11,9 +11,9 @@ import Head from "next/head";
 import catalog from "@/styles/pages/Catalog.module.css";
 import MangaTile from "@/components/mangas/MangaTile";
 import MangaList from "@/components/mangas/MangaList";
-import Filter from "@/components/mangas/Filter/Filter";
+import Filter from "@/components/mangas/filter/Filter";
 import Pagination from "@/components/mangas/Pagination";
-import SelectedTagsList from "@/components/mangas/Filter/SelectedTagsList/SelectedTagsList";
+import SelectedTagsList from "@/components/mangas/filter/selectedTagsList/SelectedTagsList";
 import axios from "@/utils/axios";
 
 export default function Mangas() {
