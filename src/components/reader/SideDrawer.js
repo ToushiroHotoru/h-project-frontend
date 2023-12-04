@@ -1,17 +1,18 @@
 import {
+  Box,
+  Flex,
   Button,
   Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerFooter,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-  Flex,
-  Box,
 } from "@chakra-ui/react";
-import SideDrawerCSS from "../../styles/components/SideDrawer.module.css";
-import useStore from "../../zustand/reader.zustand";
+
+import useStore from "@/zustand/reader.zustand";
+import SideDrawerCSS from "@/styles/components/SideDrawer.module.css";
 
 export default function SideDrawer({ isOpen, onClose, btnRef }) {
   const { readerAltMode, quality, showMap } = useStore();

@@ -1,10 +1,12 @@
-import css from "../../styles/pages/Reader.module.css";
-import { Box, Center, Tooltip, Flex, Divider } from "@chakra-ui/react";
 import Image from "next/image";
-import { BsGearFill, BsArrowUpCircle } from "react-icons/bs";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+
 import { useSpring, animated } from "@react-spring/web";
-import useStore from "../../zustand/reader.zustand";
+import { BsGearFill, BsArrowUpCircle } from "react-icons/bs";
+import { Box, Center, Tooltip, Flex, Divider } from "@chakra-ui/react";
+
+import useStore from "@/zustand/reader.zustand";
+import css from "@/styles/pages/Reader.module.css";
 
 export default function ReaderAlt({ btnRef, onOpen }) {
   const [styles, animate] = useSpring(() => ({ right: -200 }));

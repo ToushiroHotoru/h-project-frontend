@@ -1,7 +1,9 @@
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
-import css from "../../styles/pages/Reader.module.css";
 import Image from "next/image";
 import { useState } from "react";
+
+import { Skeleton } from "@chakra-ui/react";
+
+import css from "@/styles/pages/Reader.module.css";
 
 export default function ReaderPage({ quality, router, mangaPages }) {
   const [isLoaded, setIsLoaded] = useState(false);

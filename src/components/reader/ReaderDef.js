@@ -1,8 +1,16 @@
-import { Button, Box, HStack, Center, Tooltip, Flex } from "@chakra-ui/react";
-import { Divider } from "@chakra-ui/react";
-import css from "../../styles/pages/Reader.module.css";
+import Link from "next/link";
 import Image from "next/image";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+
 import {
+  Box,
+  Flex,
+  HStack,
+  Center,
+  Button,
+  Tooltip,
+  Divider,
   FormControl,
   NumberInput,
   NumberInputField,
@@ -10,12 +18,11 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
-import ReaderPage from "./ReaderPage";
 import { BsGearFill } from "react-icons/bs";
-import { useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import useStore from "../../zustand/reader.zustand";
+
+import ReaderPage from "./ReaderPage";
+import useStore from "@/zustand/reader.zustand";
+import css from "@/styles/pages/Reader.module.css";
 
 export default function RederDef({ onOpen, btnRef }) {
   const { mangaPages, readerAltMode, mangaTitle, quality, showMap } =
