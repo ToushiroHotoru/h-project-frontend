@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
-
-import useSWR from "swr";
+// системные импорты
+import Head from "next/head";
+import { useState } from "react";
 import { useRouter } from "next/router";
+
+// импорты сторонних модулей
+import useSWR from "swr";
+import axios from "@/utils/axios";
+import { FiList } from "react-icons/fi";
+import { BsImage } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
 import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
 
-import { FiList } from "react-icons/fi";
-import { BsImage } from "react-icons/bs";
-import Head from "next/head";
-import catalog from "@/styles/pages/Catalog.module.css";
+// импорты которые не относятся ни к системным ни к сторонним
 import MangaTile from "@/components/mangas/MangaTile";
 import MangaList from "@/components/mangas/MangaList";
 import Filter from "@/components/mangas/filter/Filter";
 import Pagination from "@/components/mangas/Pagination";
+import catalog from "@/styles/pages/Catalog.module.css";
 import SelectedTagsList from "@/components/mangas/filter/selectedTagsList/SelectedTagsList";
-import axios from "@/utils/axios";
 
 export default function Mangas() {
   const router = useRouter();

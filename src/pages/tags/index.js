@@ -1,7 +1,8 @@
 import Head from "next/head";
-import Tag from "../../components/tags/Tag";
-import TagsCss from "../../styles/components/Tags.module.css";
-import { LINK as API_URL } from "../../utils/API_URL.js";
+
+import Tag from "@/components/tags/Tag";
+import { LINK as API_URL } from "@/utils/API_URL.js";
+import TagsCss from "@/styles/components/Tags.module.css";
 
 export async function getStaticProps() {
   const res = await fetch(`${API_URL}/get_tags`);

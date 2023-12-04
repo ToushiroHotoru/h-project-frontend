@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import { Box, Center, Flex } from "@chakra-ui/react";
 
 export default function Custom404() {

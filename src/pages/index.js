@@ -1,14 +1,14 @@
-// import { useColorMode } from "@chakra-ui/react";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import { Flex, Box, Heading } from "@chakra-ui/react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Flex, Box, Heading } from "@chakra-ui/react";
 
-import newMangaCss from "./../styles/components/NewManga.module.css";
-import axios from "../utils/axios";
-import { useEffect, useState } from "react";
+import axios from "@/utils/axios";
+import newMangaCss from "@/styles/components/NewManga.module.css";
 
 export default function Index() {
   const [newManges, setNewMangas] = useState([]);
