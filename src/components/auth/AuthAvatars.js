@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 
-import Image from "next/image";
 import {
   Box,
   Center,
   Button,
-  ModalFooter,
-  ModalBody,
   Divider,
   Tooltip,
+  ModalBody,
+  ModalFooter,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useStore from "../../zustand/auth.zustand";
-import instance from "../../utils/instance";
 
-import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import AuthAvatar from "./AuthAvatar";
-import { LINK as API_URL } from "../../utils/API_URL";
+import instance from "@/utils/instance";
+import useStore from "@/zustand/auth.zustand";
+import { LINK as API_URL } from "@/utils/API_URL";
+import AuthFavoritesCSS from "@/styles/components/Auth.module.css";
 
 export default function AuthAvatars() {
   const { userId, userName } = useStore();

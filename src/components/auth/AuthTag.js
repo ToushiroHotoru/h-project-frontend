@@ -1,15 +1,16 @@
-import { Box } from "@chakra-ui/react";
-import { Skeleton } from "@chakra-ui/react";
-import Image from "next/image";
-import css from "../../styles/components/Auth.module.css";
 import { useState, useEffect } from "react";
 
+import Image from "next/image";
+import { Box } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
+import css from "@/styles/components/Auth.module.css";
+
 export default function AuthTag({
-  data,
-  selectTagFunc,
-  selectedTags,
   type,
+  data,
   isFavorited,
+  selectedTags,
+  selectTagFunc,
 }) {
   const [isClicked, setIsClicked] = useState();
   const [isLoaded, setIsloaded] = useState(false);

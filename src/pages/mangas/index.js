@@ -8,7 +8,7 @@ import useSWR from "swr";
 import axios from "@/utils/axios";
 import { FiList } from "react-icons/fi";
 import { BsImage } from "react-icons/bs";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
 
 // импорты которые не относятся ни к системным ни к сторонним

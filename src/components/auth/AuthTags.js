@@ -1,22 +1,22 @@
 import { useState, useEffect } from "react";
 
-import useStore from "../../zustand/auth.zustand";
 import {
-  Input,
+  Tag,
   Box,
+  Input,
   Center,
   Button,
-  ModalFooter,
-  ModalBody,
-  Tag,
   Divider,
   TagLabel,
+  ModalBody,
+  ModalFooter,
   TagCloseButton,
 } from "@chakra-ui/react";
-import instance from "../../utils/instance";
 
-import css from "../../styles/components/Auth.module.css";
 import AuthTag from "./AuthTag";
+import instance from "@/utils/instance";
+import useStore from "@/zustand/auth.zustand";
+import css from "@/styles/components/Auth.module.css";
 
 export default function AuthTags() {
   const { userId, stage, favorites } = useStore();

@@ -1,23 +1,24 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
 import {
-  FormControl,
-  FormLabel,
-  Input,
   Box,
-  ModalFooter,
-  ModalBody,
-  Button,
-  InputGroup,
-  InputRightElement,
   Flex,
+  Input,
+  Button,
   Divider,
+  ModalBody,
+  FormLabel,
+  InputGroup,
+  FormControl,
+  ModalFooter,
+  InputRightElement,
 } from "@chakra-ui/react";
+
 import { useDispatch } from "react-redux";
-import { login } from "../../redux/slices/AuthSlice";
-import useStore from "../../zustand/auth.zustand";
-import css from "../../styles/components/Auth.module.css";
+import useStore from "@/zustand/auth.zustand";
+import { login } from "@/redux/slices/AuthSlice";
+import css from "@/styles/components/Auth.module.css";
 
 const validationFunc = (email, password) => {
   let errors = {

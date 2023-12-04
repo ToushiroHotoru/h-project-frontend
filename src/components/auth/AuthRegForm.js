@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Box,
-  ModalFooter,
-  ModalBody,
-  Button,
-  InputGroup,
-  InputRightElement,
-  Flex,
-} from "@chakra-ui/react";
-import instance from "../../utils/instance";
 
-import css from "../../styles/components/Auth.module.css";
-import { LINK as API_URL } from "../../utils/API_URL";
-import useStore from "../../zustand/auth.zustand";
+import {
+  Box,
+  Flex,
+  Input,
+  Button,
+  ModalBody,
+  FormLabel,
+  InputGroup,
+  ModalFooter,
+  FormControl,
+  InputRightElement,
+} from "@chakra-ui/react";
+
+import instance from "@/utils/instance";
+import useStore from "@/zustand/auth.zustand";
+import css from "@/styles/components/Auth.module.css";
 
 const validationFunc = (email, username, password) => {
   let errors = {

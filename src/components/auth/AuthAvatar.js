@@ -1,14 +1,16 @@
-import AuthFavoritesCSS from "../../styles/components/Auth.module.css";
 import Image from "next/image";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
+import { SkeletonCircle } from "@chakra-ui/react";
+
+import AuthFavoritesCSS from "@/styles/components/Auth.module.css";
+
 export default function AuthAvatar({
+  avatarId,
+  selectAvatar,
   avatarImgUrl, // путь изображения для этого
   avatarPreview, // превью изображения на главной
   setAvatarPreview,
-  avatarId,
-  selectAvatar,
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const [isLoaded, setIsloaded] = useState(false);

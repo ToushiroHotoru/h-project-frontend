@@ -1,27 +1,27 @@
+import Image from "next/image";
 import { useState } from "react";
 
-import { FaRegUserCircle } from "react-icons/fa";
-import useStore from "../../zustand/auth.zustand";
 import {
+  Box,
   Modal,
+  Tooltip,
+  Heading,
+  extendTheme,
+  ModalHeader,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalCloseButton,
   useDisclosure,
-  Box,
-  Tooltip,
-  extendTheme,
-  Heading,
+  ModalCloseButton,
 } from "@chakra-ui/react";
+import useStore from "@/zustand/auth.zustand";
+import { FaRegUserCircle } from "react-icons/fa";
 
-import AuthRegForm from "./AuthRegForm";
-import AuthLoginForm from "./AuthLoginForm";
 import AuthTags from "./AuthTags";
 import AuthAvatars from "./AuthAvatars";
-import AuthRegistered from "./AuthRegistered";
+import AuthRegForm from "./AuthRegForm";
 import AuthComplete from "./AuthComplete";
-import Image from "next/image";
+import AuthLoginForm from "./AuthLoginForm";
+import AuthRegistered from "./AuthRegistered";
 
 export default function AuthModal() {
   const { stage, maskots, speeches } = useStore();

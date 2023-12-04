@@ -1,5 +1,6 @@
 import { Center, Button, ModalFooter, ModalBody } from "@chakra-ui/react";
-import useStore from "../../zustand/auth.zustand";
+
+import useStore from "@/zustand/auth.zustand";
 
 export default function AuthComplete({ onCloseFunc }) {
   const { stage } = useStore();
