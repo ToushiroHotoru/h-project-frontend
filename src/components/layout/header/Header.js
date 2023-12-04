@@ -1,41 +1,17 @@
-import { useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
+import { useSelector } from "react-redux";
 import { Flex, Box, Button } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
 
 import styles from "./styles.module.css";
-import axiosFront from "@/utils/axiosFront";
 import AuthModal from "@/components/auth/AuthModal";
-import { updateAccessToken, updateUserInfo } from "@/redux/slices/AuthSlice";
 
 export default function Header() {
   const isAuth = useSelector((store) => store.authReducer.isAuth);
   const userNameLetter = useSelector(
     (store) => store.authReducer.user.userName
   );
-  const dispatch = useDispatch();
-
-  // const reLogin = async () => {
-  //   const response = await axiosFront.get("/api/refreshToken");
-  //   if (response.data.status !== null && response.data.status === 200) {
-  //     dispatch(
-  //       updateAccessToken({
-  //         token: response.data.accessToken,
-  //       })
-  //     );
-  //     dispatch(
-  //       updateUserInfo({
-  //         user: response.data.user,
-  //       })
-  //     );
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   reLogin();
-  // }, []);
 
   return (
     <header className={styles.header}>
