@@ -1,6 +1,6 @@
+import { useDispatch } from "react-redux";
+
 import { Tag, TagLabel, TagCloseButton, Box } from "@chakra-ui/react";
-import { setSelectedTagsTest } from "../../../../redux/selectedTagsSlice";
-import { useSelector, useDispatch } from "react-redux";
 
 export default function SelectedTagsList({
   selectedTags,

@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
 
-import { Flex, Box, Tooltip } from "@chakra-ui/react";
-import css from "../../../../styles/components/Filter.module.css";
 import {
-  BsFillClockFill,
-  BsSortAlphaDown,
+  BsFillEyeFill,
   BsFillStarFill,
   BsFillHeartFill,
-  BsFillEyeFill,
+  BsFillClockFill,
+  BsSortAlphaDown,
 } from "react-icons/bs";
+import { Flex, Box, Tooltip } from "@chakra-ui/react";
+
+import css from "@/styles/components/Filter.module.css";
 
 const sortTypes = [
   { name: "latest", tooltip: "Дата" },

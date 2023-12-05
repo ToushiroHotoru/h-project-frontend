@@ -1,14 +1,10 @@
-import { Box, Center, HStack, Button } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  BsDownload,
-  BsHeart,
-  BsHeartFill,
-  BsFillFolderFill,
-} from "react-icons/bs";
 
-import css from "../../styles/components/manga/MangaHead.module.css";
+import { Box, Center, HStack, Button } from "@chakra-ui/react";
+import { BsDownload, BsHeart, BsFillFolderFill } from "react-icons/bs";
+
+import css from "@/styles/components/manga/MangaHead.module.css";
 
 export default function MangaImg({ img, id }) {
   return (

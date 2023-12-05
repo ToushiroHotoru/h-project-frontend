@@ -1,11 +1,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Flex, Box, Center, Button } from "@chakra-ui/react";
-import { Skeleton } from "@chakra-ui/react";
-import { Tag, TagLabel, TagCloseButton } from "@chakra-ui/react";
 
-import css from "../../styles/components/MangaTile.module.css";
+import {
+  Tag,
+  Box,
+  Flex,
+  Center,
+  Button,
+  TagLabel,
+  Skeleton,
+  TagCloseButton,
+} from "@chakra-ui/react";
+
+import css from "@/styles/components/MangaTile.module.css";
 
 export default function MangaTile({ props }) {
   const [isMouseOver, setIsMouseOver] = useState(false);

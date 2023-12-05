@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button, Flex } from "@chakra-ui/react";
+
 import {
   MdOutlineArrowForwardIos,
   MdOutlineArrowBackIosNew,
 } from "react-icons/md";
-import { useEffect } from "react";
+import { Button, Flex } from "@chakra-ui/react";
 
 export default function Pagination({ total, offset, step }) {
   const router = useRouter();

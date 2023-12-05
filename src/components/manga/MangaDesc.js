@@ -1,5 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
-import css from "../../styles/components/manga/MangaHead.module.css";
+
+import css from "@/styles/components/manga/MangaHead.module.css";
 
 export default function MangaDesc({ data, manga }) {
   return (

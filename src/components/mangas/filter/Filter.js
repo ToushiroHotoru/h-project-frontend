@@ -1,26 +1,26 @@
 import { useState, useEffect } from "react";
 
-import { useSelector, useDispatch } from "react-redux";
-import instance from "../../../utils/instanceAutoToken";
 import {
+  Box,
   Modal,
-  ModalOverlay,
-  ModalContent,
+  Button,
+  ModalBody,
   ModalHeader,
   ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button,
-  Box,
   extendTheme,
+  ModalOverlay,
+  ModalContent,
+  useDisclosure,
+  ModalCloseButton,
 } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import instance from "@/utils/instanceAutoToken";
 
 import TagsList from "./tagsList/TagsList";
 import SortList from "./sortList/SortList";
-import SelectedTagsList from "./selectedTagsList/SelectedTagsList";
 import InputForFilter from "./inputForFilter/InputForFilter";
-import { setSelectedTagsTest } from "../../../redux/selectedTagsSlice";
+import { setSelectedTagsTest } from "@/redux/selectedTagsSlice";
+import SelectedTagsList from "./selectedTagsList/SelectedTagsList";
 
 const theme = extendTheme({
   components: {

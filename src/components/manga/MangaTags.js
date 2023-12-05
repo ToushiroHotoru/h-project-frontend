@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+
 import { Box, Flex, Skeleton } from "@chakra-ui/react";
-import MangaHeadCSS from "../../styles/components/manga/MangaHead.module.css";
+
+import MangaHeadCSS from "@/styles/components/manga/MangaHead.module.css";
 
 export default function MangaTags({ tags }) {
   const [isLoaded, setIsloaded] = useState(false);

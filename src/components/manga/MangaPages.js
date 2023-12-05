@@ -1,8 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+
 import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { Box, Button, Heading, Skeleton } from "@chakra-ui/react";
+
 import css from "@/styles/components/manga/Pages.module.css";
 
 export default function MangaPages({ pages, manga }) {

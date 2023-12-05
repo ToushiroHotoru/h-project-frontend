@@ -1,5 +1,5 @@
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 import { BsFillTriangleFill } from "react-icons/bs";
+import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 
 export default function InputForFilter({
   showTags,

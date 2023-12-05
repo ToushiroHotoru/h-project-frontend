@@ -1,7 +1,9 @@
-import css from "../../styles/components/manga/Comments.module.css";
-import MangaCommentsTextarea from "./MangaCommentsTextarea";
-import { Divider, Heading, Flex, Box } from "@chakra-ui/react";
 import { AiFillHeart } from "react-icons/ai";
+import { Divider, Heading, Flex, Box } from "@chakra-ui/react";
+
+import MangaCommentsTextarea from "./MangaCommentsTextarea";
+import css from "@/styles/components/manga/Comments.module.css";
+
 export default function MangaCommentsEmpty() {
   return (
     <section className={css.comments}>

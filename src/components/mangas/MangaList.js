@@ -1,9 +1,11 @@
-import manga from "../../styles/components/MangaList.module.css";
-import Image from "next/image";
-import { Flex, Box } from "@chakra-ui/react";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
+
 import useMeasure from "react-use-measure";
+import { Flex, Box } from "@chakra-ui/react";
+
+import manga from "@/styles/components/MangaList.module.css";
 
 export default function MangaList({ data }) {
   const [isHovored, setIsHovored] = useState();

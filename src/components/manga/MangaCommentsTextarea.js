@@ -1,9 +1,12 @@
-import { Text, Textarea, Button } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import css from "../../styles/components/manga/Comments.module.css";
-import axiosBack from "../../utils/axios";
 import { useState } from "react";
 import { useRouter } from "next/router";
+
+import { useSelector } from "react-redux";
+import { Text, Textarea, Button } from "@chakra-ui/react";
+
+import axiosBack from "@/utils/axios";
+import css from "@/styles/components/manga/Comments.module.css";
+
 export default function MangaCommentsTextarea({ comments }) {
   const router = useRouter();
   const user = useSelector((store) => store.authReducer.user.id);

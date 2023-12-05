@@ -1,7 +1,8 @@
-import { Box, Flex, Button, Avatar, Divider } from "@chakra-ui/react";
-import css from "../../styles/components/manga/Comments.module.css";
-import MangaCommentsTextarea from "./MangaCommentsTextarea";
 import { BsXLg } from "react-icons/bs";
+import { Box, Flex, Button, Avatar, Divider } from "@chakra-ui/react";
+
+import MangaCommentsTextarea from "./MangaCommentsTextarea";
+import css from "@/styles/components/manga/Comments.module.css";
 
 export default function MangaCommentsExist({ comments }) {
   return (
