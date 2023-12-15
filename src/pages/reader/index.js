@@ -5,9 +5,9 @@ import { useDisclosure } from "@chakra-ui/react";
 
 import instance from "@/utils/axios";
 import useStore from "@/zustand/reader.zustand";
-import ReaderAlt from "@/components/reader/ReaderAlt";
-import ReaderDef from "@/components/reader/ReaderDef";
-import SideDrawer from "@/components/reader/SideDrawer";
+import ReaderAlt from "@/components/reader/readerAlt/ReaderAlt";
+import ReaderDef from "@/components/reader/readerDef/ReaderDef";
+import SideDrawer from "@/components/reader/sideDrawer/SideDrawer";
 
 export default function Reader() {
   const { setMangaTitle, setMangaPages } = useStore((state) => state.controls);
