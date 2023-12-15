@@ -20,9 +20,11 @@ import {
 } from "@chakra-ui/react";
 import { BsGearFill } from "react-icons/bs";
 
-import ReaderPage from "./ReaderPage";
+import ReaderPage from "../readerPage/ReaderPage";
 import useStore from "@/zustand/reader.zustand";
-import css from "@/styles/pages/Reader.module.css";
+
+import styleCommon from "@/components/reader/Reader.module.css";
+
 
 export default function RederDef({ onOpen, btnRef }) {
   const { mangaPages, readerAltMode, mangaTitle, quality, showMap } =
@@ -90,7 +92,7 @@ export default function RederDef({ onOpen, btnRef }) {
             <Box fontSize="18px" mb="15px">
               {mangaTitle}
             </Box>
-            <div className={css.content}>
+            <div className={styleCommon.content}>
               {mangaPages && (
                 <ReaderPage
                   quality={quality}
@@ -114,7 +116,7 @@ export default function RederDef({ onOpen, btnRef }) {
                   );
                 }}
               >
-                Prev
+                Назад
               </Button>
               <FormControl w="100px">
                 <NumberInput
@@ -158,11 +160,15 @@ export default function RederDef({ onOpen, btnRef }) {
                   );
                 }}
               >
-                Next
+                Вперед
               </Button>
               <Tooltip hasArrow label="Настройки" placement="left">
-                <Center ref={btnRef} className={css.gear} onClick={onOpen}>
-                  <BsGearFill className={css.gearIcon} size="1em" />
+                <Center
+                  ref={btnRef}
+                  className={styleCommon.gear}
+                  onClick={onOpen}
+                >
+                  <BsGearFill className={styleCommon.gearIcon} size="1em" />
                 </Center>
               </Tooltip>
             </HStack>

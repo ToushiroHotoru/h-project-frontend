@@ -3,12 +3,12 @@ import { useState } from "react";
 
 import { Skeleton } from "@chakra-ui/react";
 
-import css from "@/styles/pages/Reader.module.css";
+import style from "@/components/reader/readerPage/ReaderPage.module.css";
 
 export default function ReaderPage({ quality, router, mangaPages }) {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
-    <Skeleton className={css.test_click_next_parent} isLoaded={isLoaded}>
+    <Skeleton className={style.button_parent} isLoaded={isLoaded}>
       <Image
         onLoadingComplete={() => {
           setIsLoaded(true);
@@ -24,7 +24,7 @@ export default function ReaderPage({ quality, router, mangaPages }) {
         height={1000}
       />
       <div
-        className={css.test_click_prev}
+        className={style.button_prev}
         onClick={() => {
           if (Number(router.query.page) <= 1 ? false : true) {
             router.push(
@@ -40,7 +40,7 @@ export default function ReaderPage({ quality, router, mangaPages }) {
         }}
       ></div>
       <div
-        className={css.test_click_next}
+        className={style.button_next}
         onClick={() => {
           if (
             mangaPages && mangaPages.length <= Number(router.query.page)

@@ -1,0 +1,21 @@
+.button_next,
+.button_prev {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 100;
+}
+.button_next {
+  right: 0;
+  cursor: e-resize;
+}
+
+.button_prev {
+  left: 0;
+  cursor: w-resize;
+}
+
+.button_parent {
+  position: relative;
+}

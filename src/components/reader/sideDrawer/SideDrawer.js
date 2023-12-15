@@ -12,7 +12,8 @@ import {
 } from "@chakra-ui/react";
 
 import useStore from "@/zustand/reader.zustand";
-import SideDrawerCSS from "@/styles/components/SideDrawer.module.css";
+
+import styleCommon from "@/components/reader/sideDrawer/SideDrawer.module.css";
 
 export default function SideDrawer({ isOpen, onClose, btnRef }) {
   const { readerAltMode, quality, showMap } = useStore();
@@ -24,13 +25,13 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
       placement="right"
       onClose={onClose}
       finalFocusRef={btnRef}
-      className={SideDrawerCSS.drawer}
+      className={styleCommon.drawer}
       size="md"
     >
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
-        <DrawerHeader>Settings</DrawerHeader>
+        <DrawerHeader>Настройки</DrawerHeader>
 
         <DrawerBody>
           <Box>
@@ -45,7 +46,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={readerAltMode ? "gray" : "blue"}
                 onClick={() => controls.setReaderAltMode(false)}
               >
-                Default MODE
+                Переход
               </Button>
               <Button
                 flex="1"
@@ -54,7 +55,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={readerAltMode ? "blue" : "gray"}
                 onClick={() => controls.setReaderAltMode(true)}
               >
-                Alternate MODE
+                Прокрутка
               </Button>
             </Flex>
           </Box>
@@ -70,7 +71,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={quality === 1 ? "blue" : "gray"}
                 onClick={() => controls.setQuality(1)}
               >
-                Perfomance MODE
+                Производительный
               </Button>
               <Button
                 flex="1"
@@ -78,7 +79,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={quality === 50 ? "blue" : "gray"}
                 onClick={() => controls.setQuality(50)}
               >
-                Balanced MODE
+                Сбалансированный
               </Button>
               <Button
                 flex="1"
@@ -87,13 +88,13 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={quality === 100 ? "blue" : "gray"}
                 onClick={() => controls.setQuality(100)}
               >
-                Quality MODE
+                Качество
               </Button>
             </Flex>
           </Box>
           <Box>
             <Box mt="2em" fontSize="18px">
-              Map:
+              Карта страниц:
             </Box>
             <Flex w="100%">
               <Button
@@ -103,7 +104,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={showMap ? "gray" : "blue"}
                 onClick={() => controls.setShowMap(false)}
               >
-                OFF
+                Выкл.
               </Button>
               <Button
                 flex="1"
@@ -112,7 +113,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={showMap ? "blue" : "gray"}
                 onClick={() => controls.setShowMap(true)}
               >
-                ON
+                Вкл.
               </Button>
             </Flex>
           </Box>

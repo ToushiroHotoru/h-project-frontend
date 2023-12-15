@@ -6,7 +6,8 @@ import { BsGearFill, BsArrowUpCircle } from "react-icons/bs";
 import { Box, Center, Tooltip, Flex, Divider } from "@chakra-ui/react";
 
 import useStore from "@/zustand/reader.zustand";
-import css from "@/styles/pages/Reader.module.css";
+import styleCommon from "@/components/reader/Reader.module.css";
+import style from "@/components/reader/readerAlt/ReaderAlt.module.css";
 
 export default function ReaderAlt({ btnRef, onOpen }) {
   const [styles, animate] = useSpring(() => ({ right: -200 }));
@@ -76,7 +77,7 @@ export default function ReaderAlt({ btnRef, onOpen }) {
           )}
           <Center flexDirection="column">
             <Tooltip hasArrow label="Настройки" placement="left">
-              <Box ref={btnRef} className={css.gear} onClick={onOpen}>
+              <Box ref={btnRef} className={styleCommon.gear} onClick={onOpen}>
                 <BsGearFill size="2em" />
               </Box>
             </Tooltip>
@@ -101,7 +102,7 @@ export default function ReaderAlt({ btnRef, onOpen }) {
               </animated.div>
             </Tooltip>
 
-            <div className={css.content_alt_mode}>
+            <div className={style.content_alt_mode}>
               {mangaPages &&
                 mangaPages.map((item, i) => {
                   return (
