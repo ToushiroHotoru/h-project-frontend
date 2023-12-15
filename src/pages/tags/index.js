@@ -1,8 +1,9 @@
 import Head from "next/head";
 
-import Tag from "@/components/tags/Tag";
+import { Grid } from "@chakra-ui/react";
+
+import Tag from "@/components/tags/tag/Tag";
 import { LINK as API_URL } from "@/utils/API_URL.js";
-import TagsCss from "@/styles/components/Tags.module.css";
 
 export async function getStaticProps() {
   const res = await fetch(`${API_URL}/get_tags`);
@@ -22,15 +23,25 @@ export async function getStaticProps() {
 
 export default function Tags({ tags }) {
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Теги</title>
       </Head>
-      <div className={TagsCss.tagsDesktop}>
-        {tags.map((item) => (
-          <Tag data={item} key={item._id} />
-        ))}
+      <div className="container">
+        <Grid
+          gap="15px"
+          gridTemplateColumns={{
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+            xl: "repeat(5, 1fr)",
+            x450: "1fr 1fr",
+          }}
+        >
+          {tags.map((item) => (
+            <Tag data={item} key={item._id} />
+          ))}
+        </Grid>
       </div>
-    </div>
+    </>
   );
 }

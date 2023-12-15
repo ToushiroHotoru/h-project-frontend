@@ -1,0 +1,20 @@
+.tag {
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  min-height: 350px;
+}
+
+@media (max-width: 450px) {
+  .tag {
+    height: 180px;
+    display: flex;
+    flex-direction: row-reverse;
+    min-height: 180px;
+  }
+
+  .tagImage {
+    width: 70%;
+    min-height: 180px;
+  }
+}
