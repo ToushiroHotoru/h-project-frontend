@@ -9,20 +9,29 @@ import axios from "@/utils/axios";
 import { FiList } from "react-icons/fi";
 import { BsImage } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { Skeleton, Flex, Box, HStack, Center } from "@chakra-ui/react";
+import {
+  Skeleton,
+  Flex,
+  Box,
+  HStack,
+  Center,
+  useColorModeValue,
+  Grid,
+} from "@chakra-ui/react";
 
 // импорты которые не относятся ни к системным ни к сторонним
-import MangaTile from "@/components/mangas/MangaTile";
-import MangaList from "@/components/mangas/MangaList";
+import MangaTile from "@/components/mangas/mangaTile/MangaTile";
+import MangaList from "@/components/mangas/mangaList/MangaList";
 import Filter from "@/components/mangas/filter/Filter";
 import Pagination from "@/components/mangas/Pagination";
-import catalog from "@/styles/pages/Catalog.module.css";
 import SelectedTagsList from "@/components/mangas/filter/selectedTagsList/SelectedTagsList";
 
 export default function Mangas() {
   const router = useRouter();
   const [isToggled, setIsToggled] = useState(false);
   const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
+  const togglerBgColor = useColorModeValue("gray.200", "black");
+  const togglerColorModeBgColor = useColorModeValue("gray.400", "#171717");
 
   const { data, error } = useSWR(
     [router.query.tags, router.query.page, router.query.sort],
@@ -39,7 +48,7 @@ export default function Mangas() {
         <title>Каталог</title>
       </Head>
 
-      <div className={catalog.catalog}>
+      <div>
         <div className="container">
           <HStack w="100%" align="center" justify="right">
             <Box>
@@ -49,35 +58,49 @@ export default function Mangas() {
               <Filter />
             </Box>
             <Box>
-              <div className={catalog.toggler}>
+              <Flex width="auto" justifyContent="center">
                 <Center
-                  className={`${catalog.toggle_common} ${
-                    !isToggled && catalog.toggle_active
-                  }`}
+                  py="9px"
+                  width="40px"
+                  borderRadius="10px 0 0 10px"
+                  cursor="pointer"
+                  bgColor={[
+                    togglerBgColor,
+                    !isToggled ? togglerColorModeBgColor : "",
+                  ]}
                   onClick={() => setIsToggled(false)}
                 >
                   <BsImage />
                 </Center>
                 <Center
-                  className={`${catalog.toggle_detail} ${
-                    isToggled && catalog.toggle_active
-                  }`}
+                  py="9px"
+                  width="40px"
+                  borderRadius="0 10px 10px 0"
+                  cursor="pointer"
+                  bgColor={[
+                    togglerBgColor,
+                    isToggled ? togglerColorModeBgColor : "",
+                  ]}
                   onClick={() => setIsToggled(true)}
                 >
                   <FiList />
                 </Center>
-              </div>
+              </Flex>
             </Box>
           </HStack>
 
-          <div
-            className={`${catalog.wrap} ${
-              isToggled ? catalog.grid_detail : catalog.grid_common
-            }`}
+          <Grid
+            my="20px"
+            gap={{ base: "15px", md: "20px", lg: "30px" }}
+            gridTemplateColumns={{
+              base: [isToggled ? "1fr" : "repeat(2,1fr)"],
+              md: [isToggled ? "1fr" : "repeat(3,1fr)"],
+              lg: [isToggled ? "1fr" : "repeat(4,1fr)"],
+            }}
           >
             {!data && Skeletons()}
             {data && <MangaItems data={data} isToggled={isToggled} />}
-          </div>
+          </Grid>
 
           {data && (
             <Pagination
