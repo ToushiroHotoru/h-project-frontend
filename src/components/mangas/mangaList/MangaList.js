@@ -5,7 +5,7 @@ import { useState } from "react";
 import useMeasure from "react-use-measure";
 import { Flex, Box } from "@chakra-ui/react";
 
-import manga from "@/styles/components/MangaList.module.css";
+import style from "@/components/mangas/mangaList/MangaList.module.css";
 
 export default function MangaList({ data }) {
   const [isHovored, setIsHovored] = useState();
@@ -27,7 +27,7 @@ export default function MangaList({ data }) {
     <Flex
       ref={ref}
       overflow="hidden"
-      className={manga.list}
+      className={style.list}
       onMouseEnter={() => {
         if (width > 600) {
           setIsHovored(true);
@@ -37,10 +37,10 @@ export default function MangaList({ data }) {
     >
       <Link href={`/mangas/${data._id}`}>
         <a>
-          <Flex justify="center" align="center" className={manga.image_wrap}>
+          <Flex justify="center" align="center" className={style.image_wrap}>
             {reviewPicsArrayFunc().map((item, i) => {
               return (
-                <Box key={i + 1} className={`${manga.image}`}>
+                <Box key={i + 1} className={`${style.image}`}>
                   <Image
                     src={item}
                     alt="pic"
@@ -55,7 +55,7 @@ export default function MangaList({ data }) {
         </a>
       </Link>
 
-      <Box className={manga.infoWrapper}>
+      <Box className={style.infoWrapper}>
         <Link href={`/mangas/${data._id}`}>
           <a>
             <Box
@@ -64,19 +64,19 @@ export default function MangaList({ data }) {
               overflow="hidden"
               fontSize="1.3em"
               padding="0 10px"
-              className={manga.info}
+              className={style.info}
             >
               {data.title}
             </Box>
           </a>
         </Link>
-        <Box className={manga.infoSubWrapper}>
+        <Box className={style.infoSubWrapper}>
           <Flex
             direction="column"
             maxH="170px"
             mt="10px"
             padding="0 10px"
-            className={manga.info}
+            className={style.info}
           >
             <Flex mb="5px">
               <Box minW="100px">Серия</Box>
@@ -109,11 +109,11 @@ export default function MangaList({ data }) {
               </Box>
             </Flex>
           </Flex>
-          <Box className={`${manga.tagsWrapper}`}>
+          <Box className={`${style.tagsWrapper}`}>
             {data &&
               data.tags.map((tag, i) => {
                 return (
-                  <Box className={`${manga.tag}`} key={i + 1}>
+                  <Box className={`${style.tag}`} key={i + 1}>
                     <Image
                       src={tag["image"]}
                       alt="Picture of the author"
@@ -123,7 +123,7 @@ export default function MangaList({ data }) {
                       objectFit="cover"
                       draggable="false"
                     />
-                    <Box className={`${manga.tag_name}`}>{tag.name}</Box>
+                    <Box className={`${style.tag_name}`}>{tag.name}</Box>
                   </Box>
                 );
               })}

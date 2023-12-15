@@ -7,12 +7,8 @@ export default function SelectedTagsList({
   size,
   setSelectedTags,
 }) {
-  const dispatch = useDispatch();
   const removeTagFromSelectedFunc = ({ id, selectedTags }) => {
     setSelectedTags(selectedTags.filter((item) => item["id"] != id));
-    // dispatch(
-    //   setSelectedTagsTest(selectedTags.filter((item) => item["id"] != id))
-    // );
   };
 
   return (

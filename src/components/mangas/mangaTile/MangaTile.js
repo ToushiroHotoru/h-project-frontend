@@ -13,8 +13,6 @@ import {
   TagCloseButton,
 } from "@chakra-ui/react";
 
-import css from "@/styles/components/MangaTile.module.css";
-
 export default function MangaTile({ props }) {
   const [isMouseOver, setIsMouseOver] = useState(false);
   const [isLoaded, setIsloaded] = useState(false);
@@ -91,9 +89,7 @@ export default function MangaTile({ props }) {
     <Link href={`/mangas/${props._id}`}>
       <a>
         <Skeleton
-          posititon="relative"
           isLoaded={isLoaded}
-          className={css.manga_tile}
           // onMouseOver={() => {
           //   setIsMouseOver(true);
           //   console.log("mouse is over here");
@@ -102,40 +98,42 @@ export default function MangaTile({ props }) {
           //   setIsMouseOver(false);
           // }}
         >
-          {/* {isMouseOver && <Cover />} */}
-          <Image
-            onLoadingComplete={() => {
-              setIsloaded(true);
-            }}
-            src={props.cover}
-            layout="responsive"
-            alt="pic"
-            width={500}
-            height={700}
-          />
+          <Box position="relative">
+            {/* {isMouseOver && <Cover />} */}
+            <Image
+              onLoadingComplete={() => {
+                setIsloaded(true);
+              }}
+              src={props.cover}
+              layout="responsive"
+              alt="pic"
+              width={500}
+              height={700}
+            />
 
-          <Flex
-            position="absolute"
-            left="0"
-            bottom="0"
-            zIndex="2"
-            width="100%"
-            px={{ base: "4px", sm: "8px" }}
-            pb={{ base: "4px", sm: "6px" }}
-            height={{ base: "50%", sm: "30%" }}
-            bgGradient="linear(to-t, rgba(0,0,0,0.8), rgba(0,0,0,0))"
-          >
-            <Box
-              mt="auto"
-              maxHeight={{ base: "34px", sm: "48px" }}
-              fontSize={{ base: "14px", sm: "18px" }}
-              lineHeight="125%"
-              overflowY="hidden"
-              className={css.m_tile_title}
+            <Flex
+              position="absolute"
+              left="0"
+              bottom="0"
+              zIndex="2"
+              width="100%"
+              px={{ base: "4px", sm: "8px" }}
+              pb={{ base: "4px", sm: "6px" }}
+              height={{ base: "50%", sm: "30%" }}
+              bgGradient="linear(to-t, rgba(0,0,0,0.8), rgba(0,0,0,0))"
             >
-              {props.title}
-            </Box>
-          </Flex>
+              <Box
+                mt="auto"
+                maxHeight={{ base: "34px", sm: "48px" }}
+                fontSize={{ base: "14px", sm: "18px" }}
+                lineHeight="125%"
+                overflowY="hidden"
+                color='#fff'
+              >
+                {props.title}
+              </Box>
+            </Flex>
+          </Box>
         </Skeleton>
       </a>
     </Link>
