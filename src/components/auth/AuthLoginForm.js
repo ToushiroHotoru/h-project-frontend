@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRouter } from "next/router";
 
 import {
   Box,
@@ -13,12 +12,11 @@ import {
   FormControl,
   ModalFooter,
   InputRightElement,
+  useDisclosure,
 } from "@chakra-ui/react";
 
-import { useDispatch } from "react-redux";
-import useStore from "@/zustand/auth.zustand";
-import { login } from "@/redux/slices/AuthSlice";
-import css from "@/styles/components/Auth.module.css";
+import useAuthStore from "@/zustand/auth.zustand";
+import style from "@/styles/components/Auth.module.css";
 
 const validationFunc = (email, password) => {
   let errors = {
@@ -56,36 +54,26 @@ const validationFunc = (email, password) => {
   return errors;
 };
 
-export default function AuthLoginForm({ setToggleForm }) {
-  const router = useRouter();
-  const { stage } = useStore();
-  const controls = useStore(({ controls }) => controls);
+export default function AuthLoginForm({ setToggleForm, onClose }) {
+  const { login } = useAuthStore((state) => state);
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleClick = () => setShow(!show);
-
-  const dispatch = useDispatch();
-
   const loginHandler = async () => {
     if (validationFunc(email, password).status) {
       setShowErrors(true);
       return false;
     }
-
-    dispatch(
-      login({
-        email: email,
-        password: password,
-      })
-    );
-
-    // if (response.success) {
-    //   router.push(`/user/${response.user.userName}`, undefined, {
-    //     scroll: true,
-    //   });
-    // }
+    const { isAuth } = await login({
+      email: email,
+      password: password,
+    });
+    console.log(isAuth);
+    if (isAuth) {
+      onClose();
+    }
   };
 
   return (
@@ -145,7 +133,9 @@ export default function AuthLoginForm({ setToggleForm }) {
                 bgRepeat="no-repeat"
                 bgSize="contain"
                 className={
-                  show ? css.input_password_hidden : css.input_password_shown
+                  show
+                    ? style.input_password_hidden
+                    : style.input_password_shown
                 }
               ></Box>
             </InputRightElement>

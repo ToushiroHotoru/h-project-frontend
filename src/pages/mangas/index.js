@@ -28,7 +28,7 @@ import SelectedTagsList from "@/components/mangas/filter/selectedTagsList/Select
 
 export default function Mangas() {
   const router = useRouter();
-  const [isToggled, setIsToggled] = useState(false);
+  const [viewType, setViewType] = useState("grid");
   const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
   const togglerBgColor = useColorModeValue("gray.200", "black");
   const togglerColorModeBgColor = useColorModeValue("gray.400", "#171717");
@@ -48,68 +48,60 @@ export default function Mangas() {
         <title>Каталог</title>
       </Head>
 
-      <div>
-        <div className="container">
-          <HStack w="100%" align="center" justify="right">
-            <Box>
-              <SelectedTagsList selectedTags={selectedTags} size={"lg"} />
-            </Box>
-            <Box>
-              <Filter />
-            </Box>
-            <Box>
-              <Flex width="auto" justifyContent="center">
-                <Center
-                  py="9px"
-                  width="40px"
-                  borderRadius="10px 0 0 10px"
-                  cursor="pointer"
-                  bgColor={[
-                    togglerBgColor,
-                    !isToggled ? togglerColorModeBgColor : "",
-                  ]}
-                  onClick={() => setIsToggled(false)}
-                >
-                  <BsImage />
-                </Center>
-                <Center
-                  py="9px"
-                  width="40px"
-                  borderRadius="0 10px 10px 0"
-                  cursor="pointer"
-                  bgColor={[
-                    togglerBgColor,
-                    isToggled ? togglerColorModeBgColor : "",
-                  ]}
-                  onClick={() => setIsToggled(true)}
-                >
-                  <FiList />
-                </Center>
-              </Flex>
-            </Box>
-          </HStack>
+      <div className="container">
+        <HStack w="100%" align="center" justify="right">
+          <SelectedTagsList selectedTags={selectedTags} size={"lg"} />
+          <Filter />
+          <Flex width="auto" justifyContent="center">
+            <Center
+              py="9px"
+              width="40px"
+              borderRadius="10px 0 0 10px"
+              cursor="pointer"
+              bgColor={[
+                togglerBgColor,
+                setViewType === "grid" ? togglerColorModeBgColor : "",
+              ]}
+              onClick={() => setViewType("grid")}
+            >
+              <BsImage />
+            </Center>
+            <Center
+              py="9px"
+              width="40px"
+              borderRadius="0 10px 10px 0"
+              cursor="pointer"
+              bgColor={[
+                togglerBgColor,
+                setViewType === "list" ? togglerColorModeBgColor : "",
+              ]}
+              onClick={() => setViewType("list")}
+            >
+              <FiList />
+            </Center>
+          </Flex>
+        </HStack>
 
-          <Grid
-            my="20px"
-            gap={{ base: "15px", md: "20px", lg: "30px" }}
-            gridTemplateColumns={{
-              base: [isToggled ? "1fr" : "repeat(2,1fr)"],
-              md: [isToggled ? "1fr" : "repeat(3,1fr)"],
-              lg: [isToggled ? "1fr" : "repeat(4,1fr)"],
-            }}
-          >
-            {!data && Skeletons()}
-            {data && <MangaItems data={data} isToggled={isToggled} />}
-          </Grid>
+        <Grid
+          my="20px"
+          gap={{ base: "15px", md: "20px", lg: "30px" }}
+          gridTemplateColumns={{
+            base: [viewType === "list" ? "1fr" : "repeat(2,1fr)"],
+            md: [viewType === "list" ? "1fr" : "repeat(3,1fr)"],
+            lg: [viewType === "list" ? "1fr" : "repeat(4,1fr)"],
+          }}
+        >
+          {!data && Skeletons()}
+          {data && <MangaItems data={data} viewType={viewType} />}
+        </Grid>
 
-          {data && (
-            <Pagination
-              total={data.total}
-              offset={data.offset}
-              step={data.step}
-            />
-          )}
-        </div>
+        {data && (
+          <Pagination
+            total={data.total}
+            offset={data.offset}
+            step={data.step}
+          />
+        )}
       </div>
     </>
   );
@@ -142,11 +134,11 @@ const Skeletons = () => {
   });
 };
 
-const MangaItems = ({ data, isToggled }) => {
+const MangaItems = ({ data, viewType }) => {
   return (
     <>
       {data.mangas.map((item, i) => {
-        return isToggled ? (
+        return viewType === "list" ? (
           <MangaList data={item} key={i + 1} />
         ) : (
           <MangaTile props={item} key={i + 1} />

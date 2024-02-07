@@ -1,7 +1,7 @@
 // export const LINK = process.env.HOST
-const server = "repl";
+const server = "production";
 
 export const LINK =
-  server !== "repl"
+  server !== "production"
     ? "http://localhost:8080"
     : "https://api.h-project.fun";

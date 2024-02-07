@@ -95,7 +95,6 @@ footer {
 }
 
 @media (max-width: 30em) {
-
   .auth_avatars .swiper-button-next,
   .auth_avatars .swiper-button-prev {
     display: none;
@@ -144,6 +143,34 @@ footer {
   background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.0454 3.5L5.54541 8L10.0454 12.5' stroke='%23FFFFFF' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
 }
 
+.new_mangas_section .swiper-button-next,
+.new_mangas_section .swiper-button-prev {
+  height: 100%;
+  width: 80px;
+  top: 0;
+  margin-top: 0;
+}
+.new_mangas_section .swiper-button-prev {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+.new_mangas_section .swiper-button-next {
+  right: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+.new_mangas_section .swiper,
+.new_mangas_section .swiper-slide {
+  max-height: 300px;
+}
 
 @media (max-width: 1200px) {
   .container {
@@ -154,5 +181,9 @@ footer {
 @media (max-width: 600px) {
   .container {
     padding: 0 16px;
+  }
+  .new_mangas_section .swiper-button-next,
+  .new_mangas_section .swiper-button-prev {
+    width: 40px;
   }
 }

@@ -48,8 +48,8 @@
 }
 
 .tagsWrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   position: relative;
   margin: 0 0 0 50px;
   transition: transform 0.3s ease;
@@ -105,13 +105,13 @@
     transition: transform 0.3s ease;
   }
 
-  .list:hover .tagsWrapper {
+  /* .list:hover .tagsWrapper {
     transform: translateX(70px);
   }
 
   .list:hover .info {
     transform: translateX(70px);
-  }
+  } */
 }
 
 @media (max-width: 599px) {

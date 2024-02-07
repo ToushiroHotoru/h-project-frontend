@@ -6,7 +6,7 @@ const useStore = create((set) => ({
   mangaTitle: "",
   readerAltMode: false,
   mangaPages: [],
-
+  currentPage: 1,
   controls: {
     setShowMap: (payload) => set(() => ({ showMap: payload })),
 
@@ -17,6 +17,8 @@ const useStore = create((set) => ({
     setReaderAltMode: (payload) => set(() => ({ readerAltMode: payload })),
 
     setMangaPages: (payload) => set(() => ({ mangaPages: payload })),
+
+    setCurrentPage: (payload) => set(() => ({ currentPage: payload })),
   },
 }));
 

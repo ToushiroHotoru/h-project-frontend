@@ -14,7 +14,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
-import instance from "@/utils/instanceAutoToken";
+import axios from "@/utils/axios";
 
 import TagsList from "./tagsList/TagsList";
 import SortList from "./sortList/SortList";
@@ -47,7 +47,7 @@ export default function Filter() {
   const fetchTags = async () => {
     try {
       const tags = selectedTags.map((item) => item["id"]);
-      const res = await instance.get(
+      const res = await axios.get(
         "get_tags_count?" + new URLSearchParams({ tags: tags })
       );
       const result = res.data;

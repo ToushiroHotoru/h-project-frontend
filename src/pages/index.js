@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,22 +9,25 @@ import { Flex, Box, Heading } from "@chakra-ui/react";
 import axios from "@/utils/axios";
 import newMangaCss from "@/styles/components/NewManga.module.css";
 
-export default function Index() {
-  const [newManges, setNewMangas] = useState([]);
-  const loadNewMangas = async () => {
-    const response = await axios.get("/new_manga");
-    setNewMangas(response.data.manga);
-  };
+export async function getStaticProps() {
+  try {
+    const { data } = await axios.get("/new_manga");
+    return {
+      props: {
+        manga: data.manga,
+      },
+      revalidate: 60 * 30,
+    };
+  } catch (error) {}
+}
 
-  useEffect(() => {
-    loadNewMangas();
-  }, []);
+export default function Index({ manga }) {
   return (
     <div className="container">
       <Head>
         <title>Главная</title>
       </Head>
-      <div className={newMangaCss.news_manga}>
+      <section className={`${newMangaCss.news_manga} new_mangas_section`}>
         <Heading as="h1" size="xl" marginBottom="12px">
           Новые манги
         </Heading>
@@ -34,7 +36,6 @@ export default function Index() {
           navigation
           spaceBetween={14}
           slidesPerView={2}
-          loop={true}
           breakpoints={{
             1000: {
               slidesPerView: 5,
@@ -47,7 +48,7 @@ export default function Index() {
             },
           }}
         >
-          {newManges.map((item, i) => {
+          {manga.map((item, i) => {
             return (
               <SwiperSlide key={item._id}>
                 <Link href={`/mangas/${item._id}`}>
@@ -86,7 +87,7 @@ export default function Index() {
             );
           })}
         </Swiper>
-      </div>
+      </section>
     </div>
   );
 }

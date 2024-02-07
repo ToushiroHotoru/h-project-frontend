@@ -1,16 +1,14 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import {
-  MdOutlineArrowForwardIos,
-  MdOutlineArrowBackIosNew,
-} from "react-icons/md";
+import { MdOutlineNavigateNext, MdOutlineLastPage } from "react-icons/md";
 import { Button, Flex } from "@chakra-ui/react";
 
 export default function Pagination({ total, offset, step }) {
   const router = useRouter();
-  const currentPage = router.query?.page ? router.query?.page : 1;
+  const currentPage = router.query?.page ? Number(router.query.page) : 1;
   const currentSort = router.query?.sort ? router.query.sort : "latest";
+  const totalPages = Math.ceil(total / step);
   const createPagination = () => {
     let start_page_offset = offset - step * 2;
     let end_page_offset = offset + step * 3;
@@ -41,19 +39,44 @@ export default function Pagination({ total, offset, step }) {
 
   return (
     <Flex justifyContent="center">
-      {Number(currentPage) - 1 !== 0 && (
+      {currentPage - 1 !== 0 && (
         <Link
-          href={`/mangas?page=${Number(currentPage) - 1}&sort=${currentSort}${
+          href={`/mangas?page=1&sort=${currentSort}${
             router.query.tags ? "&tags=" + router.query.tags : ""
           }`}
         >
           <a>
             <Button
-              mx="2"
+              mx="2px"
+              p="0"
+              minWidth="40px"
               colorScheme="whatsapp"
-              disabled={Number(currentPage) - 1 === 0 ? true : false}
+              borderRadius="50%"
+              transform="rotate(180deg)"
+              disabled={currentPage - 1 <= 0 ? true : false}
             >
-              <MdOutlineArrowBackIosNew />
+              <MdOutlineLastPage size="20px" />
+            </Button>
+          </a>
+        </Link>
+      )}
+      {currentPage - 1 !== 0 && (
+        <Link
+          href={`/mangas?page=${currentPage - 1}&sort=${currentSort}${
+            router.query.tags ? "&tags=" + router.query.tags : ""
+          }`}
+        >
+          <a>
+            <Button
+              mx="2px"
+              p="0"
+              minWidth="40px"
+              colorScheme="whatsapp"
+              borderRadius="50%"
+              disabled={currentPage - 1 === 0 ? true : false}
+              transform="rotate(180deg)"
+            >
+              <MdOutlineNavigateNext size="20px" />
             </Button>
           </a>
         </Link>
@@ -70,8 +93,9 @@ export default function Pagination({ total, offset, step }) {
             >
               <a>
                 <Button
-                  mx="2"
+                  mx="2px"
                   colorScheme={i === currentPage - 1 ? "pink" : "whatsapp"}
+                  borderRadius="50%"
                 >
                   {item}
                 </Button>
@@ -80,21 +104,42 @@ export default function Pagination({ total, offset, step }) {
           );
         })}
 
-      {currentPage <= Math.ceil(total / step) - 1 && (
+      {currentPage < Math.ceil(total / step) && (
         <Link
-          href={`/mangas?page=${Number(currentPage) + 1}&sort=${currentSort}${
+          href={`/mangas?page=${currentPage + 1}&sort=${currentSort}${
             router.query.tags ? "&tags=" + router.query.tags : ""
           }`}
         >
           <a>
             <Button
-              mx="2"
+              mx="2px"
+              p="0"
+              minWidth="40px"
               colorScheme="whatsapp"
-              disabled={
-                Number(currentPage) === Math.ceil(total / step) ? true : false
-              }
+              borderRadius="50%"
+              disabled={currentPage === Math.ceil(total / step) ? true : false}
             >
-              <MdOutlineArrowForwardIos />
+              <MdOutlineNavigateNext size="20px" />
+            </Button>
+          </a>
+        </Link>
+      )}
+      {currentPage < totalPages && (
+        <Link
+          href={`/mangas?page=${totalPages}&sort=${currentSort}${
+            router.query.tags ? "&tags=" + router.query.tags : ""
+          }`}
+        >
+          <a>
+            <Button
+              mx="2px"
+              p="0"
+              minWidth="40px"
+              colorScheme="whatsapp"
+              borderRadius="50%"
+              disabled={currentPage === Math.ceil(total / step) ? true : false}
+            >
+              <MdOutlineLastPage size="20px" />
             </Button>
           </a>
         </Link>

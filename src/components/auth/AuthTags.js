@@ -14,8 +14,8 @@ import {
 } from "@chakra-ui/react";
 
 import AuthTag from "./AuthTag";
-import instance from "@/utils/instance";
-import useStore from "@/zustand/auth.zustand";
+import axios from "@/utils/axios";
+import useStore from "@/zustand/register.zustand";
 import css from "@/styles/components/Auth.module.css";
 
 export default function AuthTags() {
@@ -28,7 +28,7 @@ export default function AuthTags() {
 
   const getTagsFunc = async () => {
     try {
-      const res = await instance.get(`get_tags`);
+      const res = await axios.get(`get_tags`);
       const result = res.data;
       setTags(result.tags);
     } catch (err) {
@@ -44,7 +44,7 @@ export default function AuthTags() {
         .filter((tag) => selectedTags.includes(tag["name"]))
         .map((item) => item._id);
 
-      await instance.post(
+      await axios.post(
         `${stage == 4 ? "set_exceptions_tags" : "set_preferences_tags"}`,
         {
           // id: userId

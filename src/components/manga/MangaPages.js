@@ -17,7 +17,6 @@ export default function MangaPages({ pages, manga }) {
   const imageIsLoaded = ({ src }) => {
     return src + "?q=5&w=10";
   };
-  console.log(pages);
   return (
     <section className={css.content}>
       <Heading as="h2" size="md" marginBottom="20px">
