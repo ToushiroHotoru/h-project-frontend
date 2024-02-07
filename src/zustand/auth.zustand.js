@@ -20,8 +20,6 @@ const useAuthStore = create(
           password: password,
         });
 
-        console.log(data);
-
         set({
           isAuth: true,
           accessToken: data.accessToken,
