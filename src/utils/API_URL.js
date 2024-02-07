@@ -2,6 +2,6 @@
 const server = "production";
 
 export const LINK =
-  server !== "production1"
+  server !== "production"
     ? "http://localhost:8080"
     : "https://api.h-project.fun";
