@@ -1,40 +1,41 @@
+import axios from "@/utils/axios";
 import { create } from "zustand";
+import { devtools } from "zustand/middleware";
 
-const useStore = create((set) => ({
-  stage: 1,
-  userId: "6443dd58db0e525d6f77f2be",
-  userName: "",
-  favorites: [],
-  maskots: [
-    "/maskot.png",
-    "/maskot4.png",
-    "/maskot2.png",
-    "/maskot2.png",
-    "/maskot4.png",
-    "/maskot4.png",
-  ],
-  speeches: [
-    "Fuck u)",
-    "Успешно зарегистрировался",
-    "I like cookies)",
-    "My fav color is orange)",
-    "Welcome)",
-    "Настройка завершена",
-  ],
+const useAuthStore = create(
+  devtools((set, get) => ({
+    isAuth: false,
+    accessToken: null,
+    user: null,
+    errors: null,
+    controls: {
+      setToken: (token) => {
+        set({ accessToken: token });
+      },
+    },
+    login: async ({ email, password }) => {
+      try {
+        const { data } = await axios.post("/api/login", {
+          email: email,
+          password: password,
+        });
 
-  controls: {
-    setStage: (payload) => set(() => ({ stage: payload })),
+        console.log(data);
 
-    setUserId: (payload) => set(() => ({ userId: payload })),
+        set({
+          isAuth: true,
+          accessToken: data.accessToken,
+          user: data.user,
+          errors: null,
+        });
 
-    setFavorites: (payload) => set(() => ({ favorites: payload })),
+        return { isAuth: get().isAuth };
+      } catch (error) {
+        console.log(error);
+        set({ isAuth: false, errors: error });
+      }
+    },
+  }))
+);
 
-    setMaskots: (payload) => set(() => ({ maskots: payload })),
-
-    setSpeeches: (payload) => set(() => ({ speeches: payload })),
-
-    setUserName: (payload) => set(() => ({ userName: payload })),
-  },
-}));
-
-export default useStore;
+export default useAuthStore;

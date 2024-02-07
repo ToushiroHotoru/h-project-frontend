@@ -13,7 +13,7 @@ import {
   useDisclosure,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import useStore from "@/zustand/auth.zustand";
+import useRegistorStore from "@/zustand/register.zustand";
 import { FaRegUserCircle } from "react-icons/fa";
 
 import AuthTags from "./AuthTags";
@@ -24,8 +24,10 @@ import AuthLoginForm from "./AuthLoginForm";
 import AuthRegistered from "./AuthRegistered";
 
 export default function AuthModal() {
-  const { stage, maskots, speeches } = useStore();
-  const controls = useStore(({ controls }) => controls);
+  const { stage, maskots, speeches } = useRegistorStore();
+  const { setStage, setFavorites } = useRegistorStore(
+    ({ controls }) => controls
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [toggleForm, setToggleForm] = useState(true);
 
@@ -45,8 +47,8 @@ export default function AuthModal() {
   const closeFunc = () => {
     onClose();
     setToggleForm(true);
-    controls.setStage(1);
-    controls.setFavorites([]);
+    setStage(1);
+    setFavorites([]);
   };
 
   const renderSwitchFunc = (value) => {
@@ -73,7 +75,7 @@ export default function AuthModal() {
         cursor="pointer"
         onClick={() => {
           onOpen();
-          controls.setStage(3);
+          setStage(3);
         }}
       />
       <Modal
@@ -136,7 +138,10 @@ export default function AuthModal() {
               </ModalHeader>
 
               {toggleForm && (
-                <AuthLoginForm setToggleForm={(val) => setToggleForm(val)} />
+                <AuthLoginForm
+                  setToggleForm={(val) => setToggleForm(val)}
+                  onClose={onClose}
+                />
               )}
 
               {!toggleForm && renderSwitchFunc(stage)}

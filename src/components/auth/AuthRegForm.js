@@ -13,8 +13,8 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 
-import instance from "@/utils/instance";
-import useStore from "@/zustand/auth.zustand";
+import axios from "@/utils/axios";
+import useRegistorStore from "@/zustand/register.zustand";
 import css from "@/styles/components/Auth.module.css";
 
 const validationFunc = (email, username, password) => {
@@ -72,8 +72,8 @@ export default function AuthRegForm({ setToggleForm }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { stage } = useStore();
-  const controls = useStore(({ controls }) => controls);
+  const { stage } = useRegistorStore();
+  const controls = useRegistorStore(({ controls }) => controls);
 
   const fetchRegsiter = async () => {
     try {
@@ -82,7 +82,7 @@ export default function AuthRegForm({ setToggleForm }) {
         return false;
       }
 
-      const res = instance.get(`registration`, {
+      const res = axios.get(`registration`, {
         method: "POST",
         body: JSON.stringify({
           email: email,

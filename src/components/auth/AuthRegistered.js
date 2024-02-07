@@ -1,6 +1,6 @@
 import { Center, Button, ModalFooter, ModalBody } from "@chakra-ui/react";
 
-import useStore from "@/zustand/auth.zustand";
+import useStore from "@/zustand/register.zustand";
 
 export default function AuthRegistered() {
   const controls = useStore(({ controls }) => controls);

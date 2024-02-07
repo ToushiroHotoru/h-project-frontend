@@ -14,8 +14,8 @@ import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import AuthAvatar from "./AuthAvatar";
-import instance from "@/utils/instance";
-import useStore from "@/zustand/auth.zustand";
+import axios from "@/utils/axios";
+import useStore from "@/zustand/register.zustand";
 import { LINK as API_URL } from "@/utils/API_URL";
 import AuthFavoritesCSS from "@/styles/components/Auth.module.css";
 
@@ -28,7 +28,7 @@ export default function AuthAvatars() {
   const [avatars, setAvatars] = useState([]);
 
   const getAvatarsFunc = async () => {
-    const response = await instance.get(`${API_URL}/get_avatars`);
+    const response = await axios.get(`${API_URL}/get_avatars`);
     const data = response.data;
     setAvatars(data.avatars);
   };

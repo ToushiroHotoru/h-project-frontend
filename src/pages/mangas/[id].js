@@ -43,7 +43,6 @@ export default function Manga({ manga, id, comments }) {
   const onLoadHander = async () => {
     try {
       const res = await axios.get(`/manga-dynamic`, { params: { id: id } });
-      console.log(res);
       setMangaDynamic(res.data);
     } catch (err) {
       console.log(err);

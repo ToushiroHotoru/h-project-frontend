@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axiosFront from "../../utils/axiosFront";
+import axios from "@/utils/axios";
 
 const intenalInitialState = {
   isAuth: false,
@@ -15,7 +15,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async ({ email, password }, thunkAPI) => {
     try {
-      const loginResponse = await axiosFront.post("/api/login", {
+      const loginResponse = await axios.post("/api/login", {
         email: email,
         password: password,
       });
@@ -31,7 +31,7 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    const loginResponse = await axiosFront.delete("/api/logout");
+    const loginResponse = await axios.delete("/api/logout");
     return loginResponse;
   } catch (error) {
     thunkAPI.rejectWithValue("Не удалось авторизоваться");

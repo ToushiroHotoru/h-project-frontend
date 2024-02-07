@@ -71,7 +71,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={quality === 1 ? "blue" : "gray"}
                 onClick={() => controls.setQuality(1)}
               >
-                Производительный
+                Скорость
               </Button>
               <Button
                 flex="1"
@@ -79,7 +79,7 @@ export default function SideDrawer({ isOpen, onClose, btnRef }) {
                 colorScheme={quality === 50 ? "blue" : "gray"}
                 onClick={() => controls.setQuality(50)}
               >
-                Сбалансированный
+                Баланс
               </Button>
               <Button
                 flex="1"

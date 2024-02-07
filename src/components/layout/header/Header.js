@@ -1,17 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { useSelector } from "react-redux";
 import { Flex, Box, Button } from "@chakra-ui/react";
+import useAuthStore from "@/zustand/auth.zustand";
 
 import styles from "./styles.module.css";
 import AuthModal from "@/components/auth/AuthModal";
 
 export default function Header() {
-  const isAuth = useSelector((store) => store.authReducer.isAuth);
-  const userNameLetter = useSelector(
-    (store) => store.authReducer.user.userName
-  );
+  const { isAuth, user } = useAuthStore();
 
   return (
     <header className={styles.header}>
@@ -44,9 +41,15 @@ export default function Header() {
               <Link href="/tags">Теги</Link>
             </Box>
             {isAuth ? (
-              <Link href={`/user/${userNameLetter}`}>
-                <Button ml="20px">
-                  {userNameLetter.split("")[0].toUpperCase()}
+              <Link href={`/user/${user.userName}`}>
+                <Button
+                  ml="20px"
+                  p={0}
+                  borderRadius="50%"
+                  overflow="hidden"
+                  size="30px"
+                >
+                  <Image src={user.avatar} width="30px" height="30px" />
                 </Button>
               </Link>
             ) : (

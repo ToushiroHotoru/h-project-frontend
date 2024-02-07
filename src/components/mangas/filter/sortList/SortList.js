@@ -14,7 +14,6 @@ import css from "@/styles/components/Filter.module.css";
 const sortTypes = [
   { name: "latest", tooltip: "Дата" },
   { name: "alphabet", tooltip: "Алфавит" },
-  { name: "rating", tooltip: "Рейтинг" },
   { name: "likes", tooltip: "Нравится" },
   { name: "views", tooltip: "Просмотры" },
 ];
@@ -25,8 +24,6 @@ const iconRender = (sortType) => {
       return <BsFillClockFill size="50%" />;
     case "alphabet":
       return <BsSortAlphaDown size="50%" />;
-    case "rating":
-      return <BsFillStarFill size="50%" />;
     case "likes":
       return <BsFillHeartFill size="50%" />;
     case "views":
@@ -39,7 +36,7 @@ const iconRender = (sortType) => {
 const setSortFunc = ({ router, sortType }) => {
   router.push({
     pathname: `/mangas`,
-    query: { page: router.query.page, sort: sortType },
+    query: { page: router.query.page || 1, sort: sortType },
     options: { shallow: true },
   });
 };
