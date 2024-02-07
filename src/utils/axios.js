@@ -36,12 +36,8 @@ $api.interceptors.response.use(
           config.headers.Authorization = `Bearer ${data.accessToken}`;
           return $api(config);
         }
-
-        socket.socketDisconnect();
       }
-    } catch (error) {
-      socket.socketDisconnect();
-    }
+    } catch (error) {}
   }
 );
 
