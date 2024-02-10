@@ -1,5 +1,3 @@
-.news_manga {
-  margin: 0 0 20px;
+.home_mangas_sections + .home_mangas_sections {
+  margin-top: 40px;
 }
-
-.news_manga_title {}
