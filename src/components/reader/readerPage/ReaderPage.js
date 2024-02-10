@@ -12,8 +12,6 @@ export default function ReaderPage({ quality, router, mangaPages }) {
   const { currentPage, mangaTitle } = useStore();
   const { setCurrentPage } = useStore((store) => store.controls);
 
-  console.log(mangaPages[currentPage - 1])
-
   const prevPage = () => {
     if (currentPage >= 0) {
       setCurrentPage(currentPage - 1);
