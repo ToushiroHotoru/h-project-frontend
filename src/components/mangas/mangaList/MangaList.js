@@ -78,12 +78,14 @@ export default function MangaList({ data }) {
             padding="0 10px"
             className={style.info}
           >
-            <Flex mb="5px">
-              <Box minW="100px">Серия</Box>
-              <Box minW="150px" ml="2%" w="100%">
-                {data.series}
-              </Box>
-            </Flex>
+            {data.series && (
+              <Flex mb="5px">
+                <Box minW="100px">Серия</Box>
+                <Box minW="150px" ml="2%" w="100%">
+                  {data.series}
+                </Box>
+              </Flex>
+            )}
             <Flex mb="5px">
               <Box minW="100px">Автор</Box>
               <Box ml="2%" w="100%">
