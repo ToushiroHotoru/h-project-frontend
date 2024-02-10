@@ -1,5 +1,5 @@
 import Head from "next/head";
-import MangasTop from "@/components/mangas/mangasTop/mangasTop";
+import MangasTop from "@/components/mangas/mangasTop/MangasTop";
 import ErrorDefault from "@/components/errors/errorDefault/errorDefault";
 
 export default function MangasErrorLayout() {
