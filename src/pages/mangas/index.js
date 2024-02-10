@@ -1,120 +1,47 @@
 // системные импорты
-import Head from "next/head";
-import { useState } from "react";
 import { useRouter } from "next/router";
 
 // импорты сторонних модулей
 import useSWR from "swr";
 import axios from "@/utils/axios";
-import { FiList } from "react-icons/fi";
-import { BsImage } from "react-icons/bs";
-import { useSelector } from "react-redux";
-import {
-  Skeleton,
-  Flex,
-  Box,
-  HStack,
-  Center,
-  useColorModeValue,
-  Grid,
-} from "@chakra-ui/react";
 
 // импорты которые не относятся ни к системным ни к сторонним
-import MangaTile from "@/components/mangas/mangaTile/MangaTile";
-import MangaList from "@/components/mangas/mangaList/MangaList";
-import Filter from "@/components/mangas/filter/Filter";
-import Pagination from "@/components/mangas/Pagination";
-import SelectedTagsList from "@/components/mangas/filter/selectedTagsList/SelectedTagsList";
+import MangasLayout from "@/components/mangas/mangasLayout/MangasLayout";
+import MangasErrorLayout from "@/components/mangas/mangasErrorLayout/MangasErrorLayout";
+
+import useMangasStore from "@/zustand/mangas.zustand";
+import { useEffect } from "react";
 
 export default function Mangas() {
   const router = useRouter();
-  const [viewType, setViewType] = useState("grid");
-  const selectedTags = useSelector((state) => state.selectedTagsSlice.tags);
-  const togglerBgColor = useColorModeValue("gray.200", "black");
-  const togglerColorModeBgColor = useColorModeValue("gray.400", "#171717");
+  const { setMangas, setTotalMangas, setPageOffset, setPageStep } =
+    useMangasStore(({ controls }) => controls);
 
   const { data, error } = useSWR(
-    [router.query.tags, router.query.page, router.query.sort],
-    fetcher
+    [router.query.page, router.query.sort, router.query.tags],
+    mangasFetcher
   );
+
+  useEffect(() => {
+    setMangas(data?.data.mangas);
+    setPageOffset(data?.data.offset);
+    setTotalMangas(data?.data.total);
+    setPageStep(data?.data.step);
+  }, [data?.data]);
 
   if (error) {
-    return <>error occured</>;
+    return <MangasErrorLayout />;
   }
 
-  return (
-    <>
-      <Head>
-        <title>Каталог</title>
-      </Head>
-
-      <div className="container">
-        <HStack w="100%" align="center" justify="right">
-          <SelectedTagsList selectedTags={selectedTags} size={"lg"} />
-          <Filter />
-          <Flex width="auto" justifyContent="center">
-            <Center
-              py="9px"
-              width="40px"
-              borderRadius="10px 0 0 10px"
-              cursor="pointer"
-              bgColor={[
-                togglerBgColor,
-                setViewType === "grid" ? togglerColorModeBgColor : "",
-              ]}
-              onClick={() => setViewType("grid")}
-            >
-              <BsImage />
-            </Center>
-            <Center
-              py="9px"
-              width="40px"
-              borderRadius="0 10px 10px 0"
-              cursor="pointer"
-              bgColor={[
-                togglerBgColor,
-                setViewType === "list" ? togglerColorModeBgColor : "",
-              ]}
-              onClick={() => setViewType("list")}
-            >
-              <FiList />
-            </Center>
-          </Flex>
-        </HStack>
-
-        <Grid
-          my="20px"
-          gap={{ base: "15px", md: "20px", lg: "30px" }}
-          gridTemplateColumns={{
-            base: [viewType === "list" ? "1fr" : "repeat(2,1fr)"],
-            md: [viewType === "list" ? "1fr" : "repeat(3,1fr)"],
-            lg: [viewType === "list" ? "1fr" : "repeat(4,1fr)"],
-          }}
-        >
-          {!data && Skeletons()}
-          {data && <MangaItems data={data} viewType={viewType} />}
-        </Grid>
-
-        {data && (
-          <Pagination
-            total={data.total}
-            offset={data.offset}
-            step={data.step}
-          />
-        )}
-      </div>
-    </>
-  );
+  return <MangasLayout />;
 }
-const fetcher = async (selectedTags, page, sort) => {
+const mangasFetcher = async (page, sort, tags) => {
   const pageQ = page || 1;
   const sortQ = sort || "latest";
-  const tagsQ = selectedTags || null;
+  const tagsQ = tags || null;
   const { data, status } = await axios.get("/mangas", {
     params: { page: pageQ, sort: sortQ, tags: tagsQ },
   });
-  console.log(data);
-
   if (status !== 200) {
     const error = new Error("An error occurred while fetching the data.");
     error.info = await data;
@@ -123,34 +50,3 @@ const fetcher = async (selectedTags, page, sort) => {
 
   return data;
 };
-
-const Skeletons = () => {
-  return [...Array(24)].map((_, i) => {
-    return (
-      <Flex flexDirection="column" key={i + 1}>
-        <Skeleton height="380px" />
-      </Flex>
-    );
-  });
-};
-
-const MangaItems = ({ data, viewType }) => {
-  return (
-    <>
-      {data.mangas.map((item, i) => {
-        return viewType === "list" ? (
-          <MangaList data={item} key={i + 1} />
-        ) : (
-          <MangaTile props={item} key={i + 1} />
-        );
-      })}
-    </>
-  );
-};
-// export async function getServerSideProps(params) {
-//   const { query } = params;
-//   console.log(params);
-//   const data = await fetcher([], Number(query.page), query.sort);
-//   console.log(data);
-//   return { props: { data } };
-// }
