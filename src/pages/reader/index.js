@@ -7,7 +7,7 @@ import { useDisclosure } from "@chakra-ui/react";
 
 import axios from "@/utils/axios";
 import useStore from "@/zustand/reader.zustand";
-import ReaderAlt from "@/components/reader/readerAlt/ReaderScroll";
+import ReaderAlt from "@/components/reader/readerScroll/ReaderScroll";
 import ReaderDef from "@/components/reader/readerDef/ReaderDef";
 import SideDrawer from "@/components/reader/sideDrawer/SideDrawer";
 
@@ -27,13 +27,13 @@ export default function Reader() {
 
   const fetchMangaDynamic = async () => {
     try {
-      const res = await axios.get("/reader-manga-by-id", {
+      const readerManga = await axios.get("/reader-manga-by-id", {
         params: {
           id: router.query.id,
         },
       });
 
-      const result = res.data;
+      const result = readerManga.data.data.manga;
 
       setMangaPages(result.pages);
       setMangaTitle(result.title);

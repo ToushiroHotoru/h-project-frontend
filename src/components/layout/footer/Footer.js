@@ -1,3 +1,7 @@
+import Link from "next/link";
+import Image from "next/image";
+import { Divider } from "@chakra-ui/react";
+
 import styles from "./styles.module.css";
 
 export default function Footer() {
@@ -5,7 +9,18 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className="container">
         <div className={styles.wrap}>
-          <h1>Footer</h1>
+          <Divider my="10px" />
+          <Link href="/" className={styles.logo}>
+            <a>
+              <Image
+                src="/logo.svg"
+                width={257}
+                height={36}
+                alt="logo"
+                style={{ height: "26px" }}
+              />
+            </a>
+          </Link>
         </div>
       </div>
     </footer>

@@ -2,21 +2,19 @@ import Head from "next/head";
 
 import { Grid } from "@chakra-ui/react";
 
+import axios from "@/utils/axios";
 import Tag from "@/components/tags/tag/Tag";
-import { LINK as API_URL } from "@/utils/API_URL.js";
 
 export async function getStaticProps() {
-  const res = await fetch(`${API_URL}/get_tags`);
-  const tags = await res.json();
-
-  if (!tags) {
+  const tags = await axios.get(`/get_tags`);
+  if (!tags.data) {
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { tags: tags.tags },
+    props: { tags: tags.data.data.tags },
     revalidate: 10,
   };
 }
