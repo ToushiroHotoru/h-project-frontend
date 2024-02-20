@@ -11,18 +11,6 @@ export default function MangaList({ data }) {
   const [isHovored, setIsHovored] = useState();
   const [ref, { width }] = useMeasure();
 
-  const reviewPicsArrayFunc = () => {
-    if (width > 600) {
-      return [data.cover, data.pages[0], data.pages[1]];
-    } else {
-      return [data.cover, data.pages[0]];
-    }
-
-    return isHovored
-      ? data.pages.slice(0, 3)
-      : [data.cover, data.pages.slice(0, 2)];
-  };
-
   return (
     <Flex
       ref={ref}
@@ -35,7 +23,7 @@ export default function MangaList({ data }) {
       }}
       onMouseLeave={() => setIsHovored(false)}
     >
-      <Link href={`/mangas/${data._id}`}>
+      <Link href={`/mangas/${data.route}`}>
         <a>
           <Flex justify="center" align="center" className={style.image_wrap}>
             {reviewPicsArrayFunc().map((item, i) => {
@@ -56,7 +44,7 @@ export default function MangaList({ data }) {
       </Link>
 
       <Box className={style.infoWrapper}>
-        <Link href={`/mangas/${data._id}`}>
+        <Link href={`/mangas/${data.route}`}>
           <a>
             <Box
               w="90%"

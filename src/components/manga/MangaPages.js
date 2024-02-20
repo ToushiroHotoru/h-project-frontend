@@ -27,28 +27,28 @@ export default function MangaPages({ pages, manga }) {
           ? pages.pages.map((item, i) => {
               return (
                 <Link
-                  href={`/reader?id=${manga._id}&page=${i + 1}`}
+                  href={`/reader?id=${manga.route}&page=${i + 1}`}
                   key={i + 1}
                 >
-                  <Box
-                    minHeight={120}
-                    minWidth={130}
+                  <a
                     className={`${css.page} ${
                       i > step ? css.page_hidden : ""
                     } ${pagesVisibality ? `${css.page_shown}` : ""}`}
                   >
-                    <Skeleton isLoaded>
-                      <Image
-                        src={item}
-                        alt={`Picture of the author ${i + 1}`}
-                        layout="responsive"
-                        objectFit="cover"
-                        width={250}
-                        height={400}
-                        loader={imageIsLoaded}
-                      />
-                    </Skeleton>
-                  </Box>
+                    <Box minHeight={120} minWidth={130}>
+                      <Skeleton isLoaded>
+                        <Image
+                          src={item}
+                          alt={`Picture of the author ${i + 1}`}
+                          layout="responsive"
+                          objectFit="cover"
+                          width={250}
+                          height={400}
+                          loader={imageIsLoaded}
+                        />
+                      </Skeleton>
+                    </Box>
+                  </a>
                 </Link>
               );
             })
