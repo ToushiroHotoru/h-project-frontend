@@ -5,12 +5,12 @@ import HomePageMangasSection from "../components/home/HomePageMangasSection/Home
 
 export async function getStaticProps() {
   try {
-    const lastPublishedMangas = await axios.get("/last_published_mangas");
+    const lastPublishedMangas = await axios.get("/last-published-mangas");
     const mostViewedMangasOnLastWeek = await axios.get(
-      "/last_most_viewed_mangas"
+      "/last-most-viewed-mangas"
     );
     const mostLikedMangasOnLastWeek = await axios.get(
-      "/last_most_liked_mangas"
+      "/last-most-liked-mangas"
     );
     return {
       props: {

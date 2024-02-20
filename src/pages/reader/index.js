@@ -29,7 +29,7 @@ export default function Reader() {
     try {
       const readerManga = await axios.get("/reader-manga-by-id", {
         params: {
-          id: router.query.id,
+          route: router.query.id,
         },
       });
 

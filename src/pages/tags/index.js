@@ -6,7 +6,7 @@ import axios from "@/utils/axios";
 import Tag from "@/components/tags/tag/Tag";
 
 export async function getStaticProps() {
-  const tags = await axios.get(`/get_tags`);
+  const tags = await axios.get(`/tags`);
   if (!tags.data) {
     return {
       notFound: true,

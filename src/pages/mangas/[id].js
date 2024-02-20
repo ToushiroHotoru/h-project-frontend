@@ -14,19 +14,19 @@ import MangaComments from "@/components/manga/MangaComments.js";
 
 export async function getStaticProps({ params }) {
   const { id } = params;
-  const staticManga = await axios.get(`/manga-static`, { params: { id: id } });
-  const comments = await axios.get("/get_comments", {
+  const staticManga = await axios.get(`/manga-static`, {
+    params: { route: id },
+  });
+  const comments = await axios.get("/manga-comments", {
     params: {
-      mangaId: id,
+      route: id,
     },
   });
 
-  console.log(comments)
-
   return {
     props: {
-      manga: staticManga.data.data.manga,
       id: id,
+      manga: staticManga.data.data.manga,
       comments: comments.data.data.comments,
     },
 
@@ -37,7 +37,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths(context) {
   const { mangas } = await getMangasPaths();
   const paths = mangas.map((post) => ({
-    params: { id: post._id.toString() },
+    params: { id: post.route },
   }));
 
   return {
@@ -46,13 +46,13 @@ export async function getStaticPaths(context) {
   };
 }
 
-export default function Manga({ manga, id, comments }) {
+export default function Manga({ id, manga, comments }) {
   const [mangaDynamic, setMangaDynamic] = useState();
 
   const getDynamicMangaData = async () => {
     try {
       const mangaDynamicData = await axios.get(`/manga-dynamic`, {
-        params: { id: id },
+        params: { route: id },
       });
       setMangaDynamic(mangaDynamicData.data.data.manga);
     } catch (err) {
@@ -79,7 +79,7 @@ export default function Manga({ manga, id, comments }) {
           </Flex>
 
           <section className={css.head}>
-            <MangaImg img={manga.cover} id={mangaDynamic?._id} />
+            <MangaImg img={manga.cover} id={manga.route} />
             <MangaDesc data={mangaDynamic && mangaDynamic} manga={manga} />
             <MangaTags tags={mangaDynamic && mangaDynamic["tags"]} />
           </section>
