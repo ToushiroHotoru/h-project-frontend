@@ -15,15 +15,15 @@ const useAuthStore = create(
     },
     login: async ({ email, password }) => {
       try {
-        const { data } = await axios.post("/api/login", {
+        const { data } = await axios.post("/login", {
           email: email,
           password: password,
         });
 
         set({
           isAuth: true,
-          accessToken: data.accessToken,
-          user: data.user,
+          accessToken: data.data.accessToken,
+          user: data.data.user,
           errors: null,
         });
 
