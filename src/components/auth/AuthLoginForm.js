@@ -18,7 +18,7 @@ import useAuthStore from "@/zustand/auth.zustand";
 import useRegStore from "@/zustand/register.zustand";
 import style from "@/styles/components/Auth.module.css";
 
-const validationFunc = (email, password) => {
+const validationFunc = ({ email, password }) => {
   let errors = {
     status: false,
     emailError: "",
@@ -66,10 +66,7 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
       setShowErrors(true);
       return false;
     }
-    const { isAuth } = await login({
-      email: email,
-      password: password,
-    });
+    const { isAuth } = await login(userData);
     if (isAuth) {
       onClose();
     }
