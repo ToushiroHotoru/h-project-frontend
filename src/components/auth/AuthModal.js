@@ -25,7 +25,7 @@ import AuthRegistered from "./AuthRegistered";
 
 export default function AuthModal() {
   const { stage, maskots, speeches } = useRegistorStore();
-  const { setStage, setFavorites } = useRegistorStore(
+  const { setRegisterStage, setFavorites } = useRegistorStore(
     ({ controls }) => controls
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -44,14 +44,14 @@ export default function AuthModal() {
     },
   });
 
-  const closeFunc = () => {
+  const closeModal = () => {
     onClose();
     setToggleForm(true);
-    setStage(1);
+    setRegisterStage(1);
     setFavorites([]);
   };
 
-  const renderSwitchFunc = (value) => {
+  const registrationSteps = (value) => {
     switch (value) {
       case 1:
         return <AuthRegForm setToggleForm={(val) => setToggleForm(val)} />;
@@ -75,12 +75,12 @@ export default function AuthModal() {
         cursor="pointer"
         onClick={() => {
           onOpen();
-          setStage(3);
+          setRegisterStage(3);
         }}
       />
       <Modal
         isCentered
-        onClose={closeFunc}
+        onClose={closeModal}
         isOpen={isOpen}
         motionPreset="slideInBottom"
         theme={theme}
@@ -144,7 +144,7 @@ export default function AuthModal() {
                 />
               )}
 
-              {!toggleForm && renderSwitchFunc(stage)}
+              {!toggleForm && registrationSteps(stage)}
             </Box>
           </Box>
         </ModalContent>

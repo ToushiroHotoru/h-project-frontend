@@ -17,7 +17,7 @@ import axios from "@/utils/axios";
 import useRegistorStore from "@/zustand/register.zustand";
 import css from "@/styles/components/Auth.module.css";
 
-const validationFunc = (email, username, password) => {
+const validationFunc = ({ email, username, password }) => {
   let errors = {
     status: false,
     emailError: "",
@@ -68,47 +68,50 @@ const validationFunc = (email, username, password) => {
 
 export default function AuthRegForm({ setToggleForm }) {
   const [show, setShow] = useState(false);
+  const [userData, setUserData] = useState({
+    email: "",
+    username: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
   const [showErrors, setShowErrors] = useState(false);
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const { stage } = useRegistorStore();
-  const controls = useRegistorStore(({ controls }) => controls);
+  const { setRegisterStage, setUserId } = useRegistorStore(
+    ({ controls }) => controls
+  );
 
   const fetchRegsiter = async () => {
     try {
-      if (validationFunc(email, username, password).status) {
+      setShowErrors(false);
+      if (validationFunc(userData).status) {
         setShowErrors(true);
-        return false;
+        return;
       }
 
-      const res = axios.get(`registration`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          username: username,
-          password: password,
-        }),
-      });
-      const result = res.data;
+      const response = await axios.post(`/registration`, userData);
 
-      if (true) {
-        controls.setStage(2);
-        controls.setUserId(result.userId);
+      const { data, status, message } = response.data;
+
+      if (status === "success") {
+        setRegisterStage(2);
+        setUserId(data.id);
+        setErrorMessage("");
+      }
+
+      if (status === "error") {
+        setErrorMessage(message);
+        setShowErrors(true);
       }
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  useEffect(() => {}, [stage]);
-
   return (
     <>
       <ModalBody
         py={{ base: "16px", sm: "24px" }}
         px={0}
-        maxWidth={400}
         width="100%"
         display="flex"
         flexDirection="column"
@@ -125,11 +128,14 @@ export default function AuthRegForm({ setToggleForm }) {
             p="10px 36px 10px 12px"
             placeholder="example@gmail.com"
             _placeholder={{ color: "#8b8b8b;" }}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setShowErrors(false);
+              setUserData({ ...userData, email: e.target.value });
+            }}
           />
           {showErrors && (
             <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
-              {validationFunc(email, username, password).emailError}
+              {validationFunc(userData).emailError}
             </Box>
           )}
         </FormControl>
@@ -145,13 +151,13 @@ export default function AuthRegForm({ setToggleForm }) {
             p="10px 36px 10px 12px"
             _placeholder={{ color: "#8b8b8b;" }}
             onChange={(e) => {
-              setUsername(e.target.value);
-              controls.setUserName(e.target.value);
+              setShowErrors(false);
+              setUserData({ ...userData, username: e.target.value });
             }}
           />
           {showErrors && (
             <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
-              {validationFunc(email, username, password).usernameError}
+              {validationFunc(userData).usernameError}
             </Box>
           )}
         </FormControl>
@@ -167,7 +173,10 @@ export default function AuthRegForm({ setToggleForm }) {
               p="10px 36px 10px 12px"
               type={show ? "text" : "password"}
               _placeholder={{ color: "#8b8b8b;" }}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setShowErrors(false);
+                setUserData({ ...userData, password: e.target.value });
+              }}
             />
 
             <InputRightElement width="36px" right="4px" height="100%">
@@ -187,7 +196,7 @@ export default function AuthRegForm({ setToggleForm }) {
           </InputGroup>
           {showErrors && (
             <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
-              {validationFunc(email, username, password).passwordError}
+              {validationFunc(userData).passwordError}
             </Box>
           )}
         </FormControl>
@@ -199,7 +208,7 @@ export default function AuthRegForm({ setToggleForm }) {
         p={0}
         pt={24}
       >
-        <Flex width="100%" justifyContent="center">
+        <Flex width="100%" justifyContent="space-between">
           <Button
             disabled={stage >= 4}
             bg="#F143E0"
@@ -208,8 +217,7 @@ export default function AuthRegForm({ setToggleForm }) {
           >
             Далее
           </Button>
-        </Flex>
-        <Flex width="100%" justifyContent="center" marginTop="16px">
+
           <Button
             bg="#F143E0"
             _hover={{ bg: "#CE39BF" }}
@@ -218,6 +226,13 @@ export default function AuthRegForm({ setToggleForm }) {
             Войти
           </Button>
         </Flex>
+        {showErrors && errorMessage.length ? (
+          <Box mt="12px" color="red" textAlign="center">
+            {errorMessage}
+          </Box>
+        ) : (
+          ""
+        )}
       </ModalFooter>
     </>
   );

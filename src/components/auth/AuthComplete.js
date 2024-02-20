@@ -4,7 +4,7 @@ import useStore from "@/zustand/register.zustand";
 
 export default function AuthComplete({ onCloseFunc }) {
   const { stage } = useStore();
-  const controls = useStore(({ controls }) => controls);
+  const { setRegisterStage } = useStore(({ controls }) => controls);
   return (
     <>
       <ModalBody p="0" mt="15px">
@@ -20,8 +20,7 @@ export default function AuthComplete({ onCloseFunc }) {
       <ModalFooter display="flex" justifyContent="center" p={0} mt="15px">
         <Button
           onClick={() => {
-            onCloseFunc();
-            controls.setStage(1);
+            setRegisterStage(1);
           }}
           disabled={stage > 6}
         >
