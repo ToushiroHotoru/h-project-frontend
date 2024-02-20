@@ -40,6 +40,7 @@
   width: calc(25% - 14px);
   margin: 7px;
   line-height: 100%;
+  cursor: pointer;
 }
 
 .item_clicked {
@@ -64,10 +65,11 @@
   width: 100%;
   background-color: #171717;
   opacity: 0.7;
-  line-height: 100%;
-  padding: 4px 0;
-  /* border-radius: 6px 6px 0 0; */
-  font-weight: 600;
+  font-size: 12px;
+  word-wrap: anywhere;
+  padding: 4px;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .tag_name_clicked {
