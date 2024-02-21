@@ -29,10 +29,10 @@ export default function Tags({ tags }) {
         <Grid
           gap="15px"
           gridTemplateColumns={{
+            x450: "1fr 1fr",
             md: "repeat(3, 1fr)",
             lg: "repeat(4, 1fr)",
             xl: "repeat(5, 1fr)",
-            x450: "1fr 1fr",
           }}
         >
           {tags.map((item) => (
