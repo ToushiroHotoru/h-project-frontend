@@ -3,7 +3,7 @@ import { Center, Button, ModalFooter, ModalBody } from "@chakra-ui/react";
 import useStore from "@/zustand/register.zustand";
 
 export default function AuthRegistered() {
-  const controls = useStore(({ controls }) => controls);
+  const { setRegisterStage } = useStore(({ controls }) => controls);
   return (
     <>
       <ModalBody p="0" mt="15px">
@@ -20,7 +20,7 @@ export default function AuthRegistered() {
         <Button
           // disabled={stage >= 5}
           onClick={() => {
-            controls.setStage(3);
+            setRegisterStage(3);
           }}
         >
           Продолжить

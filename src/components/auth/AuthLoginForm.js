@@ -12,13 +12,13 @@ import {
   FormControl,
   ModalFooter,
   InputRightElement,
-  useDisclosure,
 } from "@chakra-ui/react";
 
 import useAuthStore from "@/zustand/auth.zustand";
+import useRegStore from "@/zustand/register.zustand";
 import style from "@/styles/components/Auth.module.css";
 
-const validationFunc = (email, password) => {
+const validationFunc = ({ email, password }) => {
   let errors = {
     status: false,
     emailError: "",
@@ -55,22 +55,18 @@ const validationFunc = (email, password) => {
 };
 
 export default function AuthLoginForm({ setToggleForm, onClose }) {
-  const { login } = useAuthStore((state) => state);
+  const { login, errorMessage } = useAuthStore((state) => state);
+  const { setRegisterStage } = useRegStore((state) => state.controls);
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState({ email: "", password: "" });
   const handleClick = () => setShow(!show);
   const loginHandler = async () => {
-    if (validationFunc(email, password).status) {
+    if (validationFunc(userData).status) {
       setShowErrors(true);
       return false;
     }
-    const { isAuth } = await login({
-      email: email,
-      password: password,
-    });
-    console.log(isAuth);
+    const { isAuth } = await login(userData);
     if (isAuth) {
       onClose();
     }
@@ -79,9 +75,8 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
   return (
     <>
       <ModalBody
-        py={{ base: "16px", sm: "24px" }}
+        py={{ base: "14px", sm: "24px" }}
         px={0}
-        maxWidth={400}
         width="100%"
         display="flex"
         flexDirection="column"
@@ -99,12 +94,12 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
             placeholder="example@gmail.com"
             _placeholder={{ color: "#8b8b8b;" }}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setUserData({ ...userData, email: e.target.value });
             }}
           />
           {showErrors && (
             <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
-              {validationFunc(email, password).emailError}
+              {validationFunc(userData).emailError}
             </Box>
           )}
         </FormControl>
@@ -120,7 +115,9 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
               p="10px 36px 10px 12px"
               type={show ? "text" : "password"}
               _placeholder={{ color: "#8b8b8b;" }}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
             />
 
             <InputRightElement width="36px" right="4px" height="100%">
@@ -142,35 +139,43 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
           </InputGroup>
           {showErrors && (
             <Box color="#ef3d3d" fontSize="14px" fontWeight={500}>
-              {validationFunc(email, password).passwordError}
+              {validationFunc(userData).passwordError}
             </Box>
           )}
         </FormControl>
       </ModalBody>
       <ModalFooter display="flex" justifyContent="center" p={0} pt={24}>
-        <Flex width="100%" justifyContent="center">
-          <Button
-            me="2px"
-            variant="link"
-            colorScheme="teal"
-            onClick={() => loginHandler()}
-          >
-            Войти
-          </Button>
-          <Divider
-            orientation="vertical"
-            colorScheme="whiteAlpha"
-            size="10px"
-          />
-          <Button
-            ms="2px"
-            variant="link"
-            colorScheme="teal"
-            onClick={() => setToggleForm(false)}
-          >
-            Регистрация
-          </Button>
-        </Flex>
+        <Box width='100%'>
+          {errorMessage ? (
+            <Box color="#ef3d3d" fontSize="14px" fontWeight={500} mb="6px" lineHeight={1.1}>
+              {errorMessage}
+            </Box>
+          ) : (
+            ""
+          )}
+          <Flex width="100%" justifyContent="space-between">
+            <Button
+              me="2px"
+              bg="#F143E0"
+              _hover={{ bg: "#CE39BF" }}
+              onClick={() => loginHandler()}
+            >
+              Войти
+            </Button>
+
+            <Button
+              ms="2px"
+              bg="#F143E0"
+              _hover={{ bg: "#CE39BF" }}
+              onClick={() => {
+                setToggleForm(false);
+                setRegisterStage(1);
+              }}
+            >
+              Регистрация
+            </Button>
+          </Flex>
+        </Box>
       </ModalFooter>
     </>
   );

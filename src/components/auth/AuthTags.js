@@ -20,7 +20,7 @@ import css from "@/styles/components/Auth.module.css";
 
 export default function AuthTags() {
   const { userId, stage, favorites } = useStore();
-  const controls = useStore(({ controls }) => controls);
+  const { setRegisterStage, setFavorites } = useStore(({ controls }) => controls);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortFlag, setSortFlag] = useState();
@@ -28,9 +28,9 @@ export default function AuthTags() {
 
   const getTagsFunc = async () => {
     try {
-      const res = await axios.get(`get_tags`);
-      const result = res.data;
-      setTags(result.tags);
+      const { data } = await axios.get(`/tags`);
+      const { tags } = data.data;
+      setTags(tags);
     } catch (err) {
       console.log(err.message);
     }
@@ -38,14 +38,12 @@ export default function AuthTags() {
 
   const sendTags = async () => {
     try {
-      console.log(stage, "<<<");
-
       const tagsIds = tags
         .filter((tag) => selectedTags.includes(tag["name"]))
         .map((item) => item._id);
 
       await axios.post(
-        `${stage == 4 ? "set_exceptions_tags" : "set_preferences_tags"}`,
+        `${stage == 4 ? "set-exceptions-tags" : "set-preferences-tags"}`,
         {
           // id: userId
           id: userId,
@@ -54,8 +52,7 @@ export default function AuthTags() {
       );
 
       setSelectedTags([]); // !delete later
-      controls.setStage(stage == 3 ? 4 : 5);
-      console.log(stage, "<<<");
+      setRegisterStage(stage == 3 ? 4 : 5);
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +67,7 @@ export default function AuthTags() {
       prevSelectedTags.push(id);
     }
     setSelectedTags(prevSelectedTags);
-    if (stage == 3) controls.setFavorites(prevSelectedTags);
+    if (stage == 3) setFavorites(prevSelectedTags);
   };
 
   // сортировка тегов по запросу

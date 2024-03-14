@@ -34,26 +34,39 @@ export default function Header() {
           </Box>
 
           <Flex alignItems="center">
-            <Box className={`link ${styles.link}`} cursor="pointer" ml="20px">
+            <Box
+              className={`link ${styles.link}`}
+              cursor="pointer"
+              ml={{ base: "10px", md: "20px" }}
+            >
               <Link href="/mangas">Каталог</Link>
             </Box>
-            <Box className={`link ${styles.link}`} cursor="pointer" ml="20px">
+            <Box
+              className={`link ${styles.link}`}
+              cursor="pointer"
+              ml={{ base: "10px", md: "20px" }}
+            >
               <Link href="/tags">Теги</Link>
             </Box>
             {isAuth ? (
-              <Link href={`/user/${user.userName}`}>
+              <Link href={`/profile/${user.userName}`}>
                 <Button
-                  ml="20px"
+                  ml={{ base: "10px", md: "20px" }}
                   p={0}
                   borderRadius="50%"
                   overflow="hidden"
-                  size="30px"
+                  width="30px"
+                  height="30px"
+                  minWidth="30px"
                 >
                   <Image src={user.avatar} width="30px" height="30px" />
                 </Button>
               </Link>
             ) : (
-              <Box className={`link ${styles.link}`} ml="20px">
+              <Box
+                className={`link ${styles.link}`}
+                ml={{ base: "10px", md: "20px" }}
+              >
                 <AuthModal />
               </Box>
             )}

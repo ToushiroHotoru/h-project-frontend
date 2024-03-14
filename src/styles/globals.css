@@ -180,7 +180,7 @@ footer {
 
 @media (max-width: 600px) {
   .container {
-    padding: 0 16px;
+    padding: 0 12px;
   }
   .new_mangas_section .swiper-button-next,
   .new_mangas_section .swiper-button-prev {

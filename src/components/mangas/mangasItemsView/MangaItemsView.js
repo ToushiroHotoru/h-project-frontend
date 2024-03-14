@@ -7,7 +7,7 @@ export default function MangaItemsView() {
   const { viewType, mangas } = useMangasStore();
   return (
     <>
-      {mangas.map((item, i) => {
+      {mangas && mangas.map((item, i) => {
         return viewType === "list" ? (
           <MangaList data={item} key={i + 1} />
         ) : (

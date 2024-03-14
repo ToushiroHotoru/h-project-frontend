@@ -12,6 +12,7 @@ import {
   ModalContent,
   useDisclosure,
   ModalCloseButton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import useRegistorStore from "@/zustand/register.zustand";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -25,11 +26,13 @@ import AuthRegistered from "./AuthRegistered";
 
 export default function AuthModal() {
   const { stage, maskots, speeches } = useRegistorStore();
-  const { setStage, setFavorites } = useRegistorStore(
+  const { setRegisterStage, setFavorites } = useRegistorStore(
     ({ controls }) => controls
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [toggleForm, setToggleForm] = useState(true);
+
+  const authModalBgColor = useColorModeValue("#fff", "#1A202C");
 
   const theme = extendTheme({
     components: {
@@ -44,14 +47,14 @@ export default function AuthModal() {
     },
   });
 
-  const closeFunc = () => {
+  const closeModal = () => {
     onClose();
     setToggleForm(true);
-    setStage(1);
+    setRegisterStage(1);
     setFavorites([]);
   };
 
-  const renderSwitchFunc = (value) => {
+  const registrationSteps = (value) => {
     switch (value) {
       case 1:
         return <AuthRegForm setToggleForm={(val) => setToggleForm(val)} />;
@@ -75,12 +78,12 @@ export default function AuthModal() {
         cursor="pointer"
         onClick={() => {
           onOpen();
-          setStage(3);
+          setRegisterStage(3);
         }}
       />
       <Modal
         isCentered
-        onClose={closeFunc}
+        onClose={closeModal}
         isOpen={isOpen}
         motionPreset="slideInBottom"
         theme={theme}
@@ -121,9 +124,9 @@ export default function AuthModal() {
             <Box
               maxWidth={600}
               w="100%"
-              py={{ base: 30, sm: 50 }}
-              px={{ base: "24px", sm: "40px" }}
-              bg="#1A202C"
+              py={{ base: "16px", sm: "26px", md: "50px" }}
+              px={{ base: "16px", sm: "26px", md: "40px" }}
+              bg={authModalBgColor}
               position="relative"
               zIndex={2}
             >
@@ -132,8 +135,8 @@ export default function AuthModal() {
                   {toggleForm ? "Авторизация" : "Регистрации"}
                 </Heading>
                 <ModalCloseButton
-                  top={{ base: "-18px", sm: "-25px" }}
-                  right={{ base: "-15px", sm: "-16px" }}
+                  top={{ base: "-16px", sm: "-25px" }}
+                  right={{ base: "-16px", sm: "-16px" }}
                 />
               </ModalHeader>
 
@@ -144,7 +147,7 @@ export default function AuthModal() {
                 />
               )}
 
-              {!toggleForm && renderSwitchFunc(stage)}
+              {!toggleForm && registrationSteps(stage)}
             </Box>
           </Box>
         </ModalContent>

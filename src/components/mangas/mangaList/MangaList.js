@@ -8,34 +8,13 @@ import { Flex, Box } from "@chakra-ui/react";
 import style from "@/components/mangas/mangaList/MangaList.module.css";
 
 export default function MangaList({ data }) {
-  const [isHovored, setIsHovored] = useState();
-  const [ref, { width }] = useMeasure();
-
   const reviewPicsArrayFunc = () => {
-    if (width > 600) {
-      return [data.cover, data.pages[0], data.pages[1]];
-    } else {
-      return [data.cover, data.pages[0]];
-    }
-
-    return isHovored
-      ? data.pages.slice(0, 3)
-      : [data.cover, data.pages.slice(0, 2)];
+    return [data.cover, ...data.pages.slice(0, 2)];
   };
 
   return (
-    <Flex
-      ref={ref}
-      overflow="hidden"
-      className={style.list}
-      onMouseEnter={() => {
-        if (width > 600) {
-          setIsHovored(true);
-        }
-      }}
-      onMouseLeave={() => setIsHovored(false)}
-    >
-      <Link href={`/mangas/${data._id}`}>
+    <Flex overflow="hidden" className={style.list}>
+      <Link href={`/mangas/${data.route}`}>
         <a>
           <Flex justify="center" align="center" className={style.image_wrap}>
             {reviewPicsArrayFunc().map((item, i) => {
@@ -56,7 +35,7 @@ export default function MangaList({ data }) {
       </Link>
 
       <Box className={style.infoWrapper}>
-        <Link href={`/mangas/${data._id}`}>
+        <Link href={`/mangas/${data.route}`}>
           <a>
             <Box
               w="90%"

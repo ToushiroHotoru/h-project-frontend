@@ -2,7 +2,14 @@ import Image from "next/image";
 import { useEffect } from "react";
 
 import { useSpring, animated } from "@react-spring/web";
-import { Flex, Box, Center, Tooltip, Heading } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Center,
+  Tooltip,
+  Heading,
+  Skeleton,
+} from "@chakra-ui/react";
 import { BsGearFill, BsArrowUpCircle } from "react-icons/bs";
 
 import useStore from "@/zustand/reader.zustand";
@@ -54,9 +61,12 @@ export default function ReaderAlt({ btnRef, onOpen }) {
           width="100%"
           alignItems="center"
         >
-          <Heading as="h1" fontSize="18px" fontWeight="normal">
-            {mangaTitle}
-          </Heading>
+          <Skeleton isLoaded={mangaTitle}>
+            <Heading as="h1" fontSize="18px" fontWeight="normal">
+              {mangaTitle}
+            </Heading>
+          </Skeleton>
+
           <Box
             position={{ base: "relative", md: "fixed" }}
             top={{ base: "0", md: "200px" }}

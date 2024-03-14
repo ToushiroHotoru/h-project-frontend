@@ -3,21 +3,16 @@ import Image from "next/image";
 import { useState } from "react";
 
 import {
-  Tag,
   Box,
   Flex,
-  Center,
-  Button,
-  TagLabel,
   Skeleton,
-  TagCloseButton,
 } from "@chakra-ui/react";
 
 export default function MangaTile({ props }) {
   const [isLoaded, setIsloaded] = useState(false);
 
   return (
-    <Link href={`/mangas/${props._id}`}>
+    <Link href={`/mangas/${props.route}`}>
       <a>
         <Box position="relative">
           <Skeleton isLoaded={isLoaded}>

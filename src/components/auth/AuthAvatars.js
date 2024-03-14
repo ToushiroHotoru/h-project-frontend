@@ -13,24 +13,23 @@ import Image from "next/image";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import AuthAvatar from "./AuthAvatar";
 import axios from "@/utils/axios";
+import AuthAvatar from "./AuthAvatar";
 import useStore from "@/zustand/register.zustand";
-import { LINK as API_URL } from "@/utils/API_URL";
 import AuthFavoritesCSS from "@/styles/components/Auth.module.css";
 
 export default function AuthAvatars() {
   const { userId, userName } = useStore();
-  const controls = useStore(({ controls }) => controls);
+  const { setRegisterStage } = useStore(({ controls }) => controls);
   const [uploadFlag, setUploadFlag] = useState(false);
   const [avatarPreview, setAvatarPreview] = useState("/zero.png");
   const [activeAvatar, setActiveAvatar] = useState(null);
   const [avatars, setAvatars] = useState([]);
 
   const getAvatarsFunc = async () => {
-    const response = await axios.get(`${API_URL}/get_avatars`);
-    const data = response.data;
-    setAvatars(data.avatars);
+    const { data } = await axios.get(`/site-avatars`);
+    const { avatars } = data.data;
+    setAvatars(avatars);
   };
 
   const sendSelectedAvatar = async () => {
@@ -41,10 +40,7 @@ export default function AuthAvatars() {
       formData.append("isUpload", uploadFlag);
       formData.append("avatar", avatar);
 
-      await fetch(`set_avatar`, {
-        method: "POST",
-        body: formData,
-      });
+      await axios.post("/add-site-avatar", formData);
     } catch (error) {
       console.log(error);
     }
@@ -132,7 +128,7 @@ export default function AuthAvatars() {
           bg={avatarPreview != "/zero.png" ? "#43F1DC" : "#A2ACAB"}
           _hover={{ bg: avatarPreview != "/zero.png" ? "#3DD7C4" : "#727978" }}
           onClick={() => {
-            controls.setStage(6);
+            setRegisterStage(6);
             sendSelectedAvatar();
           }}
         >

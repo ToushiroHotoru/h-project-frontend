@@ -9,7 +9,7 @@ import style from "@/components/tags/tag/Tag.module.css";
 export default function TagDesktop({ data }) {
   const [isLoaded, setIsloaded] = useState(false);
   return (
-    <Link href={`/mangas?tags=${data._id}`}>
+    <Link href={`/mangas?tags=${data.nameEn}`}>
       <a className={style.tag}>
         <Box
           className={style.tagImage}
@@ -21,8 +21,6 @@ export default function TagDesktop({ data }) {
             alt={data.name}
             layout="fill"
             objectFit="cover"
-            width={250}
-            height={250}
             onLoadingComplete={() => {
               setIsloaded(true);
             }}

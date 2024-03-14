@@ -3,7 +3,6 @@ import { create } from "zustand";
 const useRegistorStore = create((set) => ({
   stage: 1,
   userId: "6443dd58db0e525d6f77f2be",
-  userName: "",
   favorites: [],
   maskots: [
     "/maskot.png",
@@ -23,7 +22,7 @@ const useRegistorStore = create((set) => ({
   ],
 
   controls: {
-    setStage: (payload) => set(() => ({ stage: payload })),
+    setRegisterStage: (payload) => set(() => ({ stage: payload })),
 
     setUserId: (payload) => set(() => ({ userId: payload })),
 
@@ -32,8 +31,6 @@ const useRegistorStore = create((set) => ({
     setMaskots: (payload) => set(() => ({ maskots: payload })),
 
     setSpeeches: (payload) => set(() => ({ speeches: payload })),
-
-    setUserName: (payload) => set(() => ({ userName: payload })),
   },
 }));
 

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useStore = create((set) => ({
+const useReaderStore = create((set) => ({
   showMap: false,
   quality: 50,
   mangaTitle: "",
@@ -22,4 +22,4 @@ const useStore = create((set) => ({
   },
 }));
 
-export default useStore;
+export default useReaderStore;

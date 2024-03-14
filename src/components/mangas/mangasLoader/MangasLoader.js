@@ -4,7 +4,10 @@ export default function MangasLoader() {
   return [...Array(24)].map((_, i) => {
     return (
       <Flex flexDirection="column" key={i + 1}>
-        <Skeleton height="380px" />
+        <Skeleton
+          width="100%"
+          _before={{ content: "''", paddingTop: "140%", display: "block" }}
+        />
       </Flex>
     );
   });
