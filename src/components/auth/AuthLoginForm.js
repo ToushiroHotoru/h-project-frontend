@@ -55,7 +55,7 @@ const validationFunc = ({ email, password }) => {
 };
 
 export default function AuthLoginForm({ setToggleForm, onClose }) {
-  const { login } = useAuthStore((state) => state);
+  const { login, errorMessage } = useAuthStore((state) => state);
   const { setRegisterStage } = useRegStore((state) => state.controls);
   const [show, setShow] = useState(false);
   const [showErrors, setShowErrors] = useState(false);
@@ -75,7 +75,7 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
   return (
     <>
       <ModalBody
-        py={{ base: "16px", sm: "24px" }}
+        py={{ base: "14px", sm: "24px" }}
         px={0}
         width="100%"
         display="flex"
@@ -145,28 +145,37 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
         </FormControl>
       </ModalBody>
       <ModalFooter display="flex" justifyContent="center" p={0} pt={24}>
-        <Flex width="100%" justifyContent="space-between">
-          <Button
-            me="2px"
-            bg="#F143E0"
-            _hover={{ bg: "#CE39BF" }}
-            onClick={() => loginHandler()}
-          >
-            Войти
-          </Button>
+        <Box width='100%'>
+          {errorMessage ? (
+            <Box color="#ef3d3d" fontSize="14px" fontWeight={500} mb="6px" lineHeight={1.1}>
+              {errorMessage}
+            </Box>
+          ) : (
+            ""
+          )}
+          <Flex width="100%" justifyContent="space-between">
+            <Button
+              me="2px"
+              bg="#F143E0"
+              _hover={{ bg: "#CE39BF" }}
+              onClick={() => loginHandler()}
+            >
+              Войти
+            </Button>
 
-          <Button
-            ms="2px"
-            bg="#F143E0"
-            _hover={{ bg: "#CE39BF" }}
-            onClick={() => {
-              setToggleForm(false);
-              setRegisterStage(1);
-            }}
-          >
-            Регистрация
-          </Button>
-        </Flex>
+            <Button
+              ms="2px"
+              bg="#F143E0"
+              _hover={{ bg: "#CE39BF" }}
+              onClick={() => {
+                setToggleForm(false);
+                setRegisterStage(1);
+              }}
+            >
+              Регистрация
+            </Button>
+          </Flex>
+        </Box>
       </ModalFooter>
     </>
   );

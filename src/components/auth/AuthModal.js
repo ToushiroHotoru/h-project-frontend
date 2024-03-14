@@ -12,6 +12,7 @@ import {
   ModalContent,
   useDisclosure,
   ModalCloseButton,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import useRegistorStore from "@/zustand/register.zustand";
 import { FaRegUserCircle } from "react-icons/fa";
@@ -30,6 +31,8 @@ export default function AuthModal() {
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [toggleForm, setToggleForm] = useState(true);
+
+  const authModalBgColor = useColorModeValue("#fff", "#1A202C");
 
   const theme = extendTheme({
     components: {
@@ -121,9 +124,9 @@ export default function AuthModal() {
             <Box
               maxWidth={600}
               w="100%"
-              py={{ base: 30, sm: 50 }}
-              px={{ base: "24px", sm: "40px" }}
-              bg="#1A202C"
+              py={{ base: "16px", sm: "26px", md: "50px" }}
+              px={{ base: "16px", sm: "26px", md: "40px" }}
+              bg={authModalBgColor}
               position="relative"
               zIndex={2}
             >
@@ -132,8 +135,8 @@ export default function AuthModal() {
                   {toggleForm ? "Авторизация" : "Регистрации"}
                 </Heading>
                 <ModalCloseButton
-                  top={{ base: "-18px", sm: "-25px" }}
-                  right={{ base: "-15px", sm: "-16px" }}
+                  top={{ base: "-16px", sm: "-25px" }}
+                  right={{ base: "-16px", sm: "-16px" }}
                 />
               </ModalHeader>
 

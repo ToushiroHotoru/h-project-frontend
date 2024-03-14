@@ -1,37 +1,34 @@
-import Head from "next/head";
 import { useEffect, useState } from "react";
-
-import { Box, Flex, Heading } from "@chakra-ui/react";
 
 import axios from "@/utils/axios.js";
 import getMangasPaths from "@/utils/getMangasPaths.js";
-import css from "@/styles/pages/Manga.module.css";
-import MangaImg from "@/components/manga/MangaImg.js";
-import MangaTags from "@/components/manga/MangaTags.js";
-import MangaDesc from "@/components/manga/MangaDesc.js";
-import MangaPages from "@/components/manga/MangaPages.js";
-import MangaComments from "@/components/manga/MangaComments.js";
+import MangaScreen from "@/screens/manga/Manga.screen";
 
 export async function getStaticProps({ params }) {
-  const { id } = params;
-  const staticManga = await axios.get(`/manga-static`, {
-    params: { route: id },
-  });
-  const comments = await axios.get("/manga-comments", {
-    params: {
-      route: id,
-    },
-  });
+  try {
+    const { id } = params;
+    const staticManga = await axios.get(`/manga-static`, {
+      params: { route: id },
+    });
 
-  return {
-    props: {
-      id: id,
-      manga: staticManga.data.data.manga,
-      comments: comments.data.data.comments,
-    },
+    const comments = await axios.get("/manga-comments", {
+      params: {
+        route: id,
+      },
+    });
 
-    revalidate: 3600,
-  };
+    return {
+      props: {
+        id: id,
+        mangaStatic: staticManga.data.data.manga,
+        mangaComments: comments.data.data.comments,
+      },
+
+      revalidate: 3600,
+    };
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export async function getStaticPaths(context) {
@@ -46,7 +43,7 @@ export async function getStaticPaths(context) {
   };
 }
 
-export default function Manga({ id, manga, comments }) {
+export default function Manga({ id, mangaStatic, mangaComments }) {
   const [mangaDynamic, setMangaDynamic] = useState();
 
   const getDynamicMangaData = async () => {
@@ -65,29 +62,10 @@ export default function Manga({ id, manga, comments }) {
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>{manga.title}</title>
-      </Head>
-      <div className={css.wrap}>
-        <div className="container">
-          <Flex justifyContent="space-between">
-            <Heading as="h1" size="md" className={css.title}>
-              Manga - {manga.title}
-            </Heading>
-            <Box mt="auto">{manga.createdAt}</Box>
-          </Flex>
-
-          <section className={css.head}>
-            <MangaImg img={manga.cover} id={manga.route} />
-            <MangaDesc data={mangaDynamic && mangaDynamic} manga={manga} />
-            <MangaTags tags={mangaDynamic && mangaDynamic["tags"]} />
-          </section>
-
-          <MangaPages pages={mangaDynamic} manga={manga} />
-          <MangaComments comments={comments} />
-        </div>
-      </div>
-    </>
+    <MangaScreen
+      mangaComments={mangaComments}
+      mangaDynamic={mangaDynamic}
+      mangaStatic={mangaStatic}
+    />
   );
 }

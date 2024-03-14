@@ -7,7 +7,7 @@ const useAuthStore = create(
     isAuth: false,
     accessToken: null,
     user: null,
-    errors: null,
+    errorMessage: null,
     controls: {
       setToken: (token) => {
         set({ accessToken: token });
@@ -15,22 +15,28 @@ const useAuthStore = create(
     },
     login: async ({ email, password }) => {
       try {
-        const { data } = await axios.post("/login", {
+        const { data, status } = await axios.post("/login", {
           email: email,
           password: password,
         });
+        console.log(status);
+
+        if (data.status === "error") {
+          set({ isAuth: false, errorMessage: data.message });
+          return { isAuth: get().isAuth };
+        }
 
         set({
           isAuth: true,
           accessToken: data.data.accessToken,
           user: data.data.user,
-          errors: null,
+          errorMessage: null,
         });
 
         return { isAuth: get().isAuth };
       } catch (error) {
-        console.log(error);
         set({ isAuth: false, errors: error });
+        return { isAuth: get().isAuth };
       }
     },
   }))

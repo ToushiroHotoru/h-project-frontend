@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { useSelector } from "react-redux";
 import { Text, Textarea, Button } from "@chakra-ui/react";
 
 import axiosBack from "@/utils/axios";
@@ -9,19 +8,17 @@ import css from "@/styles/components/manga/Comments.module.css";
 
 export default function MangaCommentsTextarea({ comments }) {
   const router = useRouter();
-  const user = useSelector((store) => store.authReducer.user.id);
   const manga = router.query.id;
   const [comment, setComment] = useState("");
   const sendComment = async () => {
-    const response = await axiosBack.post("/add_comment", {
-      userId: user,
+    const response = await axiosBack.post("/add-comment-to-manga", {
       mangaId: manga,
       text: comment,
     });
     setComment("");
-    await axiosBack.get("/get_comments", {
+    await axiosBack.get("/manga-comments", {
       params: {
-        mangaId: manga,
+        route: manga,
       },
     });
   };

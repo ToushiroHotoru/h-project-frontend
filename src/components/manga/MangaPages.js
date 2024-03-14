@@ -5,7 +5,7 @@ import { useState } from "react";
 import { isMobile } from "react-device-detect";
 import { Box, Button, Heading, Skeleton } from "@chakra-ui/react";
 
-import css from "@/styles/components/manga/Pages.module.css";
+import style from "@/styles/components/manga/Pages.module.css";
 
 export default function MangaPages({ pages, manga }) {
   const [pagesVisibality, setPagesVisibality] = useState(false);
@@ -17,12 +17,13 @@ export default function MangaPages({ pages, manga }) {
   const imageIsLoaded = ({ src }) => {
     return src + "?q=5&w=10";
   };
+  
   return (
-    <section className={css.content}>
+    <section className={style.content}>
       <Heading as="h2" size="md" marginBottom="20px">
         Превью страниц
       </Heading>
-      <div className={css.content_wrap}>
+      <div className={style.content_wrap}>
         {pages !== undefined
           ? pages.pages.map((item, i) => {
               return (
@@ -31,9 +32,9 @@ export default function MangaPages({ pages, manga }) {
                   key={i + 1}
                 >
                   <a
-                    className={`${css.page} ${
-                      i > step ? css.page_hidden : ""
-                    } ${pagesVisibality ? `${css.page_shown}` : ""}`}
+                    className={`${style.readPage} ${
+                      i > step ? style.page_hidden : ""
+                    } ${pagesVisibality ? `${style.page_shown}` : ""}`}
                   >
                     <Box minHeight={120} minWidth={130}>
                       <Skeleton isLoaded>
@@ -70,7 +71,7 @@ export default function MangaPages({ pages, manga }) {
 const Skeletons = () => {
   return [...Array(12)].map((_, i) => {
     return (
-      <Box key={i + 1} className={css.page}>
+      <Box key={i + 1} className={style.readPage}>
         <Skeleton minHeight={340} minWidth={215} />
       </Box>
     );

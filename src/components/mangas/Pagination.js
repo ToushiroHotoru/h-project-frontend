@@ -43,7 +43,7 @@ export default function Pagination() {
 
   return (
     mangasTotal && (
-      <Flex justifyContent="center">
+      <Flex justifyContent="center" mt="20px">
         {currentPage - 1 !== 0 && (
           <Link
             href={`/mangas?page=1&sort=${currentSort}${
@@ -54,7 +54,10 @@ export default function Pagination() {
               <Button
                 mx="2px"
                 p="0"
-                minWidth="40px"
+                minWidth={{ base: "32px", md: "40px" }}
+                width={{ base: "32px", md: "40px" }}
+                height={{ base: "32px", md: "40px" }}
+                fontSize={{ base: "14px", md: "16px" }}
                 colorScheme="whatsapp"
                 borderRadius="50%"
                 transform="rotate(180deg)"
@@ -75,7 +78,10 @@ export default function Pagination() {
               <Button
                 mx="2px"
                 p="0"
-                minWidth="40px"
+                minWidth={{ base: "32px", md: "40px" }}
+                width={{ base: "32px", md: "40px" }}
+                height={{ base: "32px", md: "40px" }}
+                fontSize={{ base: "14px", md: "16px" }}
                 colorScheme="whatsapp"
                 borderRadius="50%"
                 disabled={currentPage - 1 === 0 ? true : false}
@@ -101,6 +107,10 @@ export default function Pagination() {
                     mx="2px"
                     colorScheme={i === currentPage - 1 ? "pink" : "whatsapp"}
                     borderRadius="50%"
+                    minWidth={{ base: "32px", md: "40px" }}
+                    width={{ base: "32px", md: "40px" }}
+                    height={{ base: "32px", md: "40px" }}
+                    fontSize={{ base: "14px", md: "16px" }}
                   >
                     {item}
                   </Button>
@@ -119,7 +129,10 @@ export default function Pagination() {
               <Button
                 mx="2px"
                 p="0"
-                minWidth="40px"
+                minWidth={{ base: "32px", md: "40px" }}
+                width={{ base: "32px", md: "40px" }}
+                height={{ base: "32px", md: "40px" }}
+                fontSize={{ base: "14px", md: "16px" }}
                 colorScheme="whatsapp"
                 borderRadius="50%"
                 disabled={
@@ -143,7 +156,10 @@ export default function Pagination() {
               <Button
                 mx="2px"
                 p="0"
-                minWidth="40px"
+                minWidth={{ base: "32px", md: "40px" }}
+                width={{ base: "32px", md: "40px" }}
+                height={{ base: "32px", md: "40px" }}
+                fontSize={{ base: "14px", md: "16px" }}
                 colorScheme="whatsapp"
                 borderRadius="50%"
                 disabled={

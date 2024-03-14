@@ -20,7 +20,7 @@ export default function MangaTags({ tags }) {
                 key={i + 1}
                 position="relative"
               >
-                <Link href={`/mangas?tags=${tagItem._id}`}>
+                <Link href={`/mangas?tags=${tagItem.nameEn}`}>
                   <a>
                     <Image
                       src={tagItem["image"]}

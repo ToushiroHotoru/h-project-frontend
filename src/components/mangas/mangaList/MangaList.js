@@ -8,21 +8,12 @@ import { Flex, Box } from "@chakra-ui/react";
 import style from "@/components/mangas/mangaList/MangaList.module.css";
 
 export default function MangaList({ data }) {
-  const [isHovored, setIsHovored] = useState();
-  const [ref, { width }] = useMeasure();
+  const reviewPicsArrayFunc = () => {
+    return [data.cover, ...data.pages.slice(0, 2)];
+  };
 
   return (
-    <Flex
-      ref={ref}
-      overflow="hidden"
-      className={style.list}
-      onMouseEnter={() => {
-        if (width > 600) {
-          setIsHovored(true);
-        }
-      }}
-      onMouseLeave={() => setIsHovored(false)}
-    >
+    <Flex overflow="hidden" className={style.list}>
       <Link href={`/mangas/${data.route}`}>
         <a>
           <Flex justify="center" align="center" className={style.image_wrap}>
