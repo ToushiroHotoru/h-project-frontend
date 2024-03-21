@@ -1,21 +1,18 @@
 import "swiper/css";
 import "swiper/css/navigation";
-import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import "@/styles/globals.css";
-import { store } from "@/redux/store";
-import Layout from "@/components/layout/Layout";
+
 import theme from "@/components/theme";
+import Layout from "@/components/layout/Layout";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
-      <Provider store={store}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ChakraProvider>
   );
 }

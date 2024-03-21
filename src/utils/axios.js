@@ -30,14 +30,21 @@ $api.interceptors.response.use(
     try {
       if (error.response) {
         if (error.response.status === 401) {
-          const { data } = await $api.get("/auth/refresh");
-          const { setToken } = useAuthStore(({ controls }) => controls);
-          setToken(data.accessToken);
+          const { data } = await $api.get("/refresh");
+
+          useAuthStore.setState({
+            user: data.data.user,
+            accessToken: data.data.user.accessToken,
+            isAuth: true,
+          });
+
           config.headers.Authorization = `Bearer ${data.accessToken}`;
           return $api(config);
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 

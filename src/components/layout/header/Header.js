@@ -49,7 +49,7 @@ export default function Header() {
               <Link href="/tags">Теги</Link>
             </Box>
             {isAuth ? (
-              <Link href={`/profile/${user.userName}`}>
+              <Link href={`/profile/${user.name}`}>
                 <Button
                   ml={{ base: "10px", md: "20px" }}
                   p={0}

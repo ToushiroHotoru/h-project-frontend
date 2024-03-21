@@ -4,23 +4,19 @@ import axios from "@/utils/axios";
 import HomePageMangasSection from "../components/home/HomePageMangasSection/HomePageMangasSection";
 
 export async function getStaticProps() {
-  try {
-    const lastPublishedMangas = await axios.get("/last-published-mangas");
-    const mostViewedMangasOnLastWeek = await axios.get(
-      "/last-most-viewed-mangas"
-    );
-    const mostLikedMangasOnLastWeek = await axios.get(
-      "/last-most-liked-mangas"
-    );
-    return {
-      props: {
-        lastPublishedMangas: lastPublishedMangas.data.data.mangas,
-        mostViewedMangasOnLastWeek: mostViewedMangasOnLastWeek.data.data.mangas,
-        mostLikedMangasOnLastWeek: mostLikedMangasOnLastWeek.data.data.mangas,
-      },
-      revalidate: 60 * 30,
-    };
-  } catch (error) {}
+  const lastPublishedMangas = await axios.get("/last-published-mangas");
+  const mostViewedMangasOnLastWeek = await axios.get(
+    "/last-most-viewed-mangas"
+  );
+  const mostLikedMangasOnLastWeek = await axios.get("/last-most-liked-mangas");
+  return {
+    props: {
+      lastPublishedMangas: lastPublishedMangas.data.data.mangas,
+      mostViewedMangasOnLastWeek: mostViewedMangasOnLastWeek.data.data.mangas,
+      mostLikedMangasOnLastWeek: mostLikedMangasOnLastWeek.data.data.mangas,
+    },
+    revalidate: 60 * 30,
+  };
 }
 
 export default function Index({
