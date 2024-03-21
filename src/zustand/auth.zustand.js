@@ -10,7 +10,12 @@ const useAuthStore = create(
     errorMessage: null,
     controls: {
       setToken: (token) => {
+        console.log(token);
         set({ accessToken: token });
+      },
+      setUser: (user) => {
+        console.log(user);
+        set({ user: user });
       },
     },
     login: async ({ email, password }) => {

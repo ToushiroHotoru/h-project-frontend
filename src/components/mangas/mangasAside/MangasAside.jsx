@@ -18,7 +18,7 @@ export default function MangasAside({ tags }) {
       position={{ base: "fixed", xl: "static" }}
       top={0}
       right={0}
-      width={{ base: "100%", sm: "300px" }}
+      width={{ base: "100%", sm: "300px", xl: "100%" }}
       height="100%"
       padding={{ base: "20px 15px", xl: 0 }}
       backgroundColor={{ base: mangasAsideBackground, xl: "transparent" }}
