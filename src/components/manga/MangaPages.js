@@ -17,14 +17,16 @@ export default function MangaPages({ pages, manga }) {
   const imageIsLoaded = ({ src }) => {
     return src + "?q=5&w=10";
   };
-  
+
+  console.log(pages, manga);
+
   return (
     <section className={style.content}>
       <Heading as="h2" size="md" marginBottom="20px">
         Превью страниц
       </Heading>
       <div className={style.content_wrap}>
-        {pages !== undefined
+        {pages.pages !== undefined && pages.pages.length
           ? pages.pages.map((item, i) => {
               return (
                 <Link

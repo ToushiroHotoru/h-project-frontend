@@ -1,46 +1,17 @@
-import { Box, Checkbox, CheckboxGroup, Stack, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { Box, Checkbox, CheckboxGroup, Stack, Input } from "@chakra-ui/react";
+import useTagStore from "@/zustand/tags.zustand";
 
 export default function MangasTags({ tags }) {
-  const router = useRouter();
-
-  const [selectedTags, setSelectedTags] = useState([]);
-  const sort = router.query.sort ? { sort: router.query.sort } : {};
+  const { selectedTag, controls } = useTagStore();
 
   const getMangasByTags = (e) => {
     const value = e.target.value;
-    const isChecked = e.target.checked;
 
-    setSelectedTags((prev) => {
-      if (!isChecked && prev.some((prev) => prev === value)) {
-        return [...prev.filter((tag) => tag !== value)];
-      } else {
-        return [...prev, value];
-      }
-    });
+    controls.setSelectedTag(value);
   };
 
-  useEffect(() => {
-    if (selectedTags.length) {
-      router.push({
-        pathname: `/mangas`,
-        query: {
-          ...sort,
-          tags: selectedTags.join(","),
-        },
-        options: { shallow: true },
-      });
-    } else {
-      router.push({
-        pathname: `/mangas`,
-        query: {
-          ...sort,
-        },
-        options: { shallow: true },
-      });
-    }
-  }, [selectedTags]);
+  console.log(selectedTag);
 
   return (
     <Box>
@@ -49,14 +20,16 @@ export default function MangasTags({ tags }) {
       </Box>
       <Box mt="12px">
         <Input placeholder="Поиск по тегу" />
-        <CheckboxGroup colorScheme="pink" defaultValue={[router.query.tags]}>
+        <CheckboxGroup colorScheme="pink">
           <Stack spacing={1} direction={["column"]} mt="12px">
             {tags.map((tag) => (
               <Checkbox
                 key={tag._id}
                 value={tag.nameEn}
                 onChange={getMangasByTags}
+                isChecked={tag.nameEn === selectedTag}
               >
+                {selectedTag.some((storeTag) => storeTag === tag.nameEn)}
                 {tag.name}
               </Checkbox>
             ))}

@@ -28,7 +28,7 @@ export default function AuthTags() {
 
   const getTagsFunc = async () => {
     try {
-      const { data } = await axios.get(`/tags`);
+      const { data } = await axios.get(`/tags/all`);
       const { tags } = data.data;
       setTags(tags);
     } catch (err) {

@@ -55,9 +55,10 @@ const validationFunc = ({ email, password }) => {
 };
 
 export default function AuthLoginForm({ setToggleForm, onClose }) {
-  const { login, errorMessage } = useAuthStore((state) => state);
-  const { setRegisterStage } = useRegStore((state) => state.controls);
   const [show, setShow] = useState(false);
+  const { closeAuthModal } = useAuthStore((state) => state.controls);
+  const { login, errorMessage, isAuth } = useAuthStore((state) => state);
+  const { setRegisterStage } = useRegStore((state) => state.controls);
   const [showErrors, setShowErrors] = useState(false);
   const [userData, setUserData] = useState({ email: "", password: "" });
   const handleClick = () => setShow(!show);
@@ -66,9 +67,10 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
       setShowErrors(true);
       return false;
     }
-    const { isAuth } = await login(userData);
+    await login(userData);
     if (isAuth) {
       onClose();
+      closeAuthModal();
     }
   };
 
@@ -145,9 +147,15 @@ export default function AuthLoginForm({ setToggleForm, onClose }) {
         </FormControl>
       </ModalBody>
       <ModalFooter display="flex" justifyContent="center" p={0} pt={24}>
-        <Box width='100%'>
+        <Box width="100%">
           {errorMessage ? (
-            <Box color="#ef3d3d" fontSize="14px" fontWeight={500} mb="6px" lineHeight={1.1}>
+            <Box
+              color="#ef3d3d"
+              fontSize="14px"
+              fontWeight={500}
+              mb="6px"
+              lineHeight={1.1}
+            >
               {errorMessage}
             </Box>
           ) : (

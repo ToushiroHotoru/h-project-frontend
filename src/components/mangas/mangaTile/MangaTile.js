@@ -2,11 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-import {
-  Box,
-  Flex,
-  Skeleton,
-} from "@chakra-ui/react";
+import { Box, Flex, Skeleton } from "@chakra-ui/react";
+
+const imageLoader = ({ coverMini }) => {
+  return coverMini;
+};
 
 export default function MangaTile({ props }) {
   const [isLoaded, setIsloaded] = useState(false);
@@ -14,12 +14,18 @@ export default function MangaTile({ props }) {
   return (
     <Link href={`/mangas/${props.route}`}>
       <a>
-        <Box position="relative">
+        <Box
+          position="relative"
+          filter={!isLoaded ? "blur(5px)" : ""}
+          transitionDuration=".3s"
+          transitionProperty="filyer"
+        >
           <Skeleton isLoaded={isLoaded}>
             <Image
               onLoad={() => {
                 setIsloaded(true);
               }}
+              loader={imageLoader(props.coverMini)}
               src={props.cover}
               layout="responsive"
               alt="pic"

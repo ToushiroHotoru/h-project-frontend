@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   Box,
@@ -23,12 +23,17 @@ import AuthRegForm from "./AuthRegForm";
 import AuthComplete from "./AuthComplete";
 import AuthLoginForm from "./AuthLoginForm";
 import AuthRegistered from "./AuthRegistered";
+import useAuthStore from "@/zustand/auth.zustand";
 
 export default function AuthModal() {
   const { stage, maskots, speeches } = useRegistorStore();
   const { setRegisterStage, setFavorites } = useRegistorStore(
     ({ controls }) => controls
   );
+
+  const { isAuthModalShow } = useAuthStore();
+  const { closeAuthModal } = useAuthStore((state) => state.controls);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [toggleForm, setToggleForm] = useState(true);
 
@@ -52,7 +57,12 @@ export default function AuthModal() {
     setToggleForm(true);
     setRegisterStage(1);
     setFavorites([]);
+    closeAuthModal();
   };
+
+  useEffect(() => {
+    if (isAuthModalShow) onOpen();
+  }, [isAuthModalShow]);
 
   const registrationSteps = (value) => {
     switch (value) {

@@ -2,12 +2,29 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Skeleton, useColorModeValue } from "@chakra-ui/react";
 
 import style from "@/components/tags/tag/Tag.module.css";
 
 export default function TagDesktop({ data }) {
   const [isLoaded, setIsloaded] = useState(false);
+
+  const textWrapperBoxShadow = useColorModeValue(
+    "0 0 25px 30px #e8e8e8",
+    "0 0 25px 30px #000"
+  );
+
+  const textWrapperBgColor = useColorModeValue("#e8e8e8", "#000000");
+  const textDescriptionGradient = useColorModeValue(
+    "linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #e8e8e8 88%)",
+    "linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 1) 88%)"
+  );
+
+  const tagInfoBgGradient = useColorModeValue(
+    "linear-gradient(rgba(255, 255, 255, 0) 26%, #e8e8e8 62%)",
+    "linear-gradient(rgba(255, 255, 255, 0) 26%, rgba(0, 0, 0, 1) 62%)"
+  );
+
   return (
     <Link href={`/mangas?tags=${data.nameEn}`}>
       <a className={style.tag}>
@@ -16,15 +33,17 @@ export default function TagDesktop({ data }) {
           position="relative"
           _before={{ content: '""', pt: "100%", display: "block" }}
         >
-          <Image
-            src={data.image}
-            alt={data.name}
-            layout="fill"
-            objectFit="cover"
-            onLoadingComplete={() => {
-              setIsloaded(true);
-            }}
-          />
+          <Skeleton isLoaded={isLoaded}>
+            <Image
+              src={data.image}
+              alt={data.name}
+              layout="fill"
+              objectFit="cover"
+              onLoadingComplete={() => {
+                setIsloaded(true);
+              }}
+            />
+          </Skeleton>
         </Box>
         <Box
           className={style.tagInfo}
@@ -32,7 +51,7 @@ export default function TagDesktop({ data }) {
           bottom={{ x450: 0 }}
           width="full"
           height="full"
-          background="linear-gradient(rgba(255, 255, 255, 0) 26%, rgba(0, 0, 0, 1) 62%)"
+          background={tagInfoBgGradient}
           zIndex={2}
         >
           <Flex
@@ -44,10 +63,15 @@ export default function TagDesktop({ data }) {
             px="15px"
             pb="15px"
             flexDirection="column"
-            boxShadow={{ base: "0 0 29px 30px #000", x450: "none" }}
-            bgColor={{ base: "black", x450: "transparent" }}
+            boxShadow={{ base: textWrapperBoxShadow, x450: "none" }}
+            bgColor={{ base: textWrapperBgColor, x450: "transparent" }}
           >
-            <Box fontSize={{ base: "18px", sm: "20px" }}>{data.name}</Box>
+            <Box
+              fontSize={{ base: "16px", sm: "18px", md: "20px" }}
+              lineHeight={1.2}
+            >
+              {data.name}
+            </Box>
             <Box
               fontSize="14px"
               height="100%"
@@ -56,13 +80,12 @@ export default function TagDesktop({ data }) {
               position="relative"
               _after={{
                 content: '""',
-                position: 'absolute',
+                position: "absolute",
                 bottom: 0,
                 width: "100%",
                 height: "50%",
                 left: 0,
-                background:
-                  "linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 1) 88%)",
+                background: textDescriptionGradient,
               }}
             >
               {data.description}

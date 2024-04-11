@@ -48,7 +48,7 @@ export default function Filter() {
     try {
       const tags = selectedTags.map((item) => item["id"]);
       const res = await axios.get(
-        "get_tags_count?" + new URLSearchParams({ tags: tags })
+        "/tags/count?" + new URLSearchParams({ tags: tags })
       );
       const result = res.data;
       setTags(result.tags);

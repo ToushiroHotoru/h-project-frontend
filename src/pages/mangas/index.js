@@ -7,7 +7,7 @@ export default function Mangas({ tags }) {
 
 export async function getStaticProps() {
   try {
-    const tags = await axios.get(`/tags`);
+    const tags = await axios.get(`/tags/all`);
 
     return {
       props: { tags: tags.data.data.tags },

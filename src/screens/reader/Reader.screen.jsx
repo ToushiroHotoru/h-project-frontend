@@ -30,7 +30,7 @@ export default function ReaderScreen() {
 
   const fetchMangaDynamic = async () => {
     try {
-      const readerManga = await axios.get("/reader-manga-by-id", {
+      const readerManga = await axios.get("/manga/reader", {
         params: {
           route: router.query.id,
         },

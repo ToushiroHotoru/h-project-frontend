@@ -1,18 +1,18 @@
 import Head from "next/head";
 
-import axios from "@/utils/axios";
+import { getAllTags } from "@/api/tags/getAllTags";
 import TagsScreen from "./../../screens/tags/Tags.screen";
 
 export async function getStaticProps() {
-  const tags = await axios.get(`/tags`);
-  if (!tags.data) {
+  const tags = await getAllTags();
+  if (!tags) {
     return {
       notFound: true,
     };
   }
 
   return {
-    props: { tags: tags.data.data.tags },
+    props: { tags: tags },
     revalidate: 10,
   };
 }

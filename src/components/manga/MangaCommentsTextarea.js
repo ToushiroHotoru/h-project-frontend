@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { Text, Textarea, Button } from "@chakra-ui/react";
+import { Text, Textarea, Button, Heading } from "@chakra-ui/react";
 
-import axiosBack from "@/utils/axios";
+import axios from "@/utils/axios";
 import css from "@/styles/components/manga/Comments.module.css";
 
 export default function MangaCommentsTextarea({ comments }) {
@@ -11,12 +11,12 @@ export default function MangaCommentsTextarea({ comments }) {
   const manga = router.query.id;
   const [comment, setComment] = useState("");
   const sendComment = async () => {
-    const response = await axiosBack.post("/add-comment-to-manga", {
+    const response = await axios.post("/comments/add-comment-to-manga", {
       mangaId: manga,
       text: comment,
     });
     setComment("");
-    await axiosBack.get("/manga-comments", {
+    await axios.get("/comments/manga-comments", {
       params: {
         route: manga,
       },
@@ -28,12 +28,15 @@ export default function MangaCommentsTextarea({ comments }) {
 
   return (
     <section className={css.comments}>
-      <Text mb="8px">Комментарии</Text>
+      <Heading as="h2" mb="8px" fontSize="28px">
+        Комментарии
+      </Heading>
       <Textarea
         placeholder="Оставьте ваш комментарий"
         size="sm"
         resize="none"
         onChange={getComment}
+        value={comment}
       />
       <Button mt="5px" onClick={sendComment}>
         Отправить
