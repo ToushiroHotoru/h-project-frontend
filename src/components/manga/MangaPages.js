@@ -18,8 +18,6 @@ export default function MangaPages({ pages, manga }) {
     return src + "?q=5&w=10";
   };
 
-  console.log(pages, manga);
-
   return (
     <section className={style.content}>
       <Heading as="h2" size="md" marginBottom="20px">

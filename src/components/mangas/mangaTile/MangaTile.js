@@ -16,10 +16,10 @@ export default function MangaTile({ props }) {
       <a>
         <Box
           position="relative"
-          filter={!isLoaded ? "blur(5px)" : ""}
           transitionDuration=".3s"
           transitionProperty="filyer"
         >
+          {/* <Box filter={!isLoaded ? "blur(5px)" : ""}> */}
           <Skeleton isLoaded={isLoaded}>
             <Image
               onLoad={() => {
@@ -33,7 +33,7 @@ export default function MangaTile({ props }) {
               height={700}
             />
           </Skeleton>
-
+          {/* </Box> */}
           <Flex
             position="absolute"
             left="0"

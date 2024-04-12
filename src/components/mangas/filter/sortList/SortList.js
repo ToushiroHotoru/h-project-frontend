@@ -25,6 +25,7 @@ export default function SortList() {
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
   const dropDownBgColor = useColorModeValue("#fff", "#000");
+  const dropDownItemBgHover = useColorModeValue("#eee", "#1c1c1c");
 
   useEffect(() => {
     if (router.query.sort) {
@@ -102,7 +103,7 @@ export default function SortList() {
                 onClick={() => setCurrentSortType(item)}
                 transitionDuration=".3s"
                 transitionProperty="background"
-                _hover={{ backgroundColor: "#1c1c1c" }}
+                _hover={{ backgroundColor: dropDownItemBgHover }}
               >
                 {iconRender(item.type)} {item.title}
               </Flex>

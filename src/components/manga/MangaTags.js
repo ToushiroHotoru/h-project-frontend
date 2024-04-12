@@ -13,20 +13,19 @@ export default function MangaTags({ tags }) {
   return (
     <div className={MangaHeadCSS.head_tags}>
       <Flex alignItems="flex-start" flexWrap="wrap" spacing="5px">
-        {tags &&
-          tags.map((tagItem, i) => {
-            return (
-              <Skeleton
-                isLoaded={isLoaded}
-                className={`${MangaHeadCSS.item} `}
-                key={i + 1}
-                position="relative"
-              >
-                <Link href={`/mangas?tags=${tagItem.nameEn}`}>
-                  <a>
+        {tags.map((tagItem, i) => {
+          return (
+            <Box
+              className={`${MangaHeadCSS.item} `}
+              key={tagItem._id}
+              position="relative"
+            >
+              <Link href={`/mangas?tags=${tagItem.nameEn}`}>
+                <a>
+                  <Skeleton isLoaded={isLoaded}>
                     <Image
                       src={tagItem["image"]}
-                      onLoadingComplete={() => {
+                      onLoad={() => {
                         setIsloaded(true);
                       }}
                       alt={tagItem["name"]}
@@ -35,17 +34,18 @@ export default function MangaTags({ tags }) {
                       objectFit="cover"
                       draggable="false"
                     />
-                    <Box
-                      className={`${MangaHeadCSS.tag_name}`}
-                      bgColor={tagNameBgColor}
-                    >
-                      {tagItem["name"]}
-                    </Box>
-                  </a>
-                </Link>
-              </Skeleton>
-            );
-          })}
+                  </Skeleton>
+                  <Box
+                    className={`${MangaHeadCSS.tag_name}`}
+                    bgColor={tagNameBgColor}
+                  >
+                    {tagItem["name"]}
+                  </Box>
+                </a>
+              </Link>
+            </Box>
+          );
+        })}
       </Flex>
     </div>
   );

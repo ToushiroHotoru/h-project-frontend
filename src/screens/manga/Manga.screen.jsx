@@ -23,7 +23,7 @@ export default function MangaScreen({
         <div className="container">
           <Flex justifyContent="space-between">
             <Heading as="h1" size="md" className={css.title}>
-              Manga - {mangaStatic.title}
+              Манга - {mangaStatic.title}
             </Heading>
             <Box mt="auto">{mangaStatic.createdAt}</Box>
           </Flex>
@@ -38,7 +38,7 @@ export default function MangaScreen({
               data={mangaDynamic && mangaDynamic}
               manga={mangaStatic}
             />
-            <MangaTags tags={mangaDynamic && mangaDynamic["tags"]} />
+            <MangaTags tags={mangaStatic["tags"]} />
           </section>
 
           <MangaPages pages={mangaDynamic} manga={mangaStatic} />

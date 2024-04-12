@@ -6,9 +6,22 @@ import { Box, Center, HStack, Button, Skeleton } from "@chakra-ui/react";
 import { BsDownload, BsHeart, BsFillFolderFill } from "react-icons/bs";
 
 import css from "@/styles/components/manga/MangaHead.module.css";
+import { useRouter } from "next/router";
+import { setCurrentMangaLike } from "@/api/manga/setCurrentMangaLike";
+import useMangaStore from "@/zustand/manga.zustand";
 
 export default function MangaImg({ img, id, alt }) {
+  const router = useRouter();
   const [isLoadedImage, setIsLoadedImage] = useState(false);
+
+  const { setCurrentLikes } = useMangaStore(({ controls }) => controls);
+
+  const setLike = async () => {
+    const { isLiked, currentLikes } = await setCurrentMangaLike(
+      router.query.id
+    );
+    setCurrentLikes({ isLiked, currentLikes });
+  };
   return (
     <div className={css.head_img}>
       <Box borderRadius="8px" overflow="hidden">
@@ -34,7 +47,14 @@ export default function MangaImg({ img, id, alt }) {
             <BsDownload size="90%" cursor="pointer" />
           </Center>
         </Box>
-        <Box maxWidth="40px" width="100%" padding="5px">
+        <Box
+          maxWidth="40px"
+          width="100%"
+          padding="5px"
+          onClick={() => {
+            setLike();
+          }}
+        >
           <Center>
             <BsHeart size="90%" cursor="pointer" />
           </Center>

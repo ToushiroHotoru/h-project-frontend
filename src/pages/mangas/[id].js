@@ -20,7 +20,7 @@ export async function getStaticProps({ params }) {
         mangaComments: comments,
       },
 
-      revalidate: 3600,
+      revalidate: 60,
     };
   } catch (error) {
     console.log(error);
