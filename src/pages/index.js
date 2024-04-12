@@ -1,19 +1,23 @@
 import Head from "next/head";
 
 import axios from "@/utils/axios";
+import {
+  getLastPublishedMangas,
+  getMostLikedMangasOnLastWeek,
+  getMostViewedMangasOnLastWeek,
+} from "@/api/mangas/getHomePageMangas";
 import HomePageMangasSection from "../components/home/HomePageMangasSection/HomePageMangasSection";
 
 export async function getStaticProps() {
-  const lastPublishedMangas = await axios.get("/last-published-mangas");
-  const mostViewedMangasOnLastWeek = await axios.get(
-    "/last-most-viewed-mangas"
-  );
-  const mostLikedMangasOnLastWeek = await axios.get("/last-most-liked-mangas");
+  const lastPublishedMangas = await getLastPublishedMangas();
+  const mostViewedMangasOnLastWeek = await getMostViewedMangasOnLastWeek();
+  const mostLikedMangasOnLastWeek = await getMostLikedMangasOnLastWeek();
+
   return {
     props: {
-      lastPublishedMangas: lastPublishedMangas.data.data.mangas,
-      mostViewedMangasOnLastWeek: mostViewedMangasOnLastWeek.data.data.mangas,
-      mostLikedMangasOnLastWeek: mostLikedMangasOnLastWeek.data.data.mangas,
+      lastPublishedMangas: lastPublishedMangas,
+      mostViewedMangasOnLastWeek: mostViewedMangasOnLastWeek,
+      mostLikedMangasOnLastWeek: mostLikedMangasOnLastWeek,
     },
     revalidate: 60 * 30,
   };

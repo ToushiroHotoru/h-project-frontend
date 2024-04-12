@@ -1,7 +1,8 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { IoMdClose } from "react-icons/io";
+import dynamic from "next/dynamic";
 
+import { IoMdClose } from "react-icons/io";
 import useMangasStore from "@/zustand/mangas.zustand";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import MangasTags from "@/components/mangas/mangasTags/MangasTags.jsx";
 
 export default function MangasAside({ tags }) {
@@ -12,6 +13,11 @@ export default function MangasAside({ tags }) {
     "gray.200",
     "gray.900"
   );
+
+  // const MangasTags = dynamic(
+  //   () => import("@/components/mangas/mangasTags/MangasTags.jsx"),
+  //   { ssr: false }
+  // );
 
   return (
     <Box

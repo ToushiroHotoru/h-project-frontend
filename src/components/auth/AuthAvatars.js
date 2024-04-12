@@ -27,7 +27,7 @@ export default function AuthAvatars() {
   const [avatars, setAvatars] = useState([]);
 
   const getAvatarsFunc = async () => {
-    const { data } = await axios.get(`/site-avatars`);
+    const { data } = await axios.get(`/avatar/site-avatars`);
     const { avatars } = data.data;
     setAvatars(avatars);
   };
@@ -40,7 +40,7 @@ export default function AuthAvatars() {
       formData.append("isUpload", uploadFlag);
       formData.append("avatar", avatar);
 
-      await axios.post("/add-site-avatar", formData);
+      await axios.post("/avatar/add-site-avatar", formData);
     } catch (error) {
       console.log(error);
     }

@@ -88,7 +88,7 @@ export default function AuthRegForm({ setToggleForm }) {
         return;
       }
 
-      const response = await axios.post(`/registration`, userData);
+      const response = await axios.post(`/user/registration`, userData);
 
       const { data, status, message } = response.data;
 

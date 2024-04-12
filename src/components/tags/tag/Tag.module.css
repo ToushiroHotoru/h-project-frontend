@@ -2,19 +2,20 @@
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  min-height: 350px;
+  min-height: 280px;
 }
 
 @media (max-width: 450px) {
   .tag {
-    height: 180px;
+    height: 150px;
     display: flex;
     flex-direction: row-reverse;
-    min-height: 180px;
+    min-height: 150px;
   }
 
   .tagImage {
-    width: 70%;
-    min-height: 180px;
+    width: 150px;
+    min-width: 150px;
+    min-height: 150px;
   }
 }

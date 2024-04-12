@@ -1,33 +1,29 @@
 import { useEffect, useState } from "react";
 
-import axios from "@/utils/axios.js";
-import getMangasPaths from "@/utils/getMangasPaths.js";
 import MangaScreen from "@/screens/manga/Manga.screen";
+import { getMangaStatic } from "@/api/manga/getMangaStatic";
+import { getMangasPaths } from "@/api/mangas/getMangasPaths";
+import { getMangaComments } from "@/api/comments/getMangaComments";
+import { useMangaDynamic } from "@/hooks/manga/useMangaDynamic";
 
 export async function getStaticProps({ params }) {
   try {
     const { id } = params;
-    const staticManga = await axios.get(`/manga-static`, {
-      params: { route: id },
-    });
+    const staticManga = await getMangaStatic(id);
 
-    const comments = await axios.get("/manga-comments", {
-      params: {
-        route: id,
-      },
-    });
+    const comments = await getMangaComments(id);
 
     return {
       props: {
         id: id,
-        mangaStatic: staticManga.data.data.manga,
-        mangaComments: comments.data.data.comments,
+        mangaStatic: staticManga,
+        mangaComments: comments,
       },
 
-      revalidate: 3600,
+      revalidate: 60,
     };
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
@@ -44,22 +40,7 @@ export async function getStaticPaths(context) {
 }
 
 export default function Manga({ id, mangaStatic, mangaComments }) {
-  const [mangaDynamic, setMangaDynamic] = useState();
-
-  const getDynamicMangaData = async () => {
-    try {
-      const mangaDynamicData = await axios.get(`/manga-dynamic`, {
-        params: { route: id },
-      });
-      setMangaDynamic(mangaDynamicData.data.data.manga);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getDynamicMangaData();
-  }, []);
+  const { mangaDynamic, isMangaLoading } = useMangaDynamic(id);
 
   return (
     <MangaScreen

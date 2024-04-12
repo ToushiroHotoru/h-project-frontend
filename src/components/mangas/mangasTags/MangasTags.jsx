@@ -1,46 +1,52 @@
-import { Box, Checkbox, CheckboxGroup, Stack, Input } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
+
+import { Box, Checkbox, CheckboxGroup, Stack, Input } from "@chakra-ui/react";
 
 export default function MangasTags({ tags }) {
   const router = useRouter();
 
-  const [selectedTags, setSelectedTags] = useState([]);
-  const sort = router.query.sort ? { sort: router.query.sort } : {};
+  const setQueryTags = (event) => {
+    if (router.query.tags) {
+      const tags = router.query.tags.split(",").filter(Boolean);
 
-  const getMangasByTags = (e) => {
-    const value = e.target.value;
-    const isChecked = e.target.checked;
-
-    setSelectedTags((prev) => {
-      if (!isChecked && prev.some((prev) => prev === value)) {
-        return [...prev.filter((tag) => tag !== value)];
-      } else {
-        return [...prev, value];
+      if (!event.target.checked && tags.includes(event.target.value)) {
+        const excludedTags = tags.filter((tag) => tag !== event.target.value);
+        if (excludedTags.length) {
+          router.push({
+            pathname: router.pathname,
+            query: {
+              tags: excludedTags.join(","),
+            },
+            options: { shallow: true },
+          });
+        } else {
+          return router.push({
+            pathname: router.pathname,
+            options: { shallow: true },
+          });
+        }
+      } else if (event.target.checked && !tags.includes(event.target.value)) {
+        tags.push(event.target.value);
+        router.push({
+          pathname: router.pathname,
+          query: {
+            tags: tags.join(","),
+          },
+          options: { shallow: true },
+        });
       }
-    });
-  };
-
-  useEffect(() => {
-    if (selectedTags.length) {
-      router.push({
-        pathname: `/mangas`,
-        query: {
-          ...sort,
-          tags: selectedTags.join(","),
-        },
-        options: { shallow: true },
-      });
     } else {
       router.push({
-        pathname: `/mangas`,
+        pathname: router.pathname,
         query: {
-          ...sort,
+          tags: event.target.value,
         },
         options: { shallow: true },
       });
     }
-  }, [selectedTags]);
+  };
+
 
   return (
     <Box>
@@ -55,7 +61,8 @@ export default function MangasTags({ tags }) {
               <Checkbox
                 key={tag._id}
                 value={tag.nameEn}
-                onChange={getMangasByTags}
+                onChange={setQueryTags}
+                isChecked={tag.checked}
               >
                 {tag.name}
               </Checkbox>
