@@ -1,13 +1,10 @@
 import { Box, Flex } from "@chakra-ui/react";
 
-import useMangaStore from "@/zustand/manga.zustand";
-import css from "@/styles/components/manga/MangaHead.module.css";
+import style from "@/styles/components/manga/MangaHead.module.css";
 
-export default function MangaDesc({ data, manga }) {
-  const { currentLikes, isLiked } = useMangaStore();
-
+export default function MangaDesc({ manga }) {
   return (
-    <div className={css.head_desc}>
+    <div className={style.head_desc}>
       <Flex direction="column">
         <Flex>
           <Box flex="1.5" minWidth="100px">
@@ -31,7 +28,7 @@ export default function MangaDesc({ data, manga }) {
           <Box flex="1.5" minWidth="100px">
             Likes
           </Box>
-          <Box flex="2">{isLiked ? currentLikes : manga.likes}</Box>
+          <Box flex="2">{manga.likes}</Box>
         </Flex>
       </Flex>
     </div>

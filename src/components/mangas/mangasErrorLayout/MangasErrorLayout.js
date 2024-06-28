@@ -1,15 +1,19 @@
 import Head from "next/head";
 import MangasTop from "@/components/mangas/mangasTop/MangasTop";
 import ErrorDefault from "@/components/errors/errorDefault/errorDefault";
+import { Box } from "@chakra-ui/react";
 
-export default function MangasErrorLayout() {
+export default function MangasErrorLayout({ code, message }) {
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Каталог</title>
       </Head>
-      <MangasTop />
-      <ErrorDefault code="500" message="error" />
-    </div>
+      <div className="container">
+        <Box height="full" position="relative">
+          <ErrorDefault code={code} message={message} />
+        </Box>
+      </div>
+    </>
   );
 }
