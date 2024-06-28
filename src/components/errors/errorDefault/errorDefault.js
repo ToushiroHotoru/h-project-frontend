@@ -1,9 +1,8 @@
 import Image from "next/image";
 
-import { Box, Center, Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 
 export default function ErrorDefault({ code, message }) {
-  console.log(code, message);
   return (
     <Flex
       flexDirection="column"
@@ -12,19 +11,33 @@ export default function ErrorDefault({ code, message }) {
       height="100%"
       position="relative"
     >
-      <Center flexDirection="column" fontSize="164px" fontWeight="800">
+      <Flex
+        flexDirection="column"
+        fontSize="164px"
+        fontWeight="800"
+        alignItems="flex-end"
+      >
         {code}
         <Box fontSize="24px" fontWeight="400">
           {message}
         </Box>
-      </Center>
+      </Flex>
 
-      <Box position="absolute" bottom="0" zIndex="-5">
+      <Box
+        position="absolute"
+        bottom={0}
+        left={0}
+        right={0}
+        zIndex="-1"
+        width="50vw"
+        height="100%"
+      >
         <Image
           src="/404.png"
-          alt="Picture of the author"
-          width={800}
-          height={800}
+          alt="Изображение об ошибке"
+          layout="fill"
+          objectFit="contain"
+          objectPosition="left"
         />
       </Box>
     </Flex>

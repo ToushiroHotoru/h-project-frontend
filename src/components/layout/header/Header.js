@@ -11,6 +11,7 @@ import {
   MenuItem,
   useDisclosure,
   MenuButton,
+  Divider,
 } from "@chakra-ui/react";
 import useAuthStore from "@/zustand/auth.zustand";
 
@@ -66,47 +67,53 @@ export default function Header() {
               <Link href="/tags">Теги</Link>
             </Box>
             {isAuth ? (
-              <Link href={`/profile/${user.name}`}>
-                <a>
-                  <Menu isOpen={isOpen}>
-                    <MenuButton
-                      onMouseEnter={onOpen}
-                      onMouseLeave={() => {
-                        clearTimeout(timer);
-                        const st = setTimeout(() => {
-                          onClose();
-                        }, 300);
-                        setTimer(st);
-                      }}
-                    >
-                      <Avatar
-                        ml={{ base: "10px", md: "20px" }}
-                        width="30px"
-                        height="30px"
-                        minWidth="30px"
-                        name={user.name}
-                        src={user.avatar}
-                        onMouseEnter={onOpen}
-                      />
-                    </MenuButton>
-                    <MenuList
-                      onMouseEnter={() => {
-                        clearTimeout(timer);
-                        onOpen();
-                      }}
-                      onMouseLeave={onClose}
-                    >
-                      <MenuItem
-                        onClick={() => {
-                          logout(), onClose();
-                        }}
-                      >
-                        Выйти
-                      </MenuItem>
-                    </MenuList>
-                  </Menu>
-                </a>
-              </Link>
+              <Menu isOpen={isOpen}>
+                <MenuButton
+                  onMouseEnter={onOpen}
+                  onMouseLeave={() => {
+                    clearTimeout(timer);
+                    const st = setTimeout(() => {
+                      onClose();
+                    }, 300);
+                    setTimer(st);
+                  }}
+                >
+                  <Avatar
+                    ml={{ base: "10px", md: "20px" }}
+                    width="30px"
+                    height="30px"
+                    minWidth="30px"
+                    name={user.name}
+                    src={user.avatar}
+                    onMouseEnter={onOpen}
+                  />
+                </MenuButton>
+                <MenuList
+                  onMouseEnter={() => {
+                    clearTimeout(timer);
+                    onOpen();
+                  }}
+                  onMouseLeave={onClose}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      logout(), onClose();
+                    }}
+                  >
+                    <Link href={`/profile/${user.name}`}>
+                      <a>Профиль</a>
+                    </Link>
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem
+                    onClick={() => {
+                      logout(), onClose();
+                    }}
+                  >
+                    Выйти
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             ) : (
               <Box
                 className={`link ${styles.link}`}
